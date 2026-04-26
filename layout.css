@@ -33,7 +33,7 @@
 /*============================flex布局===========================*/
 .flex {display: flex; gap: var(--gap);}
 
-.inline-flex, .flex.inline {display: inline-flex;}
+.flex.inline {display: inline-flex;}
 
 /* 方向类：物理语义固定，CSS值随书写模式自动适配 */
 /* 项目从顶部开始排列 */
@@ -84,12 +84,9 @@
 
 /*-----------项目本身（不要求父带 .flex，便于组件提供的 flex 容器内使用）------------*/
 /* X轴独占一行：row 方向 + wrap */
-.multi-line:not(.items-from-top):not(.items-from-bottom) .monopoly-x,
 .multi-line.items-from-left .monopoly-x,
-.multi-line.items-from-right .monopoly-x {
-	flex-basis: 100%;
-}
-
+.multi-line.items-from-right .monopoly-x,
+.multi-line:not(.items-from-top):not(.items-from-bottom) .monopoly-x,
 /* Y轴独占一列：column 方向 + wrap */
 .multi-line.items-from-top .monopoly-y,
 .multi-line.items-from-bottom .monopoly-y {
@@ -102,16 +99,16 @@
 /*===============================grid布局===============================*/
 .grid {display: grid; gap: var(--gap);}
 
-.grid.inline, .inline-grid {display: inline-grid}
+.grid.inline {display: inline-grid}
 
-.grid.朋字形, .inline-grid.朋字形 {
+.grid.朋字形 {
 	grid-template-columns: 50% 50%;
 	grid-template-areas: 'left right';
 	gap: var(--朋字形-gap);
 }
 
 /* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
-.grid.亚字形, .inline-grid.亚字形 {
+.grid.亚字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
 		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
@@ -128,7 +125,7 @@
 }
 
 /* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
-.grid.叵字形, .inline-grid.叵字形 {
+.grid.叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
 		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
@@ -142,7 +139,7 @@
 }
 
 /* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
-.grid.反叵字形, .inline-grid.反叵字形 {
+.grid.反叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
 		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
@@ -156,7 +153,7 @@
 }
 
 /* "目字形"布局，上部导航栏，底部页脚 */
-.grid.目字形, .inline-grid.目字形 {
+.grid.目字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
 		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
