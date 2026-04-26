@@ -23,15 +23,38 @@
 	--目字形-gap: var(--gap);
 }
 
+/*============================书写模式===========================*/
+/* 行堆叠方向用字母字形：Z/S/N/И */
+.flow-Z { writing-mode: horizontal-tb; direction: ltr; } /* 现代横排 */
+.flow-S { writing-mode: horizontal-tb; direction: rtl; } /* 阿拉伯语 */
+.flow-N { writing-mode: vertical-rl; direction: ltr; }   /* 传统中文竖排 */
+.flow-И { writing-mode: vertical-lr; direction: ltr; }   /* 蒙古文竖排 */
+
 /*============================flex布局===========================*/
 .flex {display: flex; gap: var(--gap);}
 
 .inline-flex, .flex.inline {display: inline-flex;}
 
-.vertical {flex-direction: column;}
+/* 方向类：物理语义固定，CSS值随书写模式自动适配 */
+/* 项目从顶部开始排列 */
+.items-from-top { flex-direction: column; }
+.flow-N.items-from-top, .flow-И.items-from-top { flex-direction: row; }
 
-/*堆叠：从下部开始向上堆*/
-.stack {flex-direction: column-reverse;}
+/* 项目从底部开始排列 */
+.items-from-bottom { flex-direction: column-reverse; }
+.flow-N.items-from-bottom, .flow-И.items-from-bottom { flex-direction: row-reverse; }
+
+/* 项目从左侧开始排列 */
+.items-from-left { flex-direction: row; }
+.flow-S.items-from-left { flex-direction: row-reverse; }
+.flow-N.items-from-left { flex-direction: column-reverse; }
+.flow-И.items-from-left { flex-direction: column; }
+
+/* 项目从右侧开始排列 */
+.items-from-right { flex-direction: row-reverse; }
+.flow-S.items-from-right { flex-direction: row; }
+.flow-N.items-from-right { flex-direction: column; }
+.flow-И.items-from-right { flex-direction: column-reverse; }
 
 .single-line {flex-wrap: nowrap;}
 
@@ -60,11 +83,18 @@
 .lines-space-evenly, .lines-friendly {flex-wrap: wrap; align-content: space-evenly;}
 
 /*-----------项目本身（不要求父带 .flex，便于组件提供的 flex 容器内使用）------------*/
-/*项目独占/垄断 一行*/
-.monopoly {flex-basis: 100%;}
+/* X轴独占一行：row 方向 + wrap */
+.multi-line:not(.items-from-top):not(.items-from-bottom) .monopoly-x,
+.multi-line.items-from-left .monopoly-x,
+.multi-line.items-from-right .monopoly-x {
+	flex-basis: 100%;
+}
 
-/*项目在主轴方向上拉伸/压缩*/
-.stretch {flex: 1 1 auto;}
+/* Y轴独占一列：column 方向 + wrap */
+.multi-line.items-from-top .monopoly-y,
+.multi-line.items-from-bottom .monopoly-y {
+	flex-basis: 100%;
+}
 
 /*项目禁止压缩*/
 .no-shrink {flex-shrink: 0;}
@@ -80,7 +110,7 @@
 	gap: var(--朋字形-gap);
 }
 
-/* “亚字形”布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
+/* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
 .grid.亚字形, .inline-grid.亚字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -97,7 +127,7 @@
 	gap: var(--亚字形-gap);
 }
 
-/* “叵字形”布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
+/* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
 .grid.叵字形, .inline-grid.叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -111,7 +141,7 @@
 	gap: var(--叵字形-gap);
 }
 
-/* “反叵字形”布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
+/* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
 .grid.反叵字形, .inline-grid.反叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -125,7 +155,7 @@
 	gap: var(--反叵字形-gap);
 }
 
-/* “目字形”布局，上部导航栏，底部页脚 */
+/* "目字形"布局，上部导航栏，底部页脚 */
 .grid.目字形, .inline-grid.目字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -174,7 +204,7 @@
 /*项目垂直靠向结束的方向/在次轴上靠后*/
 .items-near-y-end {align-items: end;}
 
-/*项目垂直居中/在次轴上居中，像“册”字一样*/
+/*项目垂直居中/在次轴上居中，像"册"字一样*/
 .items-near-y-center, .items-like-册 {align-items: center;}
 
 /*==========================================用于项目=========================================*/
@@ -199,16 +229,28 @@ footer, .footer {
 
 main, .main, .body {grid-area: main; flex: 1;}
 
-.near-center {justify-content: center; align-items: center; text-align: center;}
+/* 容器属性：让子项目居中 */
+.item-near-center {
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	justify-items: center;
+	text-align: center;
+}
 
+/* 子项目属性：让自己居中 */
+.near-center {
+	justify-self: center;
+	align-self: center;
+	margin: auto;
+}
+
+/* 弹性填充 */
 .flexible {
-	flex: 1 1 auto; /* 允许扩展和收缩 */
-	align-self: stretch; /* 默认拉伸填满 */
-	box-sizing: border-box; /* 包含内边距和边框 */
-	min-width: 0; /* 防止内容溢出 */
-	min-height: 0; /* 防止内容溢出 */
-	will-change: flex-basis; /* 性能优化 */
-	transition: flex-basis 0.2s ease;
+	flex: 1 1 auto;
+	align-self: stretch;
+	min-width: 0;
+	min-height: 0;
 }
 
 .no-gap {
