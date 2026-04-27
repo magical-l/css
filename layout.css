@@ -211,54 +211,73 @@
 .content-N.row-near-bottom, .content-И.row-near-bottom {justify-content: end;}
 
 /*==========================================用于布局容器本身==========================================*/
-/*----------项目在物理X轴方向（水平），适用于flex、grid布局里的项目----------*/
-/*项目在物理X轴上靠左*/
-.items-near-x-start {justify-content: start;}
-.content-S.items-near-x-start {justify-content: end;}
-.content-N.items-near-x-start {align-items: end;}
-.content-И.items-near-x-start {align-items: start;}
 
-/*项目在物理X轴上靠右*/
-.items-near-x-end {justify-content: end;}
-.content-S.items-near-x-end {justify-content: start;}
-.content-N.items-near-x-end {align-items: start;}
-.content-И.items-near-x-end {align-items: end;}
+/*==========================物理方向类===========================*/
+/*
+ * 设计原则：
+ * - left/right 控制水平方向
+ * - top/bottom 控制垂直方向
+ * - 横排（Z/S）：水平用 justify-content，垂直用 align-content
+ * - 竖排（N/И）：水平用 align-content，垂直用 justify-content
+ * - 竖排 Grid 很多情况默认已靠边，无需额外规则
+ */
 
-/*项目在物理X轴上居中*/
-.items-near-x-center {justify-content: center; align-items: center;}
+/*列轨道/项目靠物理左边*/
+/* 横排 */
+.content-Z.items-near-left { justify-content: start; }
+.content-S.items-near-left { justify-content: end; }
+/* 竖排 */
+.content-N.items-near-left { align-content: end; }  /* vertical-rl：列靠左 */
+.content-И.items-near-left { align-content: start; } /* vertical-lr：列靠左 */
 
-/*项目在物理X轴上均匀分布（互斥/社恐）*/
-.items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
-.content-N.items-space-between, .content-N.items-mutex, .content-N.items-social-phobia,
-.content-И.items-space-between, .content-И.items-mutex, .content-И.items-social-phobia {align-content: space-between;}
+/*列轨道/项目靠物理右边*/
+/* 横排 */
+.content-Z.items-near-right { justify-content: end; }
+.content-S.items-near-right { justify-content: start; }
+/* 竖排 vertical-rl（N）：默认已靠右，无需规则 */
+.content-И.items-near-right { align-content: end; }   /* vertical-lr：列靠右 */
 
-/*项目在物理X轴上均匀分布（不熟）*/
-.items-space-around, .items-unfamiliar {justify-content: space-around;}
-.content-N.items-space-around, .content-N.items-unfamiliar,
-.content-И.items-space-around, .content-И.items-unfamiliar {align-content: space-around;}
+/*行轨道/项目靠物理顶边*/
+/* 横排 */
+.content-Z.items-near-top { align-content: start; }
+.content-S.items-near-top { align-content: start; }
+/* 竖排 */
+.content-N.items-near-top { justify-content: start; }
+.content-И.items-near-top { justify-content: start; }
 
-/*项目在物理X轴上均匀分布（友好）*/
-.items-space-evenly, .items-friendly {justify-content: space-evenly;}
-.content-N.items-space-evenly, .content-N.items-friendly,
-.content-И.items-space-evenly, .content-И.items-friendly {align-content: space-evenly;}
+/*行轨道/项目靠物理底边*/
+/* 横排 */
+.content-Z.items-near-bottom { align-content: end; }
+.content-S.items-near-bottom { align-content: end; }
+/* 竖排 */
+.content-N.items-near-bottom { justify-content: end; }
+.content-И.items-near-bottom { justify-content: end; }
 
-/*----------项目在物理Y轴方向（垂直），适用于flex、grid布局里的项目----------*/
-/*项目在物理Y轴上靠顶*/
-.items-near-y-start {align-items: start;}
-.content-N.items-near-y-start, .content-И.items-near-y-start {justify-content: start;}
+/* Flex go-y 特殊处理：主轴垂直，靠顶/靠底用 justify-content */
+.flex.go-y.items-near-top { justify-content: start; }
+.flex.go-y.items-near-bottom { justify-content: end; }
 
-/*项目在物理Y轴上靠底*/
-.items-near-y-end {align-items: end;}
-.content-N.items-near-y-end, .content-И.items-near-y-end {justify-content: end;}
+/*----------以下为分布类，非单边对齐----------*/
+/*内容居中*/
+.items-near-center {
+	justify-content: center;
+	justify-items: center;
+	align-items: center;
+	align-content: center;
+}
 
-/*项目在物理Y轴上居中，像"册"字一样*/
-.items-near-y-center, .items-like-册 {align-items: center;}
-.content-N.items-near-y-center, .content-N.items-like-册,
-.content-И.items-near-y-center, .content-И.items-like-册 {justify-content: center;}
-
-/*项目在物理Y轴上拉伸膨胀，充满空间*/
+/*内容拉伸充满空间*/
 .items-stretch {align-items: stretch;}
-.content-N.items-stretch, .content-И.items-stretch {justify-content: stretch;}
+.content-N.items-stretch, .content-И.items-stretch {justify-items: stretch;}
+
+/*项目均匀分布（互斥/社恐）*/
+.items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
+
+/*项目均匀分布（不熟）*/
+.items-space-around, .items-unfamiliar {justify-content: space-around;}
+
+/*项目均匀分布（友好）*/
+.items-space-evenly, .items-friendly {justify-content: space-evenly;}
 
 /*==========================================用于项目=========================================*/
 /* 为防父元素没有使用.grid类之类，所以不使用 .grid > header ，直接设置grid-area。若父元素非display:grid也没事，会被浏览器忽略。下同 */

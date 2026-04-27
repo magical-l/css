@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>轨道位置测试 - items-near-left/right/top/bottom</title>
+    <link rel="stylesheet" href="../layout.css">
+    <style>
+        body { padding: 20px; font-family: sans-serif; }
+        h2 { margin-top: 40px; border-bottom: 2px solid #333; }
+        h3 { margin-top: 20px; color: #555; }
+        .section { margin: 20px 0; padding: 10px; border: 1px dashed #999; }
+
+        /* 盒子与格子大小完全相等，显示边框 */
+        .box {
+            width: 100%;
+            height: 100%;
+            background: #a5d6a7;
+            border: 2px solid #333;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .container {
+            border: 2px solid #333;
+            background: #f5f5f5;
+        }
+
+        /* 格子固定尺寸，去掉 padding */
+        .container.grid {
+            height: 200px;
+            width: 320px;
+            grid-template-columns: repeat(3, 80px);
+            grid-template-rows: repeat(2, 80px);
+            gap: 0;
+        }
+
+        /* 竖排容器尺寸调整 */
+        .container.grid.content-N,
+        .container.grid.content-И {
+            height: 320px;
+            width: 200px;
+        }
+
+        .container.flex {
+            height: 280px;
+            width: 320px;
+            gap: 0;
+        }
+
+        /* Flex 项目与格子同尺寸 */
+        .container.flex .box {
+            width: 80px;
+            height: 80px;
+        }
+
+        .label { font-size: 12px; color: #666; margin-bottom: 5px; }
+        .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
+        .case-num { font-weight: bold; color: #ffab91; }
+    </style>
+</head>
+<body class="content-Z">
+
+<h1>轨道位置测试<br>
+<small>.items-near-left / .items-near-right / .items-near-top / .items-near-bottom</small></h1>
+
+<h2>.content-Z（现代横排）</h2>
+
+<h3>Grid 布局</h3>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.grid.items-near-left</span> = 列轨道靠物理左</p>
+    <div class="container content-Z grid items-near-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.items-near-right</span> = 列轨道靠物理右</p>
+    <div class="container content-Z grid items-near-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.grid.items-near-top</span> = 行轨道靠物理顶</p>
+    <div class="container content-Z grid items-near-top">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.grid.items-near-bottom</span> = 行轨道靠物理底</p>
+    <div class="container content-Z grid items-near-bottom">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<h3>Flex 布局</h3>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例5</span> <span class="code">.flex.go-x.items-near-left</span> = 项目靠物理左</p>
+    <div class="container content-Z flex go-x items-near-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例6</span> <span class="code">.flex.go-x.items-near-right</span> = 项目靠物理右</p>
+    <div class="container content-Z flex go-x items-near-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例7</span> <span class="code">.flex.go-y.items-near-top</span> = 项目靠物理顶</p>
+    <div class="container content-Z flex go-y items-near-top">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例8</span> <span class="code">.flex.go-y.items-near-bottom</span> = 项目靠物理底</p>
+    <div class="container content-Z flex go-y items-near-bottom">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h2>.content-S（阿拉伯语 RTL）</h2>
+
+<h3>Grid 布局</h3>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例9</span> <span class="code">.content-S.grid.items-near-left</span> = 列轨道靠物理左</p>
+    <div class="container content-S grid items-near-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例10</span> <span class="code">.content-S.grid.items-near-right</span> = 列轨道靠物理右</p>
+    <div class="container content-S grid items-near-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<h2>.content-N（传统中文竖排 vertical-rl）</h2>
+
+<h3>Grid 布局</h3>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例11</span> <span class="code">.content-N.grid.items-near-left</span> = 列轨道靠物理左</p>
+    <div class="container content-N grid items-near-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例12</span> <span class="code">.content-N.grid.items-near-right</span> = 列轨道靠物理右</p>
+    <div class="container content-N grid items-near-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例13</span> <span class="code">.content-N.grid.items-near-top</span> = 行轨道靠物理顶</p>
+    <div class="container content-N grid items-near-top">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例14</span> <span class="code">.content-N.grid.items-near-bottom</span> = 行轨道靠物理底</p>
+    <div class="container content-N grid items-near-bottom">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<h2>.content-И（蒙古文竖排 vertical-lr）</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例15</span> <span class="code">.content-И.grid.items-near-left</span> = 列轨道靠物理左</p>
+    <div class="container content-И grid items-near-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例16</span> <span class="code">.content-И.grid.items-near-right</span> = 列轨道靠物理右</p>
+    <div class="container content-И grid items-near-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+</body>
+</html>
