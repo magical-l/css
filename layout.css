@@ -33,7 +33,7 @@
 /*============================flex布局===========================*/
 .flex {display: flex; gap: var(--gap);}
 
-.flex.inline {display: inline-flex;}
+.flex.inline {display: inline-flex; gap: var(--gap);}
 
 /* 方向类：物理语义固定，CSS值随书写模式自动适配 */
 /* 项目从顶部开始排列 */
@@ -57,7 +57,6 @@
 .content-И.items-from-right { flex-direction: column-reverse; }
 
 .single-line {flex-wrap: nowrap;}
-
 .multi-line {flex-wrap: wrap;}
 
 /*----------线路之间（align-content）(lines带有语义，仅适用于flex布局）----------*/
@@ -99,7 +98,7 @@
 /*===============================grid布局===============================*/
 .grid {display: grid; gap: var(--gap);}
 
-.grid.inline {display: inline-grid}
+.grid.inline {display: inline-grid; gap: var(--gap);}
 
 .grid.朋字形 {
 	grid-template-columns: 50% 50%;

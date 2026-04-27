@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Layout CSS 新增类测试</title>
-    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="../layout.css">
     <style>
         body { padding: 20px; font-family: sans-serif; }
         h2 { margin-top: 40px; border-bottom: 2px solid #333; }
@@ -281,6 +281,102 @@
         <div class="box">固定</div>
         <div class="box highlight flexible">flexible 1</div>
         <div class="box highlight flexible">flexible 2</div>
+    </div>
+</div>
+
+<!-- ==================== grid 方向类 ==================== -->
+<h2>六、Grid 方向类 .items-near-x/y-start/end/center</h2>
+
+<h3>在 .content-Z 模式下（Grid）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例27</span> <span class="code">.grid.items-near-x-start</span> X轴靠左</p>
+    <div class="container content-Z grid items-near-x-start">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例28</span> <span class="code">.grid.items-near-x-end</span> X轴靠右</p>
+    <div class="container content-Z grid items-near-x-end">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例29</span> <span class="code">.grid.items-near-x-center</span> X轴居中</p>
+    <div class="container content-Z grid items-near-x-center">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例30</span> <span class="code">.grid.items-near-y-start</span> Y轴靠顶</p>
+    <div class="container content-Z grid items-near-y-start" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例31</span> <span class="code">.grid.items-near-y-end</span> Y轴靠底</p>
+    <div class="container content-Z grid items-near-y-end" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例32</span> <span class="code">.grid.items-near-y-center</span> Y轴居中</p>
+    <div class="container content-Z grid items-near-y-center" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<h3>在 .content-N（传统中文竖排）模式下（Grid）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例33</span> <span class="code">.content-N.grid.items-near-x-start</span> → X轴靠左（align-items: end）</p>
+    <div class="container content-N grid items-near-x-start" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例34</span> <span class="code">.content-N.grid.items-near-x-end</span> → X轴靠右（align-items: start）</p>
+    <div class="container content-N grid items-near-x-end" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例35</span> <span class="code">.content-N.grid.items-near-y-start</span> → Y轴靠顶（justify-content: start）</p>
+    <div class="container content-N grid items-near-y-start" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例36</span> <span class="code">.content-N.grid.items-near-y-end</span> → Y轴靠底（justify-content: end）</p>
+    <div class="container content-N grid items-near-y-end" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<h3>在 .content-S（阿拉伯语 rtl）模式下（Grid）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例37</span> <span class="code">.content-S.grid.items-near-x-start</span> → X轴靠左（justify-content: end）</p>
+    <div class="container content-S grid items-near-x-start">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+
+    <p class="label"><span class="case-num">用例38</span> <span class="code">.content-S.grid.items-near-x-end</span> → X轴靠右（justify-content: start）</p>
+    <div class="container content-S grid items-near-x-end">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
     </div>
 </div>
 
