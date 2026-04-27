@@ -4,23 +4,22 @@
 	--gap: 1em;
 	/* 主内容区行最小高度，避免中间区域被压得过扁；布局类 亚/叵/反叵/目字形 共用 */
 	--layout-main-row-min: min(260px, 80vmin);
-	--朋字形-gap: var(--gap);
 	--亚字形-left-sidebar-min-width: 150px;
 	--亚字形-left-sidebar-max-width: 20%;
 	--亚字形-right-sidebar-min-width: 150px;
 	--亚字形-right-sidebar-max-width: 20%;
-	--亚字形-gap: var(--gap);
 	--叵字形-left-sidebar-min-width: 150px;
 	--叵字形-left-sidebar-max-width: 20%;
 	--叵字形-right-sidebar-min-width: 150px;
 	--叵字形-right-sidebar-max-width: 20%;
-	--叵字形-gap: var(--gap);
 	--反叵字形-left-sidebar-min-width: 150px;
 	--反叵字形-left-sidebar-max-width: 20%;
 	--反叵字形-right-sidebar-min-width: 150px;
 	--反叵字形-right-sidebar-max-width: 20%;
-	--反叵字形-gap: var(--gap);
-	--目字形-gap: var(--gap);
+}
+
+.no-gap {
+	gap: 0 !important;
 }
 
 /*============================书写模式===========================*/
@@ -31,9 +30,8 @@
 .content-И { writing-mode: vertical-lr; direction: ltr; }   /* 蒙古文竖排 */
 
 /*============================flex布局===========================*/
-.flex {display: flex; gap: var(--gap);}
-
-.flex.inline {display: inline-flex; gap: var(--gap);}
+.flex {display: flex}
+.flex.inline {display: inline-flex}
 
 /* 方向类：物理语义固定，CSS值随书写模式自动适配 */
 /* 项目从顶部开始排列 */
@@ -57,6 +55,7 @@
 .content-И.items-from-right { flex-direction: column-reverse; }
 
 .single-line {flex-wrap: nowrap;}
+
 .multi-line {flex-wrap: wrap;}
 
 /*----------线路之间（align-content）(lines带有语义，仅适用于flex布局）----------*/
@@ -95,15 +94,21 @@
 /*项目禁止压缩*/
 .no-shrink {flex-shrink: 0;}
 
-/*===============================grid布局===============================*/
-.grid {display: grid; gap: var(--gap);}
+/* 弹性填充 */
+.flexible {
+	flex: 1 1 auto;
+	align-self: stretch;
+	min-width: 0;
+	min-height: 0;
+}
 
-.grid.inline {display: inline-grid; gap: var(--gap);}
+/*===============================grid布局===============================*/
+.grid {display: grid}
+.grid.inline {display: inline-grid}
 
 .grid.朋字形 {
 	grid-template-columns: 50% 50%;
 	grid-template-areas: 'left right';
-	gap: var(--朋字形-gap);
 }
 
 /* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
@@ -120,7 +125,6 @@
 		'header header header'
 		'left-sidebar main right-sidebar'
 		'footer footer footer';
-	gap: var(--亚字形-gap);
 }
 
 /* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
@@ -134,7 +138,6 @@
 		'header header'
 		'left-sidebar main'
 		'footer footer';
-	gap: var(--叵字形-gap);
 }
 
 /* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
@@ -145,10 +148,9 @@
 		auto; /* Footer 高度自适应 */
 	grid-template-columns: 1fr minmax(var(--反叵字形-right-sidebar-min-width), var(--反叵字形-right-sidebar-max-width));
 	grid-template-areas:
-				'header header'
-				'main right-sidebar'
-				'footer footer';
-	gap: var(--反叵字形-gap);
+		'header header'
+		'main right-sidebar'
+		'footer footer';
 }
 
 /* "目字形"布局，上部导航栏，底部页脚 */
@@ -162,46 +164,91 @@
 		'header'
 		'main'
 		'footer';
-	gap: var(--目字形-gap);
 }
 
 /* 不一定真的能独占一行/列。如果另有项目也安排在同一行/列，两者会堆叠（不要求父带 .grid） */
 .one-row {grid-column: 1 / -1;}
-
 .one-column {grid-row: 1 / -1;}
 
+/*----------Grid 项目填充方向（物理）----------*/
+/* 横向优先填充：项目在物理X轴上依次排列，一行填满换下一行 */
+.fill-x-first {grid-auto-flow: row;}
+.content-N.fill-x-first, .content-И.fill-x-first {grid-auto-flow: column;}
+
+/* 纵向优先填充：项目在物理Y轴上依次排列，一列填满换下一列 */
+.fill-y-first {grid-auto-flow: column;}
+.content-N.fill-y-first, .content-И.fill-y-first {grid-auto-flow: row;}
+
+/*----------Grid 轨道在容器中的物理位置----------*/
+/* 列靠近容器左边 */
+.col-near-left {justify-content: start;}
+.content-S.col-near-left {justify-content: end;}
+.content-N.col-near-left {align-content: end;}
+.content-И.col-near-left {align-content: start;}
+
+/* 列靠近容器右边 */
+.col-near-right {justify-content: end;}
+.content-S.col-near-right {justify-content: start;}
+.content-N.col-near-right {align-content: start;}
+.content-И.col-near-right {align-content: end;}
+
+/* 行靠近容器顶部 */
+.row-near-top {align-content: start;}
+.content-N.row-near-top, .content-И.row-near-top {justify-content: start;}
+
+/* 行靠近容器底部 */
+.row-near-bottom {align-content: end;}
+.content-N.row-near-bottom, .content-И.row-near-bottom {justify-content: end;}
+
 /*==========================================用于布局容器本身==========================================*/
-/*----------项目之间（justify-content），适用于flex、grid布局里的项目----------*/
-/*项目都拥到队伍前面/在主轴上靠前*/
+/*----------项目在物理X轴方向（水平），适用于flex、grid布局里的项目----------*/
+/*项目在物理X轴上靠左*/
 .items-near-x-start {justify-content: start;}
+.content-S.items-near-x-start {justify-content: end;}
+.content-N.items-near-x-start {align-items: end;}
+.content-И.items-near-x-start {align-items: start;}
 
-/*项目都退到队伍后面/在主轴上靠后*/
+/*项目在物理X轴上靠右*/
 .items-near-x-end {justify-content: end;}
+.content-S.items-near-x-end {justify-content: start;}
+.content-N.items-near-x-end {align-items: start;}
+.content-И.items-near-x-end {align-items: end;}
 
-/*项目都挤在队伍中间/在主轴上居中*/
-.items-near-x-center {justify-content: center; text-align: center;}
+/*项目在物理X轴上居中*/
+.items-near-x-center {justify-content: center; align-items: center;}
 
-/*项目互斥（社恐），即项目互相之间距离尽量远*/
+/*项目在物理X轴上均匀分布（互斥/社恐）*/
 .items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
+.content-N.items-space-between, .content-N.items-mutex, .content-N.items-social-phobia,
+.content-И.items-space-between, .content-И.items-mutex, .content-И.items-social-phobia {align-content: space-between;}
 
-/*项目不熟，即项目互相之间保持距离但又不极端排斥*/
+/*项目在物理X轴上均匀分布（不熟）*/
 .items-space-around, .items-unfamiliar {justify-content: space-around;}
+.content-N.items-space-around, .content-N.items-unfamiliar,
+.content-И.items-space-around, .content-И.items-unfamiliar {align-content: space-around;}
 
-/*项目不熟但比较友好*/
+/*项目在物理X轴上均匀分布（友好）*/
 .items-space-evenly, .items-friendly {justify-content: space-evenly;}
+.content-N.items-space-evenly, .content-N.items-friendly,
+.content-И.items-space-evenly, .content-И.items-friendly {align-content: space-evenly;}
 
-/*----------项目在次轴方向（align-items），适用于flex、grid布局里的项目----------*/
-/*项目在次轴方向上拉伸膨胀，充满空间*/
-.items-stretch {align-items: stretch;}
-
-/*项目垂直靠向开始的方向/在次轴上靠前*/
+/*----------项目在物理Y轴方向（垂直），适用于flex、grid布局里的项目----------*/
+/*项目在物理Y轴上靠顶*/
 .items-near-y-start {align-items: start;}
+.content-N.items-near-y-start, .content-И.items-near-y-start {justify-content: start;}
 
-/*项目垂直靠向结束的方向/在次轴上靠后*/
+/*项目在物理Y轴上靠底*/
 .items-near-y-end {align-items: end;}
+.content-N.items-near-y-end, .content-И.items-near-y-end {justify-content: end;}
 
-/*项目垂直居中/在次轴上居中，像"册"字一样*/
+/*项目在物理Y轴上居中，像"册"字一样*/
 .items-near-y-center, .items-like-册 {align-items: center;}
+.content-N.items-near-y-center, .content-N.items-like-册,
+.content-И.items-near-y-center, .content-И.items-like-册 {justify-content: center;}
+
+/*项目在物理Y轴上拉伸膨胀，充满空间*/
+.items-stretch {align-items: stretch;}
+.content-N.items-stretch, .content-И.items-stretch {justify-content: stretch;}
 
 /*==========================================用于项目=========================================*/
 /* 为防父元素没有使用.grid类之类，所以不使用 .grid > header ，直接设置grid-area。若父元素非display:grid也没事，会被浏览器忽略。下同 */
@@ -239,18 +286,6 @@ main, .main, .body {grid-area: main; flex: 1;}
 	justify-self: center;
 	align-self: center;
 	margin: auto;
-}
-
-/* 弹性填充 */
-.flexible {
-	flex: 1 1 auto;
-	align-self: stretch;
-	min-width: 0;
-	min-height: 0;
-}
-
-.no-gap {
-	gap: 0 !important;
 }
 
 @media (max-width: 1024px) {
