@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>Flex 方向类测试</title>
+    <link rel="stylesheet" href="../layout.css">
+    <style>
+        body { padding: 20px; font-family: sans-serif; }
+        h2 { margin-top: 40px; border-bottom: 2px solid #333; }
+        h3 { margin-top: 20px; color: #666; }
+        .section { margin: 20px 0; padding: 10px; border: 1px dashed #999; }
+
+        .box {
+            width: 60px;
+            height: 60px;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .container {
+            border: 2px solid #333;
+            min-height: 150px;
+            min-width: 300px;
+            background: #f5f5f5;
+            padding: 10px;
+        }
+
+        .label { font-size: 12px; color: #666; margin-bottom: 5px; }
+        .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
+        .case-num { font-weight: bold; color: #e91e63; }
+    </style>
+</head>
+<body class="content-Z">
+
+<h1>Flex 方向类测试 .items-from-top/bottom/left/right</h1>
+<p>物理语义固定，CSS值随书写模式自动适配</p>
+
+<!-- ==================== .content-Z 模式 ==================== -->
+<h2>一、.content-Z（现代横排）模式下</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.items-from-top</span> 项目从顶部开始</p>
+    <div class="container content-Z flex items-from-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.items-from-bottom</span> 项目从底部开始</p>
+    <div class="container content-Z flex items-from-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.items-from-left</span> 项目从左侧开始</p>
+    <div class="container content-Z flex items-from-left">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.items-from-right</span> 项目从右侧开始</p>
+    <div class="container content-Z flex items-from-right">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<!-- ==================== .content-N 模式 ==================== -->
+<h2>二、.content-N（传统中文竖排）模式下</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例5</span> <span class="code">.content-N.items-from-top</span> → flex-direction: row</p>
+    <div class="container content-N flex items-from-top" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例6</span> <span class="code">.content-N.items-from-bottom</span> → flex-direction: row-reverse</p>
+    <div class="container content-N flex items-from-bottom" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例7</span> <span class="code">.content-N.items-from-left</span> → flex-direction: column-reverse</p>
+    <div class="container content-N flex items-from-left" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例8</span> <span class="code">.content-N.items-from-right</span> → flex-direction: column</p>
+    <div class="container content-N flex items-from-right" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<!-- ==================== .content-И 模式 ==================== -->
+<h2>三、.content-И（蒙古文竖排）模式下</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例9</span> <span class="code">.content-И.items-from-top</span> → flex-direction: row</p>
+    <div class="container content-И flex items-from-top" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例10</span> <span class="code">.content-И.items-from-left</span> → flex-direction: column</p>
+    <div class="container content-И flex items-from-left" style="height: 200px;">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+    </div>
+</div>
+
+</body>
+</html>

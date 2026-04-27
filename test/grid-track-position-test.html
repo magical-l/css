@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>Grid 轨道位置类测试</title>
+    <link rel="stylesheet" href="../layout.css">
+    <style>
+        body { padding: 20px; font-family: sans-serif; }
+        h2 { margin-top: 30px; border-bottom: 2px solid #333; }
+        h3 { margin-top: 20px; color: #666; }
+        .section { margin: 15px 0; }
+
+        .box {
+            width: 80px;
+            height: 80px;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            /* 显示格子边界 */
+            border: 2px dashed #333;
+            box-sizing: border-box;
+        }
+
+        .container {
+            border: 3px solid #e91e63;
+            height: 300px;
+            width: 500px;
+            background: #f0f0f0;
+        }
+
+        /* 显示 grid 格子边界：无直接方式，只能看 box 边框 */
+
+        .label { font-size: 14px; margin-bottom: 8px; }
+        .code { font-family: monospace; background: #ddd; padding: 2px 6px; }
+        .note { color: #e91e63; font-size: 12px; }
+        .case-num { color: #e91e63; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<h1>Grid 轨道位置类测试</h1>
+<p class="note">注：文字躺倒是 .content-N/И 的真实效果，未修正</p>
+
+<!-- ==================== col-near-left/right ==================== -->
+<h2>一、.col-near-left / .col-near-right（列靠近左/右）</h2>
+
+<h3>.content-Z (horizontal-tb ltr)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.grid.col-near-left</span> → 列靠近左边</p>
+    <div class="container content-Z grid col-near-left">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.col-near-right</span> → 列靠近右边</p>
+    <div class="container content-Z grid col-near-right">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<h3>.content-S (horizontal-tb rtl)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.grid.col-near-left</span> → 列靠近左边（justify-content: end）</p>
+    <div class="container content-S grid col-near-left">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.grid.col-near-right</span> → 列靠近右边（justify-content: start）</p>
+    <div class="container content-S grid col-near-right">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<h3>.content-N (vertical-rl)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例5</span> <span class="code">.grid.col-near-left</span> → 列靠近左边（align-content: end）</p>
+    <div class="container content-N grid col-near-left">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例6</span> <span class="code">.grid.col-near-right</span> → 列靠近右边（align-content: start）</p>
+    <div class="container content-N grid col-near-right">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<h3>.content-И (vertical-lr)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例7</span> <span class="code">.grid.col-near-left</span> → 列靠近左边（align-content: start）</p>
+    <div class="container content-И grid col-near-left">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例8</span> <span class="code">.grid.col-near-right</span> → 列靠近右边（align-content: end）</p>
+    <div class="container content-И grid col-near-right">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<!-- ==================== row-near-top/bottom ==================== -->
+<h2>二、.row-near-top / .row-near-bottom（行靠近顶/底）</h2>
+
+<h3>.content-Z (horizontal-tb ltr)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例9</span> <span class="code">.grid.row-near-top</span> → 行靠近顶部</p>
+    <div class="container content-Z grid row-near-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例10</span> <span class="code">.grid.row-near-bottom</span> → 行靠近底部</p>
+    <div class="container content-Z grid row-near-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+
+<h3>.content-N (vertical-rl)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例11</span> <span class="code">.grid.row-near-top</span> → 行靠近顶部（justify-content: start）</p>
+    <div class="container content-N grid row-near-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例12</span> <span class="code">.grid.row-near-bottom</span> → 行靠近底部（justify-content: end）</p>
+    <div class="container content-N grid row-near-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+
+<h3>.content-И (vertical-lr)</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例13</span> <span class="code">.grid.row-near-top</span> → 行靠近顶部（justify-content: start）</p>
+    <div class="container content-И grid row-near-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例14</span> <span class="code">.grid.row-near-bottom</span> → 行靠近底部（justify-content: end）</p>
+    <div class="container content-И grid row-near-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+        <div class="box">3</div>
+        <div class="box">4</div>
+    </div>
+</div>
+
+<!-- ==================== 组合测试 ==================== -->
+<h2>三、组合测试</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例15</span> <span class="code">.grid.col-near-left.row-near-top</span> → 列靠左 + 行靠顶</p>
+    <div class="container content-Z grid col-near-left row-near-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例16</span> <span class="code">.grid.col-near-right.row-near-bottom</span> → 列靠右 + 行靠底</p>
+    <div class="container content-Z grid col-near-right row-near-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例17</span> <span class="code">.content-N.grid.col-near-left.row-near-top</span> → 竖排下：列靠左 + 行靠顶</p>
+    <div class="container content-N grid col-near-left row-near-top">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例18</span> <span class="code">.content-N.grid.col-near-right.row-near-bottom</span> → 竖排下：列靠右 + 行靠底</p>
+    <div class="container content-N grid col-near-right row-near-bottom">
+        <div class="box">1</div>
+        <div class="box">2</div>
+    </div>
+</div>
+
+</body>
+</html>
