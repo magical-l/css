@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>方向组合类测试 .go-x/.go-y + .from-*</title>
+    <link rel="stylesheet" href="../layout.css">
+    <style>
+        body { padding: 20px; font-family: sans-serif; }
+        h2 { margin-top: 30px; border-bottom: 2px solid #333; }
+        h3 { margin-top: 15px; color: #666; }
+        .section { margin: 15px 0; }
+
+        .box {
+            width: 60px;
+            height: 60px;
+            background: #4caf50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .container {
+            border: 2px solid #333;
+            min-height: 150px;
+            min-width: 300px;
+            background: #f5f5f5;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .container.grid {
+            grid-template-columns: repeat(3, 60px);
+            grid-template-rows: repeat(2, 60px);
+        }
+
+        .label { font-size: 12px; color: #666; margin-bottom: 5px; }
+        .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; }
+        .case-num { color: #e91e63; font-weight: bold; }
+    </style>
+</head>
+<body class="content-Z">
+
+<h1>方向组合类测试 .go-x/.go-y + .from-*</h1>
+<p>物理语义固定，轴向由 .go-x/.go-y 决定，起点由 .from-* 决定</p>
+
+<!-- ==================== .go-x 基础 ==================== -->
+<h2>一、.go-x（沿物理X轴）</h2>
+
+<h3>.content-Z（现代横排）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例1</span> Flex <span class="code">.go-x</span> 默认起点（从左）</p>
+    <div class="container content-Z flex go-x">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例2</span> Flex <span class="code">.go-x.from-right</span> 从右边开始</p>
+    <div class="container content-Z flex go-x from-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h3>.content-S（阿拉伯语 rtl）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例3</span> Flex <span class="code">.content-S.go-x</span> 默认起点（从右，因为 rtl）</p>
+    <div class="container content-S flex go-x">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例4</span> Flex <span class="code">.content-S.go-x.from-right</span> 从右边开始（默认行为）</p>
+    <div class="container content-S flex go-x from-right">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例4b</span> Flex <span class="code">.content-S.go-x.from-left</span> 从左边开始（需要反向）</p>
+    <div class="container content-S flex go-x from-left">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h3>.content-N（传统中文竖排）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例5</span> Flex <span class="code">.content-N.go-x</span> 横向排列（column 因为竖排），默认起点在最右列</p>
+    <div class="container content-N flex go-x" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例6</span> Flex <span class="code">.content-N.go-x.from-right</span> 从右边开始（默认行为）</p>
+    <div class="container content-N flex go-x from-right" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例6b</span> Flex <span class="code">.content-N.go-x.from-left</span> 从左边开始（需要 column-reverse）</p>
+    <div class="container content-N flex go-x from-left" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h3>.content-И（蒙古文竖排）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例6c</span> Flex <span class="code">.content-И.go-x</span> 默认起点在最左列</p>
+    <div class="container content-И flex go-x" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例6d</span> Flex <span class="code">.content-И.go-x.from-right</span> 从右边开始（需要 column-reverse）</p>
+    <div class="container content-И flex go-x from-right" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h3>.content-Z（现代横排）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例7</span> Flex <span class="code">.go-y</span> 默认起点（从顶）</p>
+    <div class="container content-Z flex go-y" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例8</span> Flex <span class="code">.go-y.from-bottom</span> 从底部开始</p>
+    <div class="container content-Z flex go-y from-bottom" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<h3>.content-N（传统中文竖排）</h3>
+<div class="section">
+    <p class="label"><span class="case-num">用例9</span> Flex <span class="code">.content-N.go-y</span> 纵向排列（row 因为竖排）</p>
+    <div class="container content-N flex go-y" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+<div class="section">
+    <p class="label"><span class="case-num">用例10</span> Flex <span class="code">.content-N.go-y.from-bottom</span> 从底部开始（row-reverse）</p>
+    <div class="container content-N flex go-y from-bottom" style="height: 200px;">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+    </div>
+</div>
+
+<!-- ==================== Grid 对比 ==================== -->
+<h2>三、Grid 填充方向对比</h2>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例11</span> Grid <span class="code">.go-x</span> 横向填充</p>
+    <div class="container content-Z grid go-x">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例12</span> Grid <span class="code">.go-y</span> 纵向填充</p>
+    <div class="container content-Z grid go-y">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例13</span> Grid <span class="code">.content-N.go-x</span> 横向填充（column 因为竖排）</p>
+    <div class="container content-N grid go-x">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+<div class="section">
+    <p class="label"><span class="case-num">用例14</span> Grid <span class="code">.content-N.go-y</span> 纵向填充（row 因为竖排）</p>
+    <div class="container content-N grid go-y">
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+        <div class="box">4</div><div class="box">5</div><div class="box">6</div>
+    </div>
+</div>
+
+</body>
+</html>

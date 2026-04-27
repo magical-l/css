@@ -29,33 +29,54 @@
 .content-N { writing-mode: vertical-rl; direction: ltr; }   /* 传统中文竖排 */
 .content-И { writing-mode: vertical-lr; direction: ltr; }   /* 蒙古文竖排 */
 
-/*============================flex布局===========================*/
+/*============================布局容器===========================*/
 .flex {display: flex}
 .flex.inline {display: inline-flex}
+.grid {display: grid}
+.grid.inline {display: inline-grid}
 
-/* 方向类：物理语义固定，CSS值随书写模式自动适配 */
-/* 项目从顶部开始排列 */
-.items-from-top { flex-direction: column; }
-.content-N.items-from-top, .content-И.items-from-top { flex-direction: row; }
+/*============================方向类（物理语义）===========================*/
+/* 沿物理X轴：项目在水平方向依次排列 */
+.go-x {
+	flex-direction: row;     /* Flex: 横向排列 */
+	grid-auto-flow: row;     /* Grid: 横向填充 */
+}
+/* 竖排模式下，row/column 的物理方向交换 */
+.content-N.go-x, .content-И.go-x {
+	flex-direction: column;
+	grid-auto-flow: column;
+}
 
-/* 项目从底部开始排列 */
-.items-from-bottom { flex-direction: column-reverse; }
-.content-N.items-from-bottom, .content-И.items-from-bottom { flex-direction: row-reverse; }
+/* 沿物理Y轴：项目在垂直方向依次排列 */
+.go-y {
+	flex-direction: column;  /* Flex: 纵向排列 */
+	grid-auto-flow: column;  /* Grid: 纵向填充 */
+}
+.content-N.go-y, .content-И.go-y {
+	flex-direction: row;
+	grid-auto-flow: row;
+}
 
-/* 项目从左侧开始排列 */
-.items-from-left { flex-direction: row; }
-.content-S.items-from-left { flex-direction: row-reverse; }
-.content-N.items-from-left { flex-direction: column-reverse; }
-.content-И.items-from-left { flex-direction: column; }
+/* 起点（配合 .go-x/.go-y 使用，组合选择器） */
+/* 从右边开始：物理右边 */
+.go-x.from-right { flex-direction: row-reverse; }
+.content-S.go-x.from-right { flex-direction: row; }  /* rtl 默认起点就是右边 */
+.content-N.go-x.from-right { flex-direction: column; } /* vertical-rl 默认起点就是右边 */
+.content-И.go-x.from-right { flex-direction: column-reverse; } /* vertical-lr 需反向 */
 
-/* 项目从右侧开始排列 */
-.items-from-right { flex-direction: row-reverse; }
-.content-S.items-from-right { flex-direction: row; }
-.content-N.items-from-right { flex-direction: column; }
-.content-И.items-from-right { flex-direction: column-reverse; }
+/* 从左边开始：物理左边 */
+.go-x.from-left { flex-direction: row; }
+.content-S.go-x.from-left { flex-direction: row-reverse; }  /* rtl 需反向 */
+.content-N.go-x.from-left { flex-direction: column-reverse; } /* vertical-rl 需反向 */
+.content-И.go-x.from-left { flex-direction: column; } /* vertical-lr 默认起点是左边 */
+
+/* 从底部开始：物理底部 */
+.go-y.from-bottom { flex-direction: column-reverse; }
+.content-N.go-y.from-bottom, .content-И.go-y.from-bottom { flex-direction: row-reverse; }
+
+/* 从顶部开始：物理顶部（默认行为，无需额外规则） */
 
 .single-line {flex-wrap: nowrap;}
-
 .multi-line {flex-wrap: wrap;}
 
 /*----------线路之间（align-content）(lines带有语义，仅适用于flex布局）----------*/
@@ -81,13 +102,14 @@
 .lines-space-evenly, .lines-friendly {flex-wrap: wrap; align-content: space-evenly;}
 
 /*-----------项目本身（不要求父带 .flex，便于组件提供的 flex 容器内使用）------------*/
-/* X轴独占一行：row 方向 + wrap */
-.multi-line.items-from-left .monopoly-x,
-.multi-line.items-from-right .monopoly-x,
-.multi-line:not(.items-from-top):not(.items-from-bottom) .monopoly-x,
-/* Y轴独占一列：column 方向 + wrap */
-.multi-line.items-from-top .monopoly-y,
-.multi-line.items-from-bottom .monopoly-y {
+/* X轴独占一行：.go-x 方向 + wrap */
+.multi-line.go-x .monopoly-x,
+.multi-line.go-x.from-left .monopoly-x,
+.multi-line.go-x.from-right .monopoly-x,
+/* Y轴独占一列：.go-y 方向 + wrap */
+.multi-line.go-y .monopoly-y,
+.multi-line.go-y.from-top .monopoly-y,
+.multi-line.go-y.from-bottom .monopoly-y {
 	flex-basis: 100%;
 }
 
@@ -102,9 +124,7 @@
 	min-height: 0;
 }
 
-/*===============================grid布局===============================*/
-.grid {display: grid}
-.grid.inline {display: inline-grid}
+/*===============================Grid 预设布局===============================*/
 
 .grid.朋字形 {
 	grid-template-columns: 50% 50%;
@@ -169,15 +189,6 @@
 /* 不一定真的能独占一行/列。如果另有项目也安排在同一行/列，两者会堆叠（不要求父带 .grid） */
 .one-row {grid-column: 1 / -1;}
 .one-column {grid-row: 1 / -1;}
-
-/*----------Grid 项目填充方向（物理）----------*/
-/* 横向优先填充：项目在物理X轴上依次排列，一行填满换下一行 */
-.fill-x-first {grid-auto-flow: row;}
-.content-N.fill-x-first, .content-И.fill-x-first {grid-auto-flow: column;}
-
-/* 纵向优先填充：项目在物理Y轴上依次排列，一列填满换下一列 */
-.fill-y-first {grid-auto-flow: column;}
-.content-N.fill-y-first, .content-И.fill-y-first {grid-auto-flow: row;}
 
 /*----------Grid 轨道在容器中的物理位置----------*/
 /* 列靠近容器左边 */
