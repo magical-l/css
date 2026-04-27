@@ -35,51 +35,50 @@
 .grid {display: grid}
 .grid.inline {display: inline-grid}
 
-/*============================方向类（物理语义）===========================*/
-/* 沿物理X轴：项目在水平方向依次排列 */
+/*=========================方向类（物理语义）========================*/
+/* 物理横向 */
 .go-x {
 	flex-direction: row;     /* Flex: 横向排列 */
 	grid-auto-flow: row;     /* Grid: 横向填充 */
 }
-/* 竖排模式下，row/column 的物理方向交换 */
 .content-N.go-x, .content-И.go-x {
 	flex-direction: column;
 	grid-auto-flow: column;
 }
 
-/* 沿物理Y轴：项目在垂直方向依次排列 */
+/* 物理竖向 */
 .go-y {
-	flex-direction: column;  /* Flex: 纵向排列 */
-	grid-auto-flow: column;  /* Grid: 纵向填充 */
+	flex-direction: column;
+	grid-auto-flow: column;
 }
 .content-N.go-y, .content-И.go-y {
 	flex-direction: row;
 	grid-auto-flow: row;
 }
 
-/* 起点（配合 .go-x/.go-y 使用，组合选择器） */
-/* 从右边开始：物理右边 */
-.go-x.from-right { flex-direction: row-reverse; }
-.content-S.go-x.from-right { flex-direction: row; }  /* rtl 默认起点就是右边 */
-.content-N.go-x.from-right { flex-direction: column; } /* vertical-rl 默认起点就是右边 */
-.content-И.go-x.from-right { flex-direction: column-reverse; } /* vertical-lr 需反向 */
-
-/* 从左边开始：物理左边 */
+/* 从绝对左边开始 */
 .go-x.from-left { flex-direction: row; }
 .content-S.go-x.from-left { flex-direction: row-reverse; }  /* rtl 需反向 */
 .content-N.go-x.from-left { flex-direction: column-reverse; } /* vertical-rl 需反向 */
 .content-И.go-x.from-left { flex-direction: column; } /* vertical-lr 默认起点是左边 */
 
-/* 从底部开始：物理底部 */
+/* 从绝对右边开始 */
+.go-x.from-right { flex-direction: row-reverse; }
+.content-S.go-x.from-right { flex-direction: row; }  /* rtl 默认起点就是右边 */
+.content-N.go-x.from-right { flex-direction: column; } /* vertical-rl 默认起点就是右边 */
+.content-И.go-x.from-right { flex-direction: column-reverse; } /* vertical-lr 需反向 */
+
+/* 从绝对顶部开始（默认行为，无需额外规则） */
+
+/* 从绝对底部开始 */
 .go-y.from-bottom { flex-direction: column-reverse; }
 .content-N.go-y.from-bottom, .content-И.go-y.from-bottom { flex-direction: row-reverse; }
 
-/* 从顶部开始：物理顶部（默认行为，无需额外规则） */
-
+/*-----------------------flex专用--------------------------*/
 .single-line {flex-wrap: nowrap;}
 .multi-line {flex-wrap: wrap;}
 
-/*----------线路之间（align-content）(lines带有语义，仅适用于flex布局）----------*/
+/*----------线路之间（align-content）----------*/
 /*所有线路都拉伸膨胀，充满空间*/
 .lines-stretch {flex-wrap: wrap; align-content: stretch;}
 
@@ -114,7 +113,7 @@
 }
 
 /*项目禁止压缩*/
-.no-shrink {flex-shrink: 0;}
+.no-shrink {flex-shrink: 0}
 
 /* 弹性填充 */
 .flexible {
