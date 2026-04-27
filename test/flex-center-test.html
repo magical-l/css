@@ -12,18 +12,15 @@
         .box {
             width: 60px;
             height: 60px;
-            background: #4caf50;
-            color: white;
+            background: #a5d6a7;
+            color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
         }
 
-        .box.highlight {
-            background: #ffeb3b;
-            color: #333;
-        }
+        .box.highlight { background: #ffeb3b; }
 
         .container {
             border: 2px solid #333;
@@ -35,72 +32,67 @@
 
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
-        .case-num { font-weight: bold; color: #e91e63; }
+        .case-num { font-weight: bold; color: #ffab91; }
     </style>
 </head>
 <body class="content-Z">
 
-<h1>居中与弹性填充类测试</h1>
-<p>黄色背景 = 特殊测试目标</p>
-
-<!-- ==================== 居中类 ==================== -->
-<h2>一、居中类 .item-near-center / .near-center</h2>
+<h1>居中类 .item-near-center / .near-center</h1>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例1</span> <span class="code">.flex.item-near-center</span> 容器让子项目居中</p>
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.flex.item-near-center</span> = 容器让子项目居中</p>
     <div class="container flex item-near-center" style="height: 150px;">
-        <div class="box">居中的项目</div>
+        <div class="box">居中</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.item-near-center</span> 容器让子项目居中</p>
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.item-near-center</span> = 容器让子项目居中</p>
     <div class="container grid item-near-center" style="height: 150px;">
-        <div class="box">居中的项目</div>
+        <div class="box">居中</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例3</span> <span class="code">.flex</span> 子项目 <span class="code">.near-center</span></p>
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.flex .near-center</span> = 子项目让自己居中</p>
     <div class="container flex" style="height: 150px;">
         <div class="box highlight near-center">near-center</div>
-        <div class="box">普通项目</div>
+        <div class="box">普通</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例4</span> <span class="code">.grid</span> 子项目 <span class="code">.near-center</span></p>
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.grid .near-center</span> = 子项目让自己居中</p>
     <div class="container grid" style="height: 150px;">
         <div class="box highlight near-center">near-center</div>
-        <div class="box">普通项目</div>
+        <div class="box">普通</div>
     </div>
 </div>
 
-<!-- ==================== 弹性填充类 ==================== -->
-<h2>二、弹性填充类 .flexible</h2>
+<h1>弹性填充类 .flexible</h1>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例5</span> <span class="code">.flex</span> 子项目 <span class="code">.flexible</span> 填满剩余空间</p>
+    <p class="label"><span class="case-num">用例5</span> <span class="code">.flex .flexible</span> = 填满剩余空间</p>
     <div class="container flex" style="height: 100px;">
         <div class="box">固定</div>
-        <div class="box highlight flexible">flexible 填满剩余</div>
+        <div class="box highlight flexible">flexible</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例6</span> <span class="code">.flex.go-y</span> 子项目 <span class="code">.flexible</span></p>
+    <p class="label"><span class="case-num">用例6</span> <span class="code">.flex.go-y .flexible</span> = 纵向填满剩余空间</p>
     <div class="container flex go-y" style="height: 200px; gap: 10px;">
         <div class="box">固定</div>
-        <div class="box highlight flexible">flexible 填满剩余</div>
+        <div class="box highlight flexible">flexible</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例7</span> 多个 <span class="code">.flexible</span></p>
+    <p class="label"><span class="case-num">用例7</span> <span class="code">.flex .flexible + .flexible</span> = 多个项目均分剩余空间</p>
     <div class="container flex" style="height: 100px;">
         <div class="box">固定</div>
-        <div class="box highlight flexible">flexible 1</div>
-        <div class="box highlight flexible">flexible 2</div>
+        <div class="box highlight flexible">1</div>
+        <div class="box highlight flexible">2</div>
     </div>
 </div>
 

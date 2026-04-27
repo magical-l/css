@@ -12,18 +12,15 @@
         .box {
             width: 60px;
             height: 60px;
-            background: #4caf50;
-            color: white;
+            background: #a5d6a7;
+            color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
         }
 
-        .box.highlight {
-            background: #ffeb3b;
-            color: #333;
-        }
+        .box.highlight { background: #ffeb3b; }
 
         .container {
             border: 2px solid #333;
@@ -36,70 +33,68 @@
 
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
-        .case-num { font-weight: bold; color: #e91e63; }
+        .case-num { font-weight: bold; color: #ffab91; }
     </style>
 </head>
 <body class="content-Z">
 
-<h1>Flex 独占类测试 .monopoly-x/.monopoly-y</h1>
-<p>黄色背景 = 带有独占类的项目。独占类仅在 .multi-line（wrap）模式下生效</p>
+<h1>Flex 独占类 .monopoly-x/.monopoly-y</h1>
+<p>黄色背景 = 带有独占类的项目</p>
 
-<!-- ==================== monopoly-x ==================== -->
-<h2>一、.monopoly-x（X轴独占一行）</h2>
+<h2>.monopoly-x（X轴独占一行）</h2>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例1</span> <span class="code">.multi-line.go-x .monopoly-x</span></p>
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.multi-line.go-x .monopoly-x</span> = 第一个项目独占一行</p>
     <div class="container content-Z flex multi-line go-x">
-        <div class="box highlight monopoly-x">1 monopoly-x</div>
+        <div class="box highlight monopoly-x">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例2</span> <span class="code">.multi-line.go-x.from-right</span></p>
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.multi-line.go-x.from-right .monopoly-x</span> = 从右向左排列</p>
     <div class="container content-Z flex multi-line go-x from-right">
-        <div class="box highlight monopoly-x">1 monopoly-x</div>
+        <div class="box highlight monopoly-x">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例3</span> 中间项目 <span class="code">.monopoly-x</span></p>
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.multi-line.go-x .monopoly-x</span> = 中间项目独占一行</p>
     <div class="container content-Z flex multi-line go-x">
         <div class="box">1</div>
-        <div class="box highlight monopoly-x">2 monopoly-x</div>
+        <div class="box highlight monopoly-x">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
-<!-- ==================== monopoly-y ==================== -->
-<h2>二、.monopoly-y（Y轴独占一列）</h2>
+<h2>.monopoly-y（Y轴独占一列）</h2>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例4</span> <span class="code">.multi-line.go-y .monopoly-y</span></p>
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.multi-line.go-y .monopoly-y</span> = 第一个项目独占一列</p>
     <div class="container content-Z flex multi-line go-y" style="height: 250px;">
-        <div class="box highlight monopoly-y">1 monopoly-y</div>
+        <div class="box highlight monopoly-y">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例5</span> <span class="code">.multi-line.go-y.from-bottom</span></p>
+    <p class="label"><span class="case-num">用例5</span> <span class="code">.multi-line.go-y.from-bottom .monopoly-y</span> = 从下向上排列</p>
     <div class="container content-Z flex multi-line go-y from-bottom" style="height: 250px;">
-        <div class="box highlight monopoly-y">1 monopoly-y</div>
+        <div class="box highlight monopoly-y">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例6</span> 中间项目 <span class="code">.monopoly-y</span></p>
+    <p class="label"><span class="case-num">用例6</span> <span class="code">.multi-line.go-y .monopoly-y</span> = 中间项目独占一列</p>
     <div class="container content-Z flex multi-line go-y" style="height: 250px;">
         <div class="box">1</div>
-        <div class="box highlight monopoly-y">2 monopoly-y</div>
+        <div class="box highlight monopoly-y">2</div>
         <div class="box">3</div>
     </div>
 </div>

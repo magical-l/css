@@ -12,8 +12,8 @@
         .box {
             width: 60px;
             height: 60px;
-            background: #4caf50;
-            color: white;
+            background: #a5d6a7;
+            color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -30,51 +30,39 @@
 
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
-        .case-num { font-weight: bold; color: #e91e63; }
+        .case-num { font-weight: bold; color: #ffab91; }
     </style>
 </head>
 <body class="content-Z">
 
-<h1>书写模式类测试 .content-Z/S/N/И</h1>
+<h1>书写模式类 .content-Z/S/N/И</h1>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例1</span> <span class="code">.content-Z</span> 现代横排</p>
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.content-Z</span> = 现代横排</p>
     <div class="container content-Z flex">
-        <div class="box">1</div>
-        <div class="box">2</div>
-        <div class="box">3</div>
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
     </div>
-    <p class="label">行从上到下堆叠，行内从左到右</p>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例2</span> <span class="code">.content-S</span> 阿拉伯语横排 rtl</p>
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.content-S</span> = 阿拉伯语横排 rtl</p>
     <div class="container content-S flex">
-        <div class="box">1</div>
-        <div class="box">2</div>
-        <div class="box">3</div>
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
     </div>
-    <p class="label">行从上到下堆叠，行内从右到左</p>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例3</span> <span class="code">.content-N</span> 传统中文竖排</p>
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.content-N</span> = 传统中文竖排</p>
     <div class="container content-N flex" style="height: 200px;">
-        <div class="box">1</div>
-        <div class="box">2</div>
-        <div class="box">3</div>
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
     </div>
-    <p class="label">列从右到左堆叠，列内从上到下</p>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例4</span> <span class="code">.content-И</span> 蒙古文竖排</p>
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.content-И</span> = 蒙古文竖排</p>
     <div class="container content-И flex" style="height: 200px;">
-        <div class="box">1</div>
-        <div class="box">2</div>
-        <div class="box">3</div>
+        <div class="box">1</div><div class="box">2</div><div class="box">3</div>
     </div>
-    <p class="label">列从左到右堆叠，列内从上到下</p>
 </div>
 
 </body>
