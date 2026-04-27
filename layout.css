@@ -25,10 +25,10 @@
 
 /*============================书写模式===========================*/
 /* 行堆叠方向用字母字形：Z/S/N/И */
-.flow-Z { writing-mode: horizontal-tb; direction: ltr; } /* 现代横排 */
-.flow-S { writing-mode: horizontal-tb; direction: rtl; } /* 阿拉伯语 */
-.flow-N { writing-mode: vertical-rl; direction: ltr; }   /* 传统中文竖排 */
-.flow-И { writing-mode: vertical-lr; direction: ltr; }   /* 蒙古文竖排 */
+.content-Z { writing-mode: horizontal-tb; direction: ltr; } /* 现代横排 */
+.content-S { writing-mode: horizontal-tb; direction: rtl; } /* 阿拉伯语 */
+.content-N { writing-mode: vertical-rl; direction: ltr; }   /* 传统中文竖排 */
+.content-И { writing-mode: vertical-lr; direction: ltr; }   /* 蒙古文竖排 */
 
 /*============================flex布局===========================*/
 .flex {display: flex; gap: var(--gap);}
@@ -38,23 +38,23 @@
 /* 方向类：物理语义固定，CSS值随书写模式自动适配 */
 /* 项目从顶部开始排列 */
 .items-from-top { flex-direction: column; }
-.flow-N.items-from-top, .flow-И.items-from-top { flex-direction: row; }
+.content-N.items-from-top, .content-И.items-from-top { flex-direction: row; }
 
 /* 项目从底部开始排列 */
 .items-from-bottom { flex-direction: column-reverse; }
-.flow-N.items-from-bottom, .flow-И.items-from-bottom { flex-direction: row-reverse; }
+.content-N.items-from-bottom, .content-И.items-from-bottom { flex-direction: row-reverse; }
 
 /* 项目从左侧开始排列 */
 .items-from-left { flex-direction: row; }
-.flow-S.items-from-left { flex-direction: row-reverse; }
-.flow-N.items-from-left { flex-direction: column-reverse; }
-.flow-И.items-from-left { flex-direction: column; }
+.content-S.items-from-left { flex-direction: row-reverse; }
+.content-N.items-from-left { flex-direction: column-reverse; }
+.content-И.items-from-left { flex-direction: column; }
 
 /* 项目从右侧开始排列 */
 .items-from-right { flex-direction: row-reverse; }
-.flow-S.items-from-right { flex-direction: row; }
-.flow-N.items-from-right { flex-direction: column; }
-.flow-И.items-from-right { flex-direction: column-reverse; }
+.content-S.items-from-right { flex-direction: row; }
+.content-N.items-from-right { flex-direction: column; }
+.content-И.items-from-right { flex-direction: column-reverse; }
 
 .single-line {flex-wrap: nowrap;}
 

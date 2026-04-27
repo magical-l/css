@@ -23,15 +23,15 @@
 
 | 类名 | CSS 组合 | 使用场景 |
 |------|----------|----------|
-| `.flow-Z` | `horizontal-tb` + `ltr` | 现代横排（中文、英文） |
-| `.flow-S` | `horizontal-tb` + `rtl` | 阿拉伯语、希伯来语 |
-| `.flow-N` | `vertical-rl` + `ltr` | 传统中文竖排（列从右往左） |
-| `.flow-И` | `vertical-lr` + `ltr` | 蒙古文竖排（列从左往右） |
+| `.content-Z` | `horizontal-tb` + `ltr` | 现代横排（中文、英文） |
+| `.content-S` | `horizontal-tb` + `rtl` | 阿拉伯语、希伯来语 |
+| `.content-N` | `vertical-rl` + `ltr` | 传统中文竖排（列从右往左） |
+| `.content-И` | `vertical-lr` + `ltr` | 蒙古文竖排（列从左往右） |
 
 **方向类**（物理语义固定，CSS 值随书写模式自动适配）：
 
-| 类名 | 物理语义 | `.flow-Z` | `.flow-S` | `.flow-N` | `.flow-И` |
-|------|----------|-----------|-----------|-----------|-----------|
+| 类名 | 物理语义 | `.content-Z` | `.content-S` | `.content-N` | `.content-И` |
+|------|----------|--------------|--------------|--------------|--------------|
 | `.items-from-top` | 项目从顶部开始排列 | `column` | `column` | `row` | `row` |
 | `.items-from-bottom` | 项目从底部开始排列 | `column-reverse` | `column-reverse` | `row-reverse` | `row-reverse` |
 | `.items-from-left` | 项目从左侧开始排列 | `row` | `row-reverse` | `column-reverse` | `column` |
@@ -39,7 +39,7 @@
 
 命名逻辑：
 - `from-方向` 表达排列起点，语义清晰，不暗示空间分配逻辑
-- 书写模式和方向类组合在同一元素上（`.flow-N.items-from-top`），使用组合选择器而非后代选择器
+- 书写模式和方向类组合在同一元素上（`.content-N.items-from-top`），使用组合选择器而非后代选择器
 
 **已删除的旧类名**：`.vertical`、`.stack`、`.y-queue`、`.y-stack`、`.x-queue`、`.x-stack`
 

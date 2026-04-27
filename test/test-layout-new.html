@@ -53,7 +53,7 @@
         }
 
         /* 竖排模式下调整 */
-        .flow-N .box, .flow-И .box {
+        .content-N .box, .content-И .box {
             writing-mode: horizontal-tb;
         }
 
@@ -63,17 +63,17 @@
         }
     </style>
 </head>
-<body class="flow-Z">
+<body class="content-Z">
 
 <h1>Layout CSS 新增类测试</h1>
 <p>黄色背景 = 特殊测试目标</p>
 
 <!-- ==================== 书写模式 ==================== -->
-<h2>一、书写模式类 .flow-Z/S/N/И</h2>
+<h2>一、书写模式类 .content-Z/S/N/И</h2>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例1</span> <span class="code">.flow-Z</span> 现代横排</p>
-    <div class="container flow-Z flex">
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.content-Z</span> 现代横排</p>
+    <div class="container content-Z flex">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
@@ -82,8 +82,8 @@
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例2</span> <span class="code">.flow-S</span> 阿拉伯语横排 rtl</p>
-    <div class="container flow-S flex">
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.content-S</span> 阿拉伯语横排 rtl</p>
+    <div class="container content-S flex">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
@@ -92,8 +92,8 @@
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例3</span> <span class="code">.flow-N</span> 传统中文竖排</p>
-    <div class="container flow-N flex" style="height: 200px;">
+    <p class="label"><span class="case-num">用例3</span> <span class="code">.content-N</span> 传统中文竖排</p>
+    <div class="container content-N flex" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
@@ -102,8 +102,8 @@
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例4</span> <span class="code">.flow-И</span> 蒙古文竖排</p>
-    <div class="container flow-И flex" style="height: 200px;">
+    <p class="label"><span class="case-num">用例4</span> <span class="code">.content-И</span> 蒙古文竖排</p>
+    <div class="container content-И flex" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
@@ -114,79 +114,79 @@
 <!-- ==================== 方向类 ==================== -->
 <h2>二、方向类 .items-from-top/bottom/left/right</h2>
 
-<h3>在 .flow-Z 模式下</h3>
+<h3>在 .content-Z 模式下</h3>
 <div class="section">
     <p class="label"><span class="case-num">用例5</span> <span class="code">.items-from-top</span> 项目从顶部开始</p>
-    <div class="container flow-Z flex items-from-top">
+    <div class="container content-Z flex items-from-top">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例6</span> <span class="code">.items-from-bottom</span> 项目从底部开始</p>
-    <div class="container flow-Z flex items-from-bottom">
+    <div class="container content-Z flex items-from-bottom">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例7</span> <span class="code">.items-from-left</span> 项目从左侧开始</p>
-    <div class="container flow-Z flex items-from-left">
+    <div class="container content-Z flex items-from-left">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例8</span> <span class="code">.items-from-right</span> 项目从右侧开始</p>
-    <div class="container flow-Z flex items-from-right">
+    <div class="container content-Z flex items-from-right">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
-<h3>在 .flow-N（传统中文竖排）模式下</h3>
+<h3>在 .content-N（传统中文竖排）模式下</h3>
 <div class="section">
-    <p class="label"><span class="case-num">用例9</span> <span class="code">.flow-N.items-from-top</span> → flex-direction: row</p>
-    <div class="container flow-N flex items-from-top" style="height: 200px;">
+    <p class="label"><span class="case-num">用例9</span> <span class="code">.content-N.items-from-top</span> → flex-direction: row</p>
+    <div class="container content-N flex items-from-top" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
-    <p class="label"><span class="case-num">用例10</span> <span class="code">.flow-N.items-from-bottom</span> → flex-direction: row-reverse</p>
-    <div class="container flow-N flex items-from-bottom" style="height: 200px;">
+    <p class="label"><span class="case-num">用例10</span> <span class="code">.content-N.items-from-bottom</span> → flex-direction: row-reverse</p>
+    <div class="container content-N flex items-from-bottom" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
-    <p class="label"><span class="case-num">用例11</span> <span class="code">.flow-N.items-from-left</span> → flex-direction: column-reverse</p>
-    <div class="container flow-N flex items-from-left" style="height: 200px;">
+    <p class="label"><span class="case-num">用例11</span> <span class="code">.content-N.items-from-left</span> → flex-direction: column-reverse</p>
+    <div class="container content-N flex items-from-left" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
-    <p class="label"><span class="case-num">用例12</span> <span class="code">.flow-N.items-from-right</span> → flex-direction: column</p>
-    <div class="container flow-N flex items-from-right" style="height: 200px;">
+    <p class="label"><span class="case-num">用例12</span> <span class="code">.content-N.items-from-right</span> → flex-direction: column</p>
+    <div class="container content-N flex items-from-right" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 </div>
 
-<h3>在 .flow-И（蒙古文竖排）模式下</h3>
+<h3>在 .content-И（蒙古文竖排）模式下</h3>
 <div class="section">
-    <p class="label"><span class="case-num">用例13</span> <span class="code">.flow-И.items-from-top</span> → flex-direction: row</p>
-    <div class="container flow-И flex items-from-top" style="height: 200px;">
+    <p class="label"><span class="case-num">用例13</span> <span class="code">.content-И.items-from-top</span> → flex-direction: row</p>
+    <div class="container content-И flex items-from-top" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
-    <p class="label"><span class="case-num">用例14</span> <span class="code">.flow-И.items-from-left</span> → flex-direction: column</p>
-    <div class="container flow-И flex items-from-left" style="height: 200px;">
+    <p class="label"><span class="case-num">用例14</span> <span class="code">.content-И.items-from-left</span> → flex-direction: column</p>
+    <div class="container content-И flex items-from-left" style="height: 200px;">
         <div class="box">1</div>
         <div class="box">2</div>
         <div class="box">3</div>
@@ -198,35 +198,35 @@
 
 <div class="section">
     <p class="label"><span class="case-num">用例15</span> <span class="code">.multi-line.items-from-left .monopoly-x</span></p>
-    <div class="container flow-Z flex multi-line items-from-left">
+    <div class="container content-Z flex multi-line items-from-left">
         <div class="box highlight monopoly-x">1 monopoly-x</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例16</span> <span class="code">.multi-line（默认row） .monopoly-x</span></p>
-    <div class="container flow-Z flex multi-line">
+    <div class="container content-Z flex multi-line">
         <div class="box highlight monopoly-x">1 monopoly-x</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例17</span> 中间项目 <span class="code">.monopoly-x</span></p>
-    <div class="container flow-Z flex multi-line items-from-left">
+    <div class="container content-Z flex multi-line items-from-left">
         <div class="box">1</div>
         <div class="box highlight monopoly-x">2 monopoly-x</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例18</span> <span class="code">.multi-line.items-from-top .monopoly-y</span></p>
-    <div class="container flow-Z flex multi-line items-from-top" style="height: 250px;">
+    <div class="container content-Z flex multi-line items-from-top" style="height: 250px;">
         <div class="box highlight monopoly-y">1 monopoly-y</div>
         <div class="box">2</div>
         <div class="box">3</div>
     </div>
 
     <p class="label"><span class="case-num">用例19</span> 中间项目 <span class="code">.monopoly-y</span></p>
-    <div class="container flow-Z flex multi-line items-from-top" style="height: 250px;">
+    <div class="container content-Z flex multi-line items-from-top" style="height: 250px;">
         <div class="box">1</div>
         <div class="box highlight monopoly-y">2 monopoly-y</div>
         <div class="box">3</div>
