@@ -126,135 +126,115 @@
 .one-row {grid-column: 1 / -1;}
 .one-column {grid-row: 1 / -1;}
 
-/*========== 轨道位置：col-near-* / row-near-* ==========*/
-/* Z 列轨道靠左/右 */
-.col-near-left:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
-.col-near-right:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
-/* S 列轨道靠左/右（RTL反转） */
-.content-S.col-near-left:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
-.content-S.col-near-right:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
-/* N 列轨道靠左/右（start=右，所以left=end, right=start） */
-.content-N.col-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-content: end; }
-.content-N.col-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-content: start; }
-/* И 列轨道靠左/右（start=左） */
-.content-И.col-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-content: start; }
-.content-И.col-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-content: end; }
-
-/* === row-near-*：行轨道位置（4书写模式 × 2方向 = 8条）=== */
-/* Z 行轨道靠顶/底 */
-.row-near-top:not(.content-S):not(.content-N):not(.content-И) { align-content: start; }
-.row-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-content: end; }
-/* S 行轨道靠顶/底（垂直方向不变） */
-.content-S.row-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-content: start; }
-.content-S.row-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-content: end; }
-/* N 行轨道靠顶/底 */
-.content-N.row-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
-.content-N.row-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
-/* И 行轨道靠顶/底 */
-.content-И.row-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
-.content-И.row-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
+/*========== 轨道位置 ==========*/
+/* ================= 行位置 ================= */
+.row-near-top:not(.content-S):not(.content-N):not(.content-И),
+.content-S.row-near-top {
+	align-content: start;
+}
+.row-near-bottom:not(.content-S):not(.content-N):not(.content-И),
+.content-S.row-near-bottom {
+	align-content: end;
+}
+.content-N.row-near-top, .content-И.row-near-top { justify-content: start; }
+.content-N.row-near-bottom, .content-И.row-near-bottom { justify-content: end; }
+/* ================= 列位置 ================= */
+.col-near-left:not(.content-S):not(.content-N):not(.content-И),
+.content-S.col-near-right {
+	justify-content: start; 
+}
+.col-near-right:not(.content-S):not(.content-N):not(.content-И),
+.content-S.col-near-left {
+	justify-content: end; 
+}
+.content-N.col-near-left, .content-И.col-near-right { align-content: end; }
+.content-N.col-near-right, .content-И.col-near-left { align-content: start; }
 
 /*========== 项目位置：items-near-* ==========*/
 /* Grid：justify-items/align-items 的物理方向跟随 writing-mode。
    Flex：go-x/go-y 锁定物理轴后，主轴始终用 justify-content，交叉轴始终用 align-items。 */
 
-/* === items-near-*：Grid项目位置（4书写模式 × 4方向 = 16条）=== */
-/* Grid 专属（.grid）。水平定位排除 go-y，垂直定位排除 go-x。 */
-/* Z 上/下 */
-.grid.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x) { align-items: start; }
-.grid.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x) { align-items: end; }
-/* Z 左/右 */
-.grid.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-y) { justify-items: start; }
-.grid.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-y) { justify-items: end; }
-/* S 上/下 */
-.grid.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И):not(.go-x) { align-items: start; }
-.grid.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И):not(.go-x) { align-items: end; }
-/* S 左/右（RTL反转）*/
-.grid.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И):not(.go-y) { justify-items: end; }
-.grid.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И):not(.go-y) { justify-items: start; }
-/* N 上/下（start=右）*/
-.grid.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И):not(.go-x) { justify-items: start; }
-.grid.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И):not(.go-x) { justify-items: end; }
-/* N 左/右 */
-.grid.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И):not(.go-y) { align-items: end; }
-.grid.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И):not(.go-y) { align-items: start; }
-/* И 上/下（start=左）*/
-.grid.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: start; }
-.grid.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: end; }
-/* И 左/右 */
-.grid.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N):not(.go-y) { align-items: start; }
-.grid.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N):not(.go-y) { align-items: end; }
-/* И top/bottom */
-.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: start; }
-.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: end; }
+/* === items-near-*：Grid项目位置 === */
+/* Z/S：上/下（align-items）, 左/右（justify-items） */
+.grid.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x),
+.grid.content-S.items-near-top:not(.go-x) { align-items: start; }
+.grid.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x),
+.grid.content-S.items-near-bottom:not(.go-x) { align-items: end; }
+
+.grid.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.grid.content-S.items-near-right:not(.go-y) { justify-items: start; }
+.grid.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.grid.content-S.items-near-left:not(.go-y) { justify-items: end; }
+
+/* N/И：上/下（justify-items）, 左/右（align-items） */
+.grid.content-N.items-near-top:not(.go-x),
+.grid.content-И.items-near-top:not(.go-x) { justify-items: start; }
+.grid.content-N.items-near-bottom:not(.go-x),
+.grid.content-И.items-near-bottom:not(.go-x) { justify-items: end; }
+
+.grid.content-N.items-near-right:not(.go-y),
+.grid.content-И.items-near-left:not(.go-y) { align-items: start; }
+.grid.content-N.items-near-left:not(.go-y),
+.grid.content-И.items-near-right:not(.go-y) { align-items: end; }
 
 /*========== Flex 项目位置 ==========*/
 /* go-x/go-y 锁定物理轴：go-x 主轴始终水平，go-y 主轴始终垂直。
    主轴用 justify-content，交叉轴用 align-items。 */
 
-/*=== go-x 水平位置（items-near-left/right，主轴）=== */
-/* Z（start=左）*/
-.go-x.items-near-left:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
-.go-x.items-near-right:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
-/* S（RTL反转）*/
-.go-x.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
-.go-x.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
-/* N（start=右）*/
-.go-x.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
-.go-x.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
-/* И（start=左）*/
-.go-x.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
-.go-x.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
+/*=== go-x items-near-*（主轴 justify-content，交叉轴 align-items）=== */
+/* 水平：Z/И（start=左），S/N（反向） */
+.go-x.items-near-left:not(.content-S):not(.content-N):not(.content-И),
+.go-x.content-И.items-near-left { justify-content: start; }
+.go-x.items-near-right:not(.content-S):not(.content-N):not(.content-И),
+.go-x.content-И.items-near-right { justify-content: end; }
 
-/*=== go-x 垂直位置（items-near-top/bottom，交叉轴）=== */
-/* Z/S */
-.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
-.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
-/* S */
-.go-x.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
-.go-x.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
-/* N */
-.go-x.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
-.go-x.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
-/* И */
-.go-x.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
-.go-x.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
+.go-x.content-S.items-near-left,
+.go-x.content-N.items-near-left { justify-content: end; }
+.go-x.content-S.items-near-right,
+.go-x.content-N.items-near-right { justify-content: start; }
 
-/*=== go-y 垂直位置（items-near-top/bottom，主轴）=== */
-/* Z/S */
-.go-y.items-near-top:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
-.go-y.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
-/* S */
-.go-y.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
-.go-y.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
-/* N */
-.go-y.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
-.go-y.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
-/* И */
-.go-y.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
-.go-y.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
+/* 垂直 */
+.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И),
+.go-x.content-S.items-near-top,
+.go-x.content-N.items-near-top,
+.go-x.content-И.items-near-top { align-items: start; }
+.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И),
+.go-x.content-S.items-near-bottom,
+.go-x.content-N.items-near-bottom,
+.go-x.content-И.items-near-bottom { align-items: end; }
 
-/*=== go-y 水平位置（items-near-left/right，交叉轴）=== */
-/* Z（start=左）*/
-.go-y.items-near-left:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
-.go-y.items-near-right:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
-/* S（RTL反转）*/
-.go-y.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
-.go-y.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
-/* N（start=右）*/
-.go-y.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
-.go-y.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
-/* И（start=左）*/
-.go-y.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
-.go-y.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
+/*=== go-y items-near-*（主轴 justify-content，交叉轴 align-items）=== */
+/* 垂直 */
+.go-y.items-near-top:not(.content-S):not(.content-N):not(.content-И),
+.go-y.content-S.items-near-top,
+.go-y.content-N.items-near-top,
+.go-y.content-И.items-near-top { justify-content: start; }
+.go-y.items-near-bottom:not(.content-S):not(.content-N):not(.content-И),
+.go-y.content-S.items-near-bottom,
+.go-y.content-N.items-near-bottom,
+.go-y.content-И.items-near-bottom { justify-content: end; }
+
+/* 水平：Z/И（start=左），S/N（反向） */
+.go-y.items-near-left:not(.content-S):not(.content-N):not(.content-И),
+.go-y.content-И.items-near-left { align-items: start; }
+.go-y.items-near-right:not(.content-S):not(.content-N):not(.content-И),
+.go-y.content-И.items-near-right { align-items: end; }
+
+.go-y.content-S.items-near-left,
+.go-y.content-N.items-near-left { align-items: end; }
+.go-y.content-S.items-near-right,
+.go-y.content-N.items-near-right { align-items: start; }
 
 /*----------分布类----------*/
-.items-near-center { justify-content: center; justify-items: center; align-items: center; align-content: center; }
-.items-stretch { align-items: stretch; }
-.content-N.items-stretch, .content-И.items-stretch { justify-items: stretch; }
-.items-space-between, .items-mutex, .items-social-phobia { justify-content: space-between; }
-.items-space-around, .items-unfamiliar { justify-content: space-around; }
-.items-space-evenly, .items-friendly { justify-content: space-evenly; }
+/*内容拉伸充满空间*/
+.items-stretch {align-items: stretch;}
+.content-N.items-stretch, .content-И.items-stretch {justify-items: stretch;}
+/*项目均匀分布（互斥/社恐）*/
+.items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
+/*项目均匀分布（不熟）*/
+.items-space-around, .items-unfamiliar {justify-content: space-around;}
+/*项目均匀分布（友好）*/
+.items-space-evenly, .items-friendly {justify-content: space-evenly;}
 
 /*===============================Grid 预设布局===============================*/
 .grid.朋字形 { grid-template-columns: 50% 50%; grid-template-areas: 'left right'; }
