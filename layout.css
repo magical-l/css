@@ -83,20 +83,34 @@
 /*----------线路之间（align-content）----------*/
 /*所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。*/
 .multi-line.lines-stretch { align-content: stretch; }
+
+/*所有线路都拥到第一条线路这边。受项目实际排布方向影响。*/
 .multi-line.lines-near-start { align-content: start; }
+
+/*所有线路都退到最后一条线路这边。受项目实际排布方向影响。*/
 .multi-line.lines-near-end { align-content: end; }
+
+/*所有线路都挤在中间。受项目实际排布方向影响。*/
 .multi-line.lines-near-center { align-content: center; }
+
+/*线路互斥（社恐），即线路互相之间距离尽量远。受项目实际排布方向影响。*/
 .multi-line.lines-space-between, .multi-line.lines-mutex, .multi-line.lines-social-phobia { align-content: space-between; }
+
+/*线路不熟，即线路互相之间保持距离但又不极端排斥。受项目实际排布方向影响。*/
 .multi-line.lines-space-around, .multi-line.lines-unfamiliar { align-content: space-around; }
+
+/*线路不熟但比较友好。受项目实际排布方向影响。*/
 .multi-line.lines-space-evenly, .multi-line.lines-friendly { align-content: space-evenly; }
 
 /*-----------项目本身------------*/
+/* 在横向flex容器里，保证本项目独占一行 */
 .multi-line.go-x .monopoly-x,
-/* 在flex容器为纵向铺陈子元素的情况下，保证本项目独占一列 */
+/* 在纵向flex容器里，保证本项目独占一列 */
 .multi-line.go-y .monopoly-y {
 	flex-basis: 100%;
 }
 
+/* 本项目禁止压缩 */
 .no-shrink {flex-shrink: 0}
 
 /* 本项目弹性填充 */
