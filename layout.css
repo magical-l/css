@@ -2,7 +2,6 @@
 
 :root {
 	--gap: 1em;
-	/* 主内容区行最小高度，避免中间区域被压得过扁；布局类 亚/叵/反叵/目字形 共用 */
 	--layout-main-row-min: min(260px, 80vmin);
 	--亚字形-left-sidebar-min-width: 150px;
 	--亚字形-left-sidebar-max-width: 20%;
@@ -84,34 +83,20 @@
 /*----------线路之间（align-content）----------*/
 /*所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。*/
 .multi-line.lines-stretch { align-content: stretch; }
-
-/*所有线路都拥到第一条线路这边。受项目实际排布方向影响。*/
 .multi-line.lines-near-start { align-content: start; }
-
-/*所有线路都退到最后一条线路这边。受项目实际排布方向影响。*/
 .multi-line.lines-near-end { align-content: end; }
-
-/*所有线路都挤在中间。受项目实际排布方向影响。*/
 .multi-line.lines-near-center { align-content: center; }
-
-/*线路互斥（社恐），即线路互相之间距离尽量远。受项目实际排布方向影响。*/
 .multi-line.lines-space-between, .multi-line.lines-mutex, .multi-line.lines-social-phobia { align-content: space-between; }
-
-/*线路不熟，即线路互相之间保持距离但又不极端排斥。受项目实际排布方向影响。*/
 .multi-line.lines-space-around, .multi-line.lines-unfamiliar { align-content: space-around; }
-
-/*线路不熟但比较友好。受项目实际排布方向影响。*/
 .multi-line.lines-space-evenly, .multi-line.lines-friendly { align-content: space-evenly; }
 
 /*-----------项目本身------------*/
-/* 在flex容器为横向铺陈子元素的情况下，保证本项目独占一行 */
 .multi-line.go-x .monopoly-x,
 /* 在flex容器为纵向铺陈子元素的情况下，保证本项目独占一列 */
 .multi-line.go-y .monopoly-y {
 	flex-basis: 100%;
 }
 
-/*项目禁止压缩*/
 .no-shrink {flex-shrink: 0}
 
 /* 本项目弹性填充 */
@@ -128,158 +113,150 @@
 .one-row {grid-column: 1 / -1;}
 .one-column {grid-row: 1 / -1;}
 
-/*----------Grid 轨道在容器中的物理位置----------*/
-/* 保证列都靠向左边（适配任何书写模式）。 */
-.col-near-left {justify-content: start;}
-.content-S.col-near-left {justify-content: end;}
-.content-N.col-near-left {align-content: end;}
-.content-И.col-near-left {align-content: start;}
+/*========== 轨道位置：col-near-* / row-near-* ==========*/
+/* Z 列轨道靠左/右 */
+.col-near-left:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
+.col-near-right:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
+/* S 列轨道靠左/右（RTL反转） */
+.content-S.col-near-left:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
+.content-S.col-near-right:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
+/* N 列轨道靠左/右（start=右，所以left=end, right=start） */
+.content-N.col-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-content: end; }
+.content-N.col-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-content: start; }
+/* И 列轨道靠左/右（start=左） */
+.content-И.col-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-content: start; }
+.content-И.col-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-content: end; }
 
-/* 保证列都靠向右边（适配任何书写模式）。 */
-.col-near-right {justify-content: end;}
-.content-S.col-near-right {justify-content: start;}
-.content-N.col-near-right {align-content: start;}
-.content-И.col-near-right {align-content: end;}
+/* === row-near-*：行轨道位置（4书写模式 × 2方向 = 8条）=== */
+/* Z 行轨道靠顶/底 */
+.row-near-top:not(.content-S):not(.content-N):not(.content-И) { align-content: start; }
+.row-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-content: end; }
+/* S 行轨道靠顶/底（垂直方向不变） */
+.content-S.row-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-content: start; }
+.content-S.row-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-content: end; }
+/* N 行轨道靠顶/底 */
+.content-N.row-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
+.content-N.row-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
+/* И 行轨道靠顶/底 */
+.content-И.row-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
+.content-И.row-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
-/* 保证行都靠向上边（适配任何书写模式）。 */
-.row-near-top {align-content: start;}
-.content-N.row-near-top, .content-И.row-near-top {justify-content: start;}
-
-/* 保证列都靠向下边（适配任何书写模式）。 */
-.row-near-bottom {align-content: end;}
-.content-N.row-near-bottom, .content-И.row-near-bottom {justify-content: end;}
-
-/*==========================================用于布局容器本身==========================================*/
-
-/*==========================物理方向类===========================*/
+/*========== 项目位置：items-near-* ==========*/
 /*
- * 设计原则：
- * - left/right 控制水平方向
- * - top/bottom 控制垂直方向
- * - 横排（Z/S）：水平用 justify-content，垂直用 align-content
- * - 竖排（N/И）：水平用 align-content，垂直用 justify-content
- * - 竖排 Grid 很多情况默认已靠边，无需额外规则
+ * Grid：justify-items控制项目水平位置，align-items控制项目垂直位置
+ * Flex：justify-content控制主轴位置，align-items控制交叉轴位置
+ *
+ * Z: justify-*控制水平，align-*控制垂直
+ * S: 同Z，但RTL反转水平（垂直不变）
+ * N: justify-*控制垂直，align-*控制水平（start=右）
+ * И: justify-*控制垂直，align-*控制水平（start=左）
  */
 
-/*列轨道/项目靠物理左边*/
-/* 横排 */
-.content-Z.items-near-left { justify-content: start; }
-.content-S.items-near-left { justify-content: end; }
-/* 竖排 */
-.content-N.items-near-left { align-content: end; }  /* vertical-rl：列靠左 */
-.content-И.items-near-left { align-content: start; } /* vertical-lr：列靠左 */
+/* === items-near-*：Grid项目位置（4书写模式 × 4方向 = 16条）=== */
+/*
+ * Grid专用：只用于Grid容器（排除go-x和go-y）
+ * justify-items: Grid格子内水平位置
+ * align-items: Grid格子内垂直位置
+ */
+/* Z 项目靠左/右/顶/底（Grid专用）*/
+.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
+.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
+.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
+.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
+/* S 项目靠左/右/顶/底（RTL反转水平）*/
+.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
+.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
+.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
+.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
+/* N 项目靠左/右/顶/底（start=右）*/
+.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
+.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
+.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
+.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
+/* И 项目靠左/右/顶/底（start=左）*/
+.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { align-items: start; }
+.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { align-items: end; }
+.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { justify-items: start; }
+.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { justify-items: end; }
 
-/*列轨道/项目靠物理右边*/
-/* 横排 */
-.content-Z.items-near-right { justify-content: end; }
-.content-S.items-near-right { justify-content: start; }
-/* 竖排 vertical-rl（N）：默认已靠右，无需规则 */
-.content-И.items-near-right { align-content: end; }   /* vertical-lr：列靠右 */
+/*========== Flex 项目位置：完整排列组合 ==========*/
+/*
+ * Flex go-x：主轴=水平(Z/S)或垂直(N/И)，交叉轴=垂直(Z/S)或水平(N/И)
+ * Flex go-y：主轴=垂直(Z/S)或水平(N/И)，交叉轴=水平(Z/S)或垂直(N/И)
+ *
+ * 主轴用 justify-content，交叉轴用 align-items
+ */
 
-/*行轨道/项目靠物理顶边*/
-/* 横排 */
-.content-Z.items-near-top { align-content: start; }
-.content-S.items-near-top { align-content: start; }
-/* 竖排 */
-.content-N.items-near-top { justify-content: start; }
-.content-И.items-near-top { justify-content: start; }
+/* === Flex go-x 主轴位置（4书写模式 × 主轴方向）=== */
+/* Z go-x：主轴=水平，控制 items-near-left/right */
+.go-x.items-near-left:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
+.go-x.items-near-right:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
+/* S go-x：主轴=水平（RTL反转） */
+.go-x.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
+.go-x.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
+/* N go-x：主轴=垂直，控制 items-near-top/bottom */
+.go-x.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
+.go-x.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
+/* И go-x：主轴=垂直 */
+.go-x.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
+.go-x.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
 
-/*行轨道/项目靠物理底边*/
-/* 横排 */
-.content-Z.items-near-bottom { align-content: end; }
-.content-S.items-near-bottom { align-content: end; }
-/* 竖排 */
-.content-N.items-near-bottom { justify-content: end; }
-.content-И.items-near-bottom { justify-content: end; }
+/* === Flex go-x 交叉轴位置（4书写模式 × 交叉轴方向）=== */
+/* Z go-x：交叉轴=垂直，控制 items-near-top/bottom */
+.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
+.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
+/* S go-x：交叉轴=垂直（不变） */
+.go-x.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
+.go-x.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
+/* N go-x：交叉轴=水平（start=右），控制 items-near-left/right */
+.go-x.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
+.go-x.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
+/* И go-x：交叉轴=水平（start=左） */
+.go-x.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
+.go-x.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
-/* Flex go-y 特殊处理：主轴垂直，靠顶/靠底用 justify-content */
-.flex.go-y.items-near-top { justify-content: start; }
-.flex.go-y.items-near-bottom { justify-content: end; }
+/* === Flex go-y 主轴位置（4书写模式 × 主轴方向）=== */
+/* Z go-y：主轴=垂直，控制 items-near-top/bottom */
+.go-y.items-near-top:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
+.go-y.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
+/* S go-y：主轴=垂直（不变） */
+.go-y.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
+.go-y.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
+/* N go-y：主轴=水平（start=右），控制 items-near-left/right */
+.go-y.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
+.go-y.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
+/* И go-y：主轴=水平（start=左） */
+.go-y.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
+.go-y.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
 
-/*----------以下为分布类，非单边对齐----------*/
-/*内容居中*/
-.items-near-center {
-	justify-content: center;
-	justify-items: center;
-	align-items: center;
-	align-content: center;
-}
+/* === Flex go-y 交叉轴位置（4书写模式 × 交叉轴方向）=== */
+/* Z go-y：交叉轴=水平，控制 items-near-left/right */
+.go-y.items-near-left:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
+.go-y.items-near-right:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
+/* S go-y：交叉轴=水平（RTL反转） */
+.go-y.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
+.go-y.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
+/* N go-y：交叉轴=垂直，控制 items-near-top/bottom */
+.go-y.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
+.go-y.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
+/* И go-y：交叉轴=垂直 */
+.go-y.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
+.go-y.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
-/*内容拉伸充满空间*/
-.items-stretch {align-items: stretch;}
-.content-N.items-stretch, .content-И.items-stretch {justify-items: stretch;}
-
-/*项目均匀分布（互斥/社恐）*/
-.items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
-
-/*项目均匀分布（不熟）*/
-.items-space-around, .items-unfamiliar {justify-content: space-around;}
-
-/*项目均匀分布（友好）*/
-.items-space-evenly, .items-friendly {justify-content: space-evenly;}
-
+/*----------分布类----------*/
+.items-near-center { justify-content: center; justify-items: center; align-items: center; align-content: center; }
+.items-stretch { align-items: stretch; }
+.content-N.items-stretch, .content-И.items-stretch { justify-items: stretch; }
+.items-space-between, .items-mutex, .items-social-phobia { justify-content: space-between; }
+.items-space-around, .items-unfamiliar { justify-content: space-around; }
+.items-space-evenly, .items-friendly { justify-content: space-evenly; }
 
 /*===============================Grid 预设布局===============================*/
-
-.grid.朋字形 {
-	grid-template-columns: 50% 50%;
-	grid-template-areas: 'left right';
-}
-
-/* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
-.grid.亚字形 {
-	grid-template-rows:
-		auto    /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
-	grid-template-columns:
-		minmax(var(--亚字形-left-sidebar-min-width), var(--亚字形-left-sidebar-max-width))   /* 左侧：最小150px，最大占20%宽度 */
-		1fr                  /* 中间：自适应剩余空间 */
-		minmax(var(--亚字形-right-sidebar-min-width), var(--亚字形-right-sidebar-max-width)); /* 右侧：同左侧 */
-	grid-template-areas:
-		'header header header'
-		'left-sidebar main right-sidebar'
-		'footer footer footer';
-}
-
-/* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
-.grid.叵字形 {
-	grid-template-rows:
-		auto    /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
-	grid-template-columns: minmax(var(--叵字形-left-sidebar-min-width), var(--叵字形-left-sidebar-max-width)) 1fr;
-	grid-template-areas:
-		'header header'
-		'left-sidebar main'
-		'footer footer';
-}
-
-/* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
-.grid.反叵字形 {
-	grid-template-rows:
-		auto    /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
-	grid-template-columns: 1fr minmax(var(--反叵字形-right-sidebar-min-width), var(--反叵字形-right-sidebar-max-width));
-	grid-template-areas:
-		'header header'
-		'main right-sidebar'
-		'footer footer';
-}
-
-/* "目字形"布局，上部导航栏，底部页脚 */
-.grid.目字形 {
-	grid-template-rows:
-		auto    /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
-	grid-template-columns: 1fr;
-	grid-template-areas:
-		'header'
-		'main'
-		'footer';
-}
+.grid.朋字形 { grid-template-columns: 50% 50%; grid-template-areas: 'left right'; }
+.grid.亚字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: minmax(var(--亚字形-left-sidebar-min-width), var(--亚字形-left-sidebar-max-width)) 1fr minmax(var(--亚字形-right-sidebar-min-width), var(--亚字形-right-sidebar-max-width)); grid-template-areas: 'header header header' 'left-sidebar main right-sidebar' 'footer footer footer'; }
+.grid.叵字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: minmax(var(--叵字形-left-sidebar-min-width), var(--叵字形-left-sidebar-max-width)) 1fr; grid-template-areas: 'header header' 'left-sidebar main' 'footer footer'; }
+.grid.反叵字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: 1fr minmax(var(--反叵字形-right-sidebar-min-width), var(--反叵字形-right-sidebar-max-width)); grid-template-areas: 'header header' 'main right-sidebar' 'footer footer'; }
+.grid.目字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: 1fr; grid-template-areas: 'header' 'main' 'footer'; }
 
 /*==========================================用于项目=========================================*/
 /* 为防父元素没有使用.grid类之类，所以不使用 .grid > header ，直接设置grid-area。若父元素非display:grid也没事，会被浏览器忽略。下同 */

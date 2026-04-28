@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>col/row/items-near-* 测试</title>
+    <link rel="stylesheet" href="../layout.css">
+    <style>
+        body { padding: 20px; font-family: sans-serif; font-size: 14px; }
+        h1 { border-bottom: 2px solid #333; }
+        h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
+        .section { margin: 15px 0; display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; }
+
+        .case { border: 1px solid #999; padding: 10px; background: #fafafa; }
+        .case-title { font-weight: bold; margin-bottom: 5px; }
+        .case-code { font-family: monospace; font-size: 12px; color: #555; margin-bottom: 8px; }
+        .case-num { color: #ff6b6b; }
+
+        .container { border: 3px solid #333; background: #f0f0f0; }
+
+        /* Grid 容器：格子尺寸 */
+        .grid-box {
+            display: grid;
+            gap: 0;
+            grid-template-columns: 70px 70px;
+            grid-template-rows: 50px 50px;
+            width: 200px;
+            height: 150px;
+        }
+        /* 竖排 Grid */
+        .grid-box.v {
+            grid-template-columns: 50px 50px;
+            grid-template-rows: 70px 70px;
+            width: 150px;
+            height: 200px;
+        }
+
+        /* Flex 容器 */
+        .flex-box { display: flex; gap: 0; }
+        .flex-box.wide { width: 200px; }
+        .flex-box.tall { height: 180px; }
+        .flex-box.sized { width: 150px; height: 180px; }
+
+        /* Grid 项目：小于格子显示位置 */
+        .grid-box .item { width: 40px; height: 30px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+        /* Grid轨道测试：项目填满格子 */
+        .grid-box.track .item { width: 100%; height: 100%; }
+
+        /* Flex 项目 */
+        .flex-box .item { width: 50px; height: 40px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+        .flex-box .item.small { width: 40px; height: 30px; }
+
+        .note { font-size: 12px; margin-top: 5px; color: #2e7d32; }
+    </style>
+</head>
+<body>
+
+<h1>col/row/items-near-* 测试</h1>
+
+<h2>一、.col-near-*（列轨道位置）</h2>
+<p>Grid轨道测试，项目填满格子</p>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例1</span> Z .col-near-left</div>
+        <div class="case-code">列轨道靠左</div>
+        <div class="container grid-box track content-Z col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例2</span> Z .col-near-right</div>
+        <div class="case-code">列轨道靠右</div>
+        <div class="container grid-box track content-Z col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例3</span> S .col-near-left</div>
+        <div class="case-code">RTL：列轨道靠左</div>
+        <div class="container grid-box track content-S col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例4</span> S .col-near-right</div>
+        <div class="case-code">RTL：列轨道靠右</div>
+        <div class="container grid-box track content-S col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例5</span> N .col-near-left</div>
+        <div class="case-code">N竖排：列轨道靠左</div>
+        <div class="container grid-box v track content-N col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例6</span> N .col-near-right</div>
+        <div class="case-code">N竖排：列轨道靠右</div>
+        <div class="container grid-box v track content-N col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例7</span> И .col-near-left</div>
+        <div class="case-code">И竖排：列轨道靠左</div>
+        <div class="container grid-box v track content-И col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例8</span> И .col-near-right</div>
+        <div class="case-code">И竖排：列轨道靠右</div>
+        <div class="container grid-box v track content-И col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h2>二、.row-near-*（行轨道位置）</h2>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例9</span> Z .row-near-top</div>
+        <div class="case-code">行轨道靠顶</div>
+        <div class="container grid-box track content-Z row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例10</span> Z .row-near-bottom</div>
+        <div class="case-code">行轨道靠底</div>
+        <div class="container grid-box track content-Z row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例11</span> S .row-near-top</div>
+        <div class="case-code">RTL：行轨道靠顶</div>
+        <div class="container grid-box track content-S row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例12</span> S .row-near-bottom</div>
+        <div class="case-code">RTL：行轨道靠底</div>
+        <div class="container grid-box track content-S row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例13</span> N .row-near-top</div>
+        <div class="case-code">N竖排：行轨道靠顶</div>
+        <div class="container grid-box v track content-N row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例14</span> N .row-near-bottom</div>
+        <div class="case-code">N竖排：行轨道靠底</div>
+        <div class="container grid-box v track content-N row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例15</span> И .row-near-top</div>
+        <div class="case-code">И竖排：行轨道靠顶</div>
+        <div class="container grid-box v track content-И row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例16</span> И .row-near-bottom</div>
+        <div class="case-code">И竖排：行轨道靠底</div>
+        <div class="container grid-box v track content-И row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h2>三、Grid .items-near-*（项目在格子内位置）</h2>
+<p>项目尺寸小于格子，显示位置</p>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例17</span> Z .items-near-left</div>
+        <div class="case-code">项目靠左</div>
+        <div class="container grid-box content-Z items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例18</span> Z .items-near-right</div>
+        <div class="case-code">项目靠右</div>
+        <div class="container grid-box content-Z items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例19</span> Z .items-near-top</div>
+        <div class="case-code">项目靠顶</div>
+        <div class="container grid-box content-Z items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例20</span> Z .items-near-bottom</div>
+        <div class="case-code">项目靠底</div>
+        <div class="container grid-box content-Z items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例21</span> S .items-near-left</div>
+        <div class="case-code">RTL：项目靠左</div>
+        <div class="container grid-box content-S items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例22</span> S .items-near-right</div>
+        <div class="case-code">RTL：项目靠右</div>
+        <div class="container grid-box content-S items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例23</span> S .items-near-top</div>
+        <div class="case-code">RTL：项目靠顶</div>
+        <div class="container grid-box content-S items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例24</span> S .items-near-bottom</div>
+        <div class="case-code">RTL：项目靠底</div>
+        <div class="container grid-box content-S items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例25</span> N .items-near-left</div>
+        <div class="case-code">N竖排：项目靠左</div>
+        <div class="container grid-box v content-N items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例26</span> N .items-near-right</div>
+        <div class="case-code">N竖排：项目靠右</div>
+        <div class="container grid-box v content-N items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例27</span> N .items-near-top</div>
+        <div class="case-code">N竖排：项目靠顶</div>
+        <div class="container grid-box v content-N items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例28</span> N .items-near-bottom</div>
+        <div class="case-code">N竖排：项目靠底</div>
+        <div class="container grid-box v content-N items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例29</span> И .items-near-left</div>
+        <div class="case-code">И竖排：项目靠左</div>
+        <div class="container grid-box v content-И items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例30</span> И .items-near-right</div>
+        <div class="case-code">И竖排：项目靠右</div>
+        <div class="container grid-box v content-И items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例31</span> И .items-near-top</div>
+        <div class="case-code">И竖排：项目靠顶</div>
+        <div class="container grid-box v content-И items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例32</span> И .items-near-bottom</div>
+        <div class="case-code">И竖排：项目靠底</div>
+        <div class="container grid-box v content-И items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h2>四、Flex go-x .items-near-*（项目在容器内位置）</h2>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例33</span> Z go-x .items-near-left</div>
+        <div class="case-code">项目靠左（主轴水平）</div>
+        <div class="container flex-box go-x wide content-Z items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例34</span> Z go-x .items-near-right</div>
+        <div class="case-code">项目靠右</div>
+        <div class="container flex-box go-x wide content-Z items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例35</span> Z go-x .items-near-top</div>
+        <div class="case-code">项目靠顶（交叉轴垂直）</div>
+        <div class="container flex-box go-x tall content-Z items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例36</span> Z go-x .items-near-bottom</div>
+        <div class="case-code">项目靠底</div>
+        <div class="container flex-box go-x tall content-Z items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例37</span> S go-x .items-near-left</div>
+        <div class="case-code">RTL：项目靠左（主轴水平，RTL反转）</div>
+        <div class="container flex-box go-x wide content-S items-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例38</span> S go-x .items-near-right</div>
+        <div class="case-code">RTL：项目靠右</div>
+        <div class="container flex-box go-x wide content-S items-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例39</span> S go-x .items-near-top</div>
+        <div class="case-code">RTL：项目靠顶</div>
+        <div class="container flex-box go-x tall content-S items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例40</span> S go-x .items-near-bottom</div>
+        <div class="case-code">RTL：项目靠底</div>
+        <div class="container flex-box go-x tall content-S items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例41</span> N go-x .items-near-top</div>
+        <div class="case-code">N竖排go-x：项目靠顶（主轴垂直）</div>
+        <div class="container flex-box go-x sized content-N items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例42</span> N go-x .items-near-bottom</div>
+        <div class="case-code">N竖排go-x：项目靠底</div>
+        <div class="container flex-box go-x sized content-N items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例43</span> N go-x .items-near-left</div>
+        <div class="case-code">N竖排go-x：项目靠左（交叉轴水平，start=右）</div>
+        <div class="container flex-box go-x sized content-N items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例44</span> N go-x .items-near-right</div>
+        <div class="case-code">N竖排go-x：项目靠右</div>
+        <div class="container flex-box go-x sized content-N items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例45</span> И go-x .items-near-top</div>
+        <div class="case-code">И竖排go-x：项目靠顶（主轴垂直）</div>
+        <div class="container flex-box go-x sized content-И items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例46</span> И go-x .items-near-bottom</div>
+        <div class="case-code">И竖排go-x：项目靠底</div>
+        <div class="container flex-box go-x sized content-И items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例47</span> И go-x .items-near-left</div>
+        <div class="case-code">И竖排go-x：项目靠左（交叉轴水平，start=左）</div>
+        <div class="container flex-box go-x sized content-И items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例48</span> И go-x .items-near-right</div>
+        <div class="case-code">И竖排go-x：项目靠右</div>
+        <div class="container flex-box go-x sized content-И items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+<h2>五、Flex go-y .items-near-*（项目在容器内位置）</h2>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例49</span> Z go-y .items-near-top</div>
+        <div class="case-code">项目靠顶（主轴垂直）</div>
+        <div class="container flex-box go-y tall content-Z items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例50</span> Z go-y .items-near-bottom</div>
+        <div class="case-code">项目靠底</div>
+        <div class="container flex-box go-y tall content-Z items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例51</span> Z go-y .items-near-left</div>
+        <div class="case-code">项目靠左（交叉轴水平）</div>
+        <div class="container flex-box go-y wide content-Z items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例52</span> Z go-y .items-near-right</div>
+        <div class="case-code">项目靠右</div>
+        <div class="container flex-box go-y wide content-Z items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例53</span> S go-y .items-near-top</div>
+        <div class="case-code">RTL：项目靠顶（主轴垂直）</div>
+        <div class="container flex-box go-y tall content-S items-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例54</span> S go-y .items-near-bottom</div>
+        <div class="case-code">RTL：项目靠底</div>
+        <div class="container flex-box go-y tall content-S items-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例55</span> S go-y .items-near-left</div>
+        <div class="case-code">RTL：项目靠左（交叉轴RTL反转）</div>
+        <div class="container flex-box go-y wide content-S items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例56</span> S go-y .items-near-right</div>
+        <div class="case-code">RTL：项目靠右</div>
+        <div class="container flex-box go-y wide content-S items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例57</span> N go-y .items-near-right</div>
+        <div class="case-code">N竖排go-y：项目靠右（主轴水平，start=右）</div>
+        <div class="container flex-box go-y sized content-N items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例58</span> N go-y .items-near-left</div>
+        <div class="case-code">N竖排go-y：项目靠左</div>
+        <div class="container flex-box go-y sized content-N items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例59</span> N go-y .items-near-top</div>
+        <div class="case-code">N竖排go-y：项目靠顶（交叉轴垂直）</div>
+        <div class="container flex-box go-y sized content-N items-near-top">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例60</span> N go-y .items-near-bottom</div>
+        <div class="case-code">N竖排go-y：项目靠底</div>
+        <div class="container flex-box go-y sized content-N items-near-bottom">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例61</span> И go-y .items-near-left</div>
+        <div class="case-code">И竖排go-y：项目靠左（主轴水平，start=左）</div>
+        <div class="container flex-box go-y sized content-И items-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例62</span> И go-y .items-near-right</div>
+        <div class="case-code">И竖排go-y：项目靠右</div>
+        <div class="container flex-box go-y sized content-И items-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例63</span> И go-y .items-near-top</div>
+        <div class="case-code">И竖排go-y：项目靠顶（交叉轴垂直）</div>
+        <div class="container flex-box go-y sized content-И items-near-top">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">用例64</span> И go-y .items-near-bottom</div>
+        <div class="case-code">И竖排go-y：项目靠底</div>
+        <div class="container flex-box go-y sized content-И items-near-bottom">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
