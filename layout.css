@@ -110,8 +110,7 @@
 	flex-basis: 100%;
 }
 
-/* 本项目禁止压缩 */
-.no-shrink {flex-shrink: 0}
+.no-shrink { flex-shrink: 0; }
 
 /* 本项目弹性填充 */
 .flexible {
@@ -156,106 +155,98 @@
 .content-И.row-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
 /*========== 项目位置：items-near-* ==========*/
-/*
- * Grid：justify-items控制项目水平位置，align-items控制项目垂直位置
- * Flex：justify-content控制主轴位置，align-items控制交叉轴位置
- *
- * Z: justify-*控制水平，align-*控制垂直
- * S: 同Z，但RTL反转水平（垂直不变）
- * N: justify-*控制垂直，align-*控制水平（start=右）
- * И: justify-*控制垂直，align-*控制水平（start=左）
- */
+/* Grid：justify-items/align-items 的物理方向跟随 writing-mode。
+   Flex：go-x/go-y 锁定物理轴后，主轴始终用 justify-content，交叉轴始终用 align-items。 */
 
 /* === items-near-*：Grid项目位置（4书写模式 × 4方向 = 16条）=== */
-/*
- * Grid专用：只用于Grid容器（排除go-x和go-y）
- * justify-items: Grid格子内水平位置
- * align-items: Grid格子内垂直位置
- */
-/* Z 项目靠左/右/顶/底（Grid专用）*/
-.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
-.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
-.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
-.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
-/* S 项目靠左/右/顶/底（RTL反转水平）*/
-.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
-.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
-.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
-.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
-/* N 项目靠左/右/顶/底（start=右）*/
-.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { align-items: end; }
-.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { align-items: start; }
-.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { justify-items: start; }
-.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И):not(.go-x):not(.go-y) { justify-items: end; }
-/* И 项目靠左/右/顶/底（start=左）*/
-.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { align-items: start; }
-.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { align-items: end; }
-.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { justify-items: start; }
-.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x):not(.go-y) { justify-items: end; }
+/* Grid 专属（.grid）。水平定位排除 go-y，垂直定位排除 go-x。 */
+/* Z 上/下 */
+.grid.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x) { align-items: start; }
+.grid.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x) { align-items: end; }
+/* Z 左/右 */
+.grid.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-y) { justify-items: start; }
+.grid.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-y) { justify-items: end; }
+/* S 上/下 */
+.grid.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И):not(.go-x) { align-items: start; }
+.grid.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И):not(.go-x) { align-items: end; }
+/* S 左/右（RTL反转）*/
+.grid.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И):not(.go-y) { justify-items: end; }
+.grid.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И):not(.go-y) { justify-items: start; }
+/* N 上/下（start=右）*/
+.grid.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И):not(.go-x) { justify-items: start; }
+.grid.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И):not(.go-x) { justify-items: end; }
+/* N 左/右 */
+.grid.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И):not(.go-y) { align-items: end; }
+.grid.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И):not(.go-y) { align-items: start; }
+/* И 上/下（start=左）*/
+.grid.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: start; }
+.grid.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: end; }
+/* И 左/右 */
+.grid.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N):not(.go-y) { align-items: start; }
+.grid.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N):not(.go-y) { align-items: end; }
+/* И top/bottom */
+.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: start; }
+.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N):not(.go-x) { justify-items: end; }
 
-/*========== Flex 项目位置：完整排列组合 ==========*/
-/*
- * Flex go-x：主轴=水平(Z/S)或垂直(N/И)，交叉轴=垂直(Z/S)或水平(N/И)
- * Flex go-y：主轴=垂直(Z/S)或水平(N/И)，交叉轴=水平(Z/S)或垂直(N/И)
- *
- * 主轴用 justify-content，交叉轴用 align-items
- */
+/*========== Flex 项目位置 ==========*/
+/* go-x/go-y 锁定物理轴：go-x 主轴始终水平，go-y 主轴始终垂直。
+   主轴用 justify-content，交叉轴用 align-items。 */
 
-/* === Flex go-x 主轴位置（4书写模式 × 主轴方向）=== */
-/* Z go-x：主轴=水平，控制 items-near-left/right */
+/*=== go-x 水平位置（items-near-left/right，主轴）=== */
+/* Z（start=左）*/
 .go-x.items-near-left:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
 .go-x.items-near-right:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
-/* S go-x：主轴=水平（RTL反转） */
+/* S（RTL反转）*/
 .go-x.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
 .go-x.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
-/* N go-x：主轴=垂直，控制 items-near-top/bottom */
-.go-x.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
-.go-x.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
-/* И go-x：主轴=垂直 */
-.go-x.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
-.go-x.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
-
-/* === Flex go-x 交叉轴位置（4书写模式 × 交叉轴方向）=== */
-/* Z go-x：交叉轴=垂直，控制 items-near-top/bottom */
-.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
-.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
-/* S go-x：交叉轴=垂直（不变） */
-.go-x.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
-.go-x.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
-/* N go-x：交叉轴=水平（start=右），控制 items-near-left/right */
+/* N（start=右）*/
 .go-x.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
-.go-x.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
-/* И go-x：交叉轴=水平（start=左） */
-.go-x.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
+.go-x.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
+/* И（start=左）*/
+.go-x.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
 .go-x.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
-/* === Flex go-y 主轴位置（4书写模式 × 主轴方向）=== */
-/* Z go-y：主轴=垂直，控制 items-near-top/bottom */
+/*=== go-x 垂直位置（items-near-top/bottom，交叉轴）=== */
+/* Z/S */
+.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
+.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
+/* S */
+.go-x.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
+.go-x.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
+/* N */
+.go-x.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
+.go-x.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
+/* И */
+.go-x.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
+.go-x.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
+
+/*=== go-y 垂直位置（items-near-top/bottom，主轴）=== */
+/* Z/S */
 .go-y.items-near-top:not(.content-S):not(.content-N):not(.content-И) { justify-content: start; }
 .go-y.items-near-bottom:not(.content-S):not(.content-N):not(.content-И) { justify-content: end; }
-/* S go-y：主轴=垂直（不变） */
+/* S */
 .go-y.content-S.items-near-top:not(.content-Z):not(.content-N):not(.content-И) { justify-content: start; }
 .go-y.content-S.items-near-bottom:not(.content-Z):not(.content-N):not(.content-И) { justify-content: end; }
-/* N go-y：主轴=水平（start=右），控制 items-near-left/right */
-.go-y.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
-.go-y.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
-/* И go-y：主轴=水平（start=左） */
-.go-y.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
-.go-y.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
+/* N */
+.go-y.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { justify-content: start; }
+.go-y.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
+/* И */
+.go-y.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { justify-content: start; }
+.go-y.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
 
-/* === Flex go-y 交叉轴位置（4书写模式 × 交叉轴方向）=== */
-/* Z go-y：交叉轴=水平，控制 items-near-left/right */
+/*=== go-y 水平位置（items-near-left/right，交叉轴）=== */
+/* Z（start=左）*/
 .go-y.items-near-left:not(.content-S):not(.content-N):not(.content-И) { align-items: start; }
 .go-y.items-near-right:not(.content-S):not(.content-N):not(.content-И) { align-items: end; }
-/* S go-y：交叉轴=水平（RTL反转） */
+/* S（RTL反转）*/
 .go-y.content-S.items-near-left:not(.content-Z):not(.content-N):not(.content-И) { align-items: end; }
 .go-y.content-S.items-near-right:not(.content-Z):not(.content-N):not(.content-И) { align-items: start; }
-/* N go-y：交叉轴=垂直，控制 items-near-top/bottom */
-.go-y.content-N.items-near-top:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
-.go-y.content-N.items-near-bottom:not(.content-Z):not(.content-S):not(.content-И) { justify-content: end; }
-/* И go-y：交叉轴=垂直 */
-.go-y.content-И.items-near-top:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
-.go-y.content-И.items-near-bottom:not(.content-Z):not(.content-S):not(.content-N) { justify-content: end; }
+/* N（start=右）*/
+.go-y.content-N.items-near-left:not(.content-Z):not(.content-S):not(.content-И) { align-items: end; }
+.go-y.content-N.items-near-right:not(.content-Z):not(.content-S):not(.content-И) { align-items: start; }
+/* И（start=左）*/
+.go-y.content-И.items-near-left:not(.content-Z):not(.content-S):not(.content-N) { align-items: start; }
+.go-y.content-И.items-near-right:not(.content-Z):not(.content-S):not(.content-N) { align-items: end; }
 
 /*----------分布类----------*/
 .items-near-center { justify-content: center; justify-items: center; align-items: center; align-content: center; }
