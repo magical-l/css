@@ -173,79 +173,49 @@
 .content-N.col-near-right:not(.go-x) { align-content: start; align-items: start; }
 
 /*========== 项目位置：items-near-* ==========*/
-/* Grid：justify-items/align-items 的物理方向跟随 writing-mode。
-   Flex：go-x/go-y 锁定物理轴后，主轴始终用 justify-content，交叉轴始终用 align-items。 */
+/* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
 
-/* === items-near-*：Grid项目位置 === */
-/* Z/S：上/下（align-items）, 左/右（justify-items） */
-.grid.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-x),
-.grid.content-S.items-near-top:not(.go-x) { align-items: start; }
-.grid.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-x),
-.grid.content-S.items-near-bottom:not(.go-x) { align-items: end; }
+/* --- items-near-top --- */
+.items-near-top:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.content-S.items-near-top:not(.go-y),
+.content-N.go-x.items-near-top,
+.content-И.go-x.items-near-top { align-items: start; }
 
-.grid.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
-.grid.content-S.items-near-right:not(.go-y) { justify-items: start; }
-.grid.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
-.grid.content-S.items-near-left:not(.go-y) { justify-items: end; }
+.content-N.items-near-top:not(.go-x),
+.content-И.items-near-top:not(.go-x),
+.items-near-top.go-y { justify-items: start; }
 
-/* N/И：上/下（justify-items）, 左/右（align-items） */
-.grid.content-N.items-near-top:not(.go-x),
-.grid.content-И.items-near-top:not(.go-x) { justify-items: start; }
-.grid.content-N.items-near-bottom:not(.go-x),
-.grid.content-И.items-near-bottom:not(.go-x) { justify-items: end; }
+/* --- items-near-bottom --- */
+.items-near-bottom:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.content-S.items-near-bottom:not(.go-y),
+.content-N.go-x.items-near-bottom,
+.content-И.go-x.items-near-bottom { align-items: end; }
 
-.grid.content-N.items-near-right:not(.go-y),
-.grid.content-И.items-near-left:not(.go-y) { align-items: start; }
-.grid.content-N.items-near-left:not(.go-y),
-.grid.content-И.items-near-right:not(.go-y) { align-items: end; }
+.content-N.items-near-bottom:not(.go-x),
+.content-И.items-near-bottom:not(.go-x),
+.items-near-bottom.go-y { justify-items: end; }
 
-/*========== Flex 项目位置 ==========*/
-/* go-x/go-y 锁定物理轴：go-x 主轴始终水平，go-y 主轴始终垂直。
-   主轴用 justify-content，交叉轴用 align-items。 */
+/* --- items-near-left --- */
+.items-near-left:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.content-И.go-x.items-near-left { justify-items: start; }
+.content-S.items-near-left:not(.go-y),
+.content-N.go-x.items-near-left { justify-items: end; }
 
-/*=== go-x items-near-*（主轴 justify-content，交叉轴 align-items）=== */
-/* 水平：Z/И（start=左），S/N（反向） */
-.go-x.items-near-left:not(.content-S):not(.content-N):not(.content-И),
-.go-x.content-И.items-near-left { justify-content: start; }
-.go-x.items-near-right:not(.content-S):not(.content-N):not(.content-И),
-.go-x.content-И.items-near-right { justify-content: end; }
+.items-near-left.go-y:not(.content-S):not(.content-N):not(.content-И),
+.content-И.items-near-left:not(.go-x) { align-items: start; }
+.content-S.items-near-left.go-y,
+.content-N.items-near-left:not(.go-x) { align-items: end; }
 
-.go-x.content-S.items-near-left,
-.go-x.content-N.items-near-left { justify-content: end; }
-.go-x.content-S.items-near-right,
-.go-x.content-N.items-near-right { justify-content: start; }
+/* --- items-near-right --- */
+.items-near-right:not(.content-S):not(.content-N):not(.content-И):not(.go-y),
+.content-И.go-x.items-near-right { justify-items: end; }
+.content-S.items-near-right:not(.go-y),
+.content-N.go-x.items-near-right { justify-items: start; }
 
-/* 垂直 */
-.go-x.items-near-top:not(.content-S):not(.content-N):not(.content-И),
-.go-x.content-S.items-near-top,
-.go-x.content-N.items-near-top,
-.go-x.content-И.items-near-top { align-items: start; }
-.go-x.items-near-bottom:not(.content-S):not(.content-N):not(.content-И),
-.go-x.content-S.items-near-bottom,
-.go-x.content-N.items-near-bottom,
-.go-x.content-И.items-near-bottom { align-items: end; }
-
-/*=== go-y items-near-*（主轴 justify-content，交叉轴 align-items）=== */
-/* 垂直 */
-.go-y.items-near-top:not(.content-S):not(.content-N):not(.content-И),
-.go-y.content-S.items-near-top,
-.go-y.content-N.items-near-top,
-.go-y.content-И.items-near-top { justify-content: start; }
-.go-y.items-near-bottom:not(.content-S):not(.content-N):not(.content-И),
-.go-y.content-S.items-near-bottom,
-.go-y.content-N.items-near-bottom,
-.go-y.content-И.items-near-bottom { justify-content: end; }
-
-/* 水平：Z/И（start=左），S/N（反向） */
-.go-y.items-near-left:not(.content-S):not(.content-N):not(.content-И),
-.go-y.content-И.items-near-left { align-items: start; }
-.go-y.items-near-right:not(.content-S):not(.content-N):not(.content-И),
-.go-y.content-И.items-near-right { align-items: end; }
-
-.go-y.content-S.items-near-left,
-.go-y.content-N.items-near-left { align-items: end; }
-.go-y.content-S.items-near-right,
-.go-y.content-N.items-near-right { align-items: start; }
+.items-near-right.go-y:not(.content-S):not(.content-N):not(.content-И),
+.content-И.items-near-right:not(.go-x) { align-items: end; }
+.content-S.items-near-right.go-y,
+.content-N.items-near-right:not(.go-x) { align-items: start; }
 
 /*----------分布类----------*/
 /*内容拉伸充满空间*/
@@ -259,11 +229,66 @@
 .items-space-evenly, .items-friendly {justify-content: space-evenly;}
 
 /*===============================Grid 预设布局===============================*/
-.grid.朋字形 { grid-template-columns: 50% 50%; grid-template-areas: 'left right'; }
-.grid.亚字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: minmax(var(--亚字形-left-sidebar-min-width), var(--亚字形-left-sidebar-max-width)) 1fr minmax(var(--亚字形-right-sidebar-min-width), var(--亚字形-right-sidebar-max-width)); grid-template-areas: 'header header header' 'left-sidebar main right-sidebar' 'footer footer footer'; }
-.grid.叵字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: minmax(var(--叵字形-left-sidebar-min-width), var(--叵字形-left-sidebar-max-width)) 1fr; grid-template-areas: 'header header' 'left-sidebar main' 'footer footer'; }
-.grid.反叵字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: 1fr minmax(var(--反叵字形-right-sidebar-min-width), var(--反叵字形-right-sidebar-max-width)); grid-template-areas: 'header header' 'main right-sidebar' 'footer footer'; }
-.grid.目字形 { grid-template-rows: auto minmax(var(--layout-main-row-min), auto) auto; grid-template-columns: 1fr; grid-template-areas: 'header' 'main' 'footer'; }
+
+.grid.朋字形 {
+	grid-template-columns: 50% 50%;
+	grid-template-areas: 'left right';
+}
+
+/* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
+.grid.亚字形 {
+	grid-template-rows:
+		auto    /* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
+		auto; /* Footer 高度自适应 */
+	grid-template-columns:
+		minmax(var(--亚字形-left-sidebar-min-width), var(--亚字形-left-sidebar-max-width))   /* 左侧：最小150px，最大占20%宽度 */
+		1fr                  /* 中间：自适应剩余空间 */
+		minmax(var(--亚字形-right-sidebar-min-width), var(--亚字形-right-sidebar-max-width)); /* 右侧：同左侧 */
+	grid-template-areas:
+		'header header header'
+		'left-sidebar main right-sidebar'
+		'footer footer footer';
+}
+
+/* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
+.grid.叵字形 {
+	grid-template-rows:
+		auto    /* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
+		auto; /* Footer 高度自适应 */
+	grid-template-columns: minmax(var(--叵字形-left-sidebar-min-width), var(--叵字形-left-sidebar-max-width)) 1fr;
+	grid-template-areas:
+		'header header'
+		'left-sidebar main'
+		'footer footer';
+}
+
+/* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
+.grid.反叵字形 {
+	grid-template-rows:
+		auto    /* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
+		auto; /* Footer 高度自适应 */
+	grid-template-columns: 1fr minmax(var(--反叵字形-right-sidebar-min-width), var(--反叵字形-right-sidebar-max-width));
+	grid-template-areas:
+		'header header'
+		'main right-sidebar'
+		'footer footer';
+}
+
+/* "目字形"布局，上部导航栏，底部页脚 */
+.grid.目字形 {
+	grid-template-rows:
+		auto    /* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)     /* 主内容区：有最小高度，再填充剩余 */
+		auto; /* Footer 高度自适应 */
+	grid-template-columns: 1fr;
+	grid-template-areas:
+		'header'
+		'main'
+		'footer';
+}
 
 /*==========================================用于项目=========================================*/
 /* 为防父元素没有使用.grid类之类，所以不使用 .grid > header ，直接设置grid-area。若父元素非display:grid也没事，会被浏览器忽略。下同 */
