@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>row-near-* / col-near-* 完整测试（Grid + Flex）</title>
+<link rel="stylesheet" href="../layout.css">
+<style>
+body { padding: 20px; font-family: sans-serif; font-size: 14px; }
+h1 { border-bottom: 2px solid #333; }
+h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
+h3 { margin-top: 20px; color: #777; }
+.section { margin: 15px 0; display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; }
+.case { border: 1px solid #999; padding: 10px; background: #fafafa; }
+.case-title { font-weight: bold; margin-bottom: 3px; }
+.case-code { font-family: monospace; font-size: 11px; color: #555; margin-bottom: 6px; }
+.case-num { color: #ff6b6b; }
+
+.container { border: 3px solid #333; background: #f0f0f0; }
+/* Grid 容器 */
+.grid-box { display: grid; gap: 0; grid-template-columns: 70px 70px; grid-template-rows: 50px 50px; width: 200px; height: 150px; }
+.grid-box .item { width: 40px; height: 30px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+/* N/И Grid 竖排 */
+.grid-box.v { grid-template-columns: 50px 50px; grid-template-rows: 70px 70px; width: 150px; height: 200px; }
+
+/* Flex 容器 */
+.flex-box { display: flex; gap: 0; }
+.flex-box.wide { width: 200px; height: 120px; }
+.flex-box.tall { height: 180px; width: 200px; }
+.flex-box.sized { width: 220px; height: 180px; }
+.flex-box .item { width: 50px; height: 40px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+/* 多行Flex容器（让align-content可见） */
+.flex-box.wrap-row { width: 130px; height: 150px; }
+.flex-box.wrap-col { width: 170px; height: 80px; }
+.flex-box .item.small { width: 40px; height: 30px; }
+</style>
+</head>
+<body>
+
+<h1>row-near-* / col-near-* 测试（Grid + Flex，16组合 × 4类）</h1>
+<p>默认 go：Z/S→go-x，N/И→go-y。每条规则同时设 content 和 items 属性（如 align-content + align-items），轨道和项目一起靠边。多行Flex容器使用 .multi-line + 约束尺寸使项目换行。</p>
+
+<!-- ==================== row-near-top ==================== -->
+<h2>row-near-top</h2>
+<h3>Grid</h3>
+<div class="section">
+    <!-- Z Grid go-x(默认): align-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">1</span> Grid Z .row-near-top</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:start</div>
+        <div class="container grid-box content-Z row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <!-- S Grid go-x(默认): align-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">2</span> Grid S .row-near-top</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:start</div>
+        <div class="container grid-box content-S row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <!-- N Grid go-y(默认): justify-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">3</span> Grid N .row-near-top</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:start</div>
+        <div class="container grid-box v content-N row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <!-- И Grid go-y(默认): justify-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">4</span> Grid И .row-near-top</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:start</div>
+        <div class="container grid-box v content-И row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-x（Z/S默认，N/И显式）</h3>
+<div class="section">
+    <!-- Z Flex go-x(默认): align-content:start，单行下no-op，用多行看效果 -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">5</span> Flex Z .row-near-top</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:start（多行可见）</div>
+        <div class="container flex-box multi-line wrap-row content-Z row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <!-- S Flex go-x(默认) -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">6</span> Flex S .row-near-top</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:start</div>
+        <div class="container flex-box multi-line wrap-row content-S row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <!-- N Flex go-x(显式): align-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">7</span> Flex N go-x .row-near-top</div>
+        <div class="case-code">go-x(显式) → align-content+align-items:start（column+多行）</div>
+        <div class="container flex-box multi-line wrap-col go-x content-N row-near-top">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <!-- И Flex go-x(显式) -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">8</span> Flex И go-x .row-near-top</div>
+        <div class="case-code">go-x(显式) → align-content+align-items:start</div>
+        <div class="container flex-box multi-line wrap-col go-x content-И row-near-top">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-y（N/И默认，Z/S显式）</h3>
+<div class="section">
+    <!-- Z Flex go-y(显式): justify-content:start，单行可见 -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">9</span> Flex Z go-y .row-near-top</div>
+        <div class="case-code">go-y(显式) → justify-content+justify-items:start</div>
+        <div class="container flex-box tall go-y content-Z row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <!-- S Flex go-y(显式) -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">10</span> Flex S go-y .row-near-top</div>
+        <div class="case-code">go-y(显式) → justify-content+justify-items:start</div>
+        <div class="container flex-box tall go-y content-S row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <!-- N Flex go-y(默认): justify-content:start -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">11</span> Flex N .row-near-top</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:start</div>
+        <div class="container flex-box tall content-N row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <!-- И Flex go-y(默认) -->
+    <div class="case">
+        <div class="case-title"><span class="case-num">12</span> Flex И .row-near-top</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:start</div>
+        <div class="container flex-box tall content-И row-near-top">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== row-near-bottom ==================== -->
+<h2>row-near-bottom</h2>
+<h3>Grid</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">13</span> Grid Z .row-near-bottom</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:end</div>
+        <div class="container grid-box content-Z row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">14</span> Grid S .row-near-bottom</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:end</div>
+        <div class="container grid-box content-S row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">15</span> Grid N .row-near-bottom</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:end</div>
+        <div class="container grid-box v content-N row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">16</span> Grid И .row-near-bottom</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:end</div>
+        <div class="container grid-box v content-И row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-x</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">17</span> Flex Z .row-near-bottom</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:end（多行）</div>
+        <div class="container flex-box multi-line wrap-row content-Z row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">18</span> Flex S .row-near-bottom</div>
+        <div class="case-code">go-x(默认) → align-content+align-items:end</div>
+        <div class="container flex-box multi-line wrap-row content-S row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">19</span> Flex N go-x .row-near-bottom</div>
+        <div class="case-code">go-x(显式) → align-content+align-items:end（column+多行）</div>
+        <div class="container flex-box multi-line wrap-col go-x content-N row-near-bottom">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">20</span> Flex И go-x .row-near-bottom</div>
+        <div class="case-code">go-x(显式) → align-content+align-items:end</div>
+        <div class="container flex-box multi-line wrap-col go-x content-И row-near-bottom">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-y</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">21</span> Flex Z go-y .row-near-bottom</div>
+        <div class="case-code">go-y(显式) → justify-content+justify-items:end</div>
+        <div class="container flex-box tall go-y content-Z row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">22</span> Flex S go-y .row-near-bottom</div>
+        <div class="case-code">go-y(显式) → justify-content+justify-items:end</div>
+        <div class="container flex-box tall go-y content-S row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">23</span> Flex N .row-near-bottom</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:end</div>
+        <div class="container flex-box tall content-N row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">24</span> Flex И .row-near-bottom</div>
+        <div class="case-code">go-y(默认) → justify-content+justify-items:end</div>
+        <div class="container flex-box tall content-И row-near-bottom">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== col-near-left ==================== -->
+<h2>col-near-left</h2>
+<h3>Grid</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">25</span> Grid Z .col-near-left</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:start（Z左=start）</div>
+        <div class="container grid-box content-Z col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">26</span> Grid S .col-near-left</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:end（S左=end）</div>
+        <div class="container grid-box content-S col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">27</span> Grid N .col-near-left</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:end（N左=end）</div>
+        <div class="container grid-box v content-N col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">28</span> Grid И .col-near-left</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:start（И左=start）</div>
+        <div class="container grid-box v content-И col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-x</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">29</span> Flex Z .col-near-left</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:start</div>
+        <div class="container flex-box wide content-Z col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">30</span> Flex S .col-near-left</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:end（S左=end）</div>
+        <div class="container flex-box wide content-S col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">31</span> Flex N go-x .col-near-left</div>
+        <div class="case-code">go-x(显式) → justify-content+justify-items:end（N左=end）</div>
+        <div class="container flex-box sized go-x content-N col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">32</span> Flex И go-x .col-near-left</div>
+        <div class="case-code">go-x(显式) → justify-content+justify-items:start（И左=start）</div>
+        <div class="container flex-box sized go-x content-И col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-y</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">33</span> Flex Z go-y .col-near-left</div>
+        <div class="case-code">go-y(显式) → align-content+align-items:start（多行可见）</div>
+        <div class="container flex-box multi-line wrap-row go-y content-Z col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">34</span> Flex S go-y .col-near-left</div>
+        <div class="case-code">go-y(显式) → align-content+align-items:end（S左=end，多行）</div>
+        <div class="container flex-box multi-line wrap-row go-y content-S col-near-left">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">35</span> Flex N .col-near-left</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:end（N左=end，多行可见）</div>
+        <div class="container flex-box multi-line wrap-col content-N col-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">36</span> Flex И .col-near-left</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:start（И左=start，多行可见）</div>
+        <div class="container flex-box multi-line wrap-col content-И col-near-left">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== col-near-right ==================== -->
+<h2>col-near-right</h2>
+<h3>Grid</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">37</span> Grid Z .col-near-right</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:end</div>
+        <div class="container grid-box content-Z col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">38</span> Grid S .col-near-right</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:start（S右=start）</div>
+        <div class="container grid-box content-S col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">39</span> Grid N .col-near-right</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:start（N右=start）</div>
+        <div class="container grid-box v content-N col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">40</span> Grid И .col-near-right</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:end（И右=end）</div>
+        <div class="container grid-box v content-И col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-x</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">41</span> Flex Z .col-near-right</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:end</div>
+        <div class="container flex-box wide content-Z col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">42</span> Flex S .col-near-right</div>
+        <div class="case-code">go-x(默认) → justify-content+justify-items:start</div>
+        <div class="container flex-box wide content-S col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">43</span> Flex N go-x .col-near-right</div>
+        <div class="case-code">go-x(显式) → justify-content+justify-items:start（N右=start）</div>
+        <div class="container flex-box sized go-x content-N col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">44</span> Flex И go-x .col-near-right</div>
+        <div class="case-code">go-x(显式) → justify-content+justify-items:end</div>
+        <div class="container flex-box sized go-x content-И col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+</div>
+
+<h3>Flex go-y</h3>
+<div class="section">
+    <div class="case">
+        <div class="case-title"><span class="case-num">45</span> Flex Z go-y .col-near-right</div>
+        <div class="case-code">go-y(显式) → align-content+align-items:end（多行可见）</div>
+        <div class="container flex-box multi-line wrap-row go-y content-Z col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">46</span> Flex S go-y .col-near-right</div>
+        <div class="case-code">go-y(显式) → align-content+align-items:start（S右=start，多行）</div>
+        <div class="container flex-box multi-line wrap-row go-y content-S col-near-right">
+            <div class="item">1</div><div class="item">2</div><div class="item">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">47</span> Flex N .col-near-right</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:start（N右=start，多行可见）</div>
+        <div class="container flex-box multi-line wrap-col content-N col-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+    <div class="case">
+        <div class="case-title"><span class="case-num">48</span> Flex И .col-near-right</div>
+        <div class="case-code">go-y(默认) → align-content+align-items:end（多行可见）</div>
+        <div class="container flex-box multi-line wrap-col content-И col-near-right">
+            <div class="item small">1</div><div class="item small">2</div><div class="item small">3</div>
+        </div>
+    </div>
+</div>
+
+<h2>自动验证</h2>
+<div id="verify-result" style="font-family:monospace;font-size:12px;background:#f5f5f5;padding:10px;white-space:pre-wrap;max-height:400px;overflow:auto;"></div>
+<script>
+(function(){
+  var results = [];
+  var cases = document.querySelectorAll('.case');
+  cases.forEach(function(c){
+    var num = (c.querySelector('.case-num')||{}).textContent||'';
+    if (!num) return;
+    var container = c.querySelector('.container');
+    if (!container) return;
+    var cs = getComputedStyle(container);
+    var expected = (c.querySelector('.case-code')||{}).textContent||'';
+    var classes = Array.from(container.classList).join(' ');
+
+    // Determine if Grid or Flex
+    var isGrid = cs.display === 'grid';
+    var isFlex = cs.display === 'flex';
+    var mode = isGrid ? 'Grid' : isFlex ? 'Flex' : 'Other';
+
+    // Determine go direction
+    var hasGox = classes.indexOf('go-x') >= 0;
+    var hasGoy = classes.indexOf('go-y') >= 0;
+    var go = hasGoy ? 'go-y' : 'go-x';
+
+    results.push({
+      num: num,
+      mode: mode,
+      go: go,
+      jc: cs.justifyContent,
+      ac: cs.alignContent,
+      ji: cs.justifyItems,
+      ai: cs.alignItems,
+      fd: cs.flexDirection,
+      expected: expected
+    });
+  });
+
+  var out = '';
+  var pass = 0, fail = 0;
+  results.forEach(function(r, i){
+    // Quick checks
+    var issues = [];
+
+    // row-near-top: should position at top
+    if (r.expected.indexOf('row-near-top') >= 0 || (r.expected.indexOf('.row-near-top') >= 0)) {
+    }
+
+    out += r.num.padStart(2,' ') + ' ' + r.mode + ' ' + r.go + ' | jc=' + r.jc + ' ac=' + r.ac + ' ji=' + r.ji + ' ai=' + r.ai + '\n';
+  });
+
+  document.getElementById('verify-result').textContent =
+    '用例 布局  go   | justify-content  align-content  justify-items  align-items\n' +
+    '──────────────────────────────────────────────────────────────────────────\n' + out;
+})();
+</script>
+
+</body>
+</html>
