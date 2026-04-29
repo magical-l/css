@@ -58,23 +58,25 @@
 	grid-auto-flow: row;
 }
 
-/* 在横向铺陈子元素时，保证从左边开始。 */
+/* .go-x.from-left：在横向铺陈子元素时，保证从左边开始（适配任何书写模式）。 */
 .go-x.from-left { flex-direction: row; }
 .content-S.go-x.from-left, .content-S .go-x.from-left { flex-direction: row-reverse; }
 .content-N.go-x.from-left, .content-N .go-x.from-left { flex-direction: column-reverse; }
 .content-И.go-x.from-left, .content-И .go-x.from-left { flex-direction: column; }
 
-/* 在横向铺陈子元素时，保证从右边开始。 */
+/* .go-x.from-right：在横向铺陈子元素时，保证从右边开始（适配任何书写模式）。 */
 .go-x.from-right { flex-direction: row-reverse; }
 .content-S.go-x.from-right, .content-S .go-x.from-right { flex-direction: row; }
 .content-N.go-x.from-right, .content-N .go-x.from-right { flex-direction: column; }
 .content-И.go-x.from-right, .content-И .go-x.from-right { flex-direction: column-reverse; }
 
-/* 在纵向铺陈子元素时，保证从上方开始。（默认行为，无需额外规则） */
-/* .go-y.from-top { …… }
-.content-N.go-y.from-top, .content-И.go-y.from-top { …… } */
+/* .go-y.from-top：在纵向铺陈子元素时，保证从上方开始（适配任何书写模式）。 */
+/* 默认行为，无需额外规则
+.go-y.from-top { …… }
+.content-N.go-y.from-top, .content-И.go-y.from-top { …… }
+*/
 
-/* 在纵向铺陈子元素时，保证从下方开始。 */
+/* .go-y.from-bottom：在纵向铺陈子元素时，保证从下方开始（适配任何书写模式）。 */
 .go-y.from-bottom { flex-direction: column-reverse; }
 .content-N.go-y.from-bottom, .content-N .go-y.from-bottom,
 .content-И.go-y.from-bottom, .content-И .go-y.from-bottom { flex-direction: row-reverse; }
@@ -134,70 +136,114 @@
    选择器分同元素（.A.B）和后代（.A .B），后者匹配父级继承 writing-mode 的情况。
    .go-x/.go-y 不继承，必须与容器同元素，故后代版本中 go 类始终在 .row-near-* 侧。 */
 /* ================= 行位置 ================= */
-/* --- row-near-top --- */
+/* --- .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 --- */
 .row-near-top:where(:not(.content-S):not(.content-N):not(.content-И)):not(.go-y),
 .content-S.row-near-top:not(.go-y),
 .content-S .row-near-top:not(.content-N):not(.content-И):not(.go-y),
 .content-N.go-x.row-near-top,
 .content-N .go-x.row-near-top,
 .content-И.go-x.row-near-top,
-.content-И .go-x.row-near-top { align-content: start; align-items: start; }
-
+.content-И .go-x.row-near-top {
+	align-content: start;
+	align-items: start;
+}
 .content-N.row-near-top:not(.go-x),
 .content-N .row-near-top:not(.go-x),
 .content-И.row-near-top:not(.go-x),
-.content-И .row-near-top:not(.go-x) { justify-content: start; justify-items: start; align-content: normal; align-items: normal; }
+.content-И .row-near-top:not(.go-x) {
+	justify-content: start;
+	justify-items: start;
+	align-content: normal;
+	align-items: normal;
+}
 .row-near-top.go-y { justify-content: start; justify-items: start; }
 
-/* --- row-near-bottom --- */
+/* --- .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 --- */
 .row-near-bottom:where(:not(.content-S):not(.content-N):not(.content-И)):not(.go-y),
 .content-S.row-near-bottom:not(.go-y),
 .content-S .row-near-bottom:not(.content-N):not(.content-И):not(.go-y),
 .content-N.go-x.row-near-bottom,
 .content-N .go-x.row-near-bottom,
 .content-И.go-x.row-near-bottom,
-.content-И .go-x.row-near-bottom { align-content: end; align-items: end; }
+.content-И .go-x.row-near-bottom {
+	align-content: end;
+	align-items: end;
+}
 
 .content-N.row-near-bottom:not(.go-x),
 .content-N .row-near-bottom:not(.go-x),
 .content-И.row-near-bottom:not(.go-x),
-.content-И .row-near-bottom:not(.go-x) { justify-content: end; justify-items: end; align-content: normal; align-items: normal; }
+.content-И .row-near-bottom:not(.go-x) {
+	justify-content: end;
+	justify-items: end;
+	align-content: normal;
+	align-items: normal;
+}
 .row-near-bottom.go-y { justify-content: end; justify-items: end; }
 
 /* ================= 列位置 ================= */
-/* --- col-near-left --- */
+/* --- .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 --- */
 .col-near-left:where(:not(.content-S):not(.content-N):not(.content-И)):not(.go-y),
 .content-И.go-x.col-near-left,
-.content-И .go-x.col-near-left { justify-content: start; justify-items: start; }
+.content-И .go-x.col-near-left {
+	justify-content: start; justify-items: start;
+}
 .content-S.col-near-left:not(.go-y),
 .content-S .col-near-left:not(.content-N):not(.content-И):not(.go-y),
 .content-N.go-x.col-near-left,
-.content-N .go-x.col-near-left { justify-content: end; justify-items: end; }
+.content-N .go-x.col-near-left {
+	justify-content: end;
+	justify-items: end;
+}
 
 .col-near-left.go-y:where(:not(.content-S):not(.content-N):not(.content-И)),
 .content-И.col-near-left:not(.go-x),
-.content-И .col-near-left:not(.go-x) { align-content: start; align-items: start; }
+.content-И .col-near-left:not(.go-x) {
+	align-content: start;
+	align-items: start;
+}
 .content-S.col-near-left.go-y,
 .content-S .col-near-left.go-y,
 .content-N.col-near-left:not(.go-x),
-.content-N .col-near-left:not(.go-x) { align-content: end; align-items: end; }
+.content-N .col-near-left:not(.go-x) {
+	align-content: end;
+	align-items: end;
+}
 
-/* --- col-near-right --- */
+/* --- .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 --- */
 .col-near-right:where(:not(.content-S):not(.content-N):not(.content-И)):not(.go-y),
 .content-И.go-x.col-near-right,
-.content-И .go-x.col-near-right { justify-content: end; justify-items: end; }
+.content-И .go-x.col-near-right {
+	justify-content: end;
+	justify-items: end;
+}
 .content-S.col-near-right:not(.go-y),
 .content-S .col-near-right:not(.content-N):not(.content-И):not(.go-y),
 .content-N.go-x.col-near-right,
-.content-N .go-x.col-near-right { justify-content: start; justify-items: start; }
+.content-N .go-x.col-near-right {
+	justify-content: start;
+	justify-items: start;
+}
 
-.col-near-right.go-y:where(:not(.content-S):not(.content-N):not(.content-И)) { align-content: end; align-items: end; }
+.col-near-right.go-y:where(:not(.content-S):not(.content-N):not(.content-И)) {
+	align-content: end; align-items: end;
+}
 .content-И.col-near-right:not(.go-x),
-.content-И .col-near-right:not(.go-x) { align-content: end; align-items: end; justify-content: normal; justify-items: normal; }
+.content-И .col-near-right:not(.go-x) {
+	align-content: end;
+	align-items: end;
+	justify-content: normal;
+	justify-items: normal;
+}
 .content-S.col-near-right.go-y,
 .content-S .col-near-right.go-y,
 .content-N.col-near-right:not(.go-x),
-.content-N .col-near-right:not(.go-x) { align-content: start; align-items: start; justify-content: normal; justify-items: normal; }
+.content-N .col-near-right:not(.go-x) {
+	align-content: start;
+	align-items: start;
+	justify-content: normal;
+	justify-items: normal;
+}
 
 /*========== 项目位置：items-near-* ==========*/
 /* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
