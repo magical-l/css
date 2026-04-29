@@ -41,7 +41,8 @@
 	flex-direction: row;     /* Flex: 横向排列 */
 	grid-auto-flow: row;     /* Grid: 横向填充 */
 }
-.content-N.go-x, .content-И.go-x {
+.content-N.go-x, .content-N .go-x,
+.content-И.go-x, .content-И .go-x {
 	flex-direction: column;
 	grid-auto-flow: column;
 }
@@ -51,22 +52,23 @@
 	flex-direction: column;
 	grid-auto-flow: column;
 }
-.content-N.go-y, .content-И.go-y {
+.content-N.go-y, .content-N .go-y,
+.content-И.go-y, .content-И .go-y {
 	flex-direction: row;
 	grid-auto-flow: row;
 }
 
 /* 在横向铺陈子元素时，保证从左边开始。 */
 .go-x.from-left { flex-direction: row; }
-.content-S.go-x.from-left { flex-direction: row-reverse; }
-.content-N.go-x.from-left { flex-direction: column-reverse; }
-.content-И.go-x.from-left { flex-direction: column; }
+.content-S.go-x.from-left, .content-S .go-x.from-left { flex-direction: row-reverse; }
+.content-N.go-x.from-left, .content-N .go-x.from-left { flex-direction: column-reverse; }
+.content-И.go-x.from-left, .content-И .go-x.from-left { flex-direction: column; }
 
 /* 在横向铺陈子元素时，保证从右边开始。 */
 .go-x.from-right { flex-direction: row-reverse; }
-.content-S.go-x.from-right { flex-direction: row; }
-.content-N.go-x.from-right { flex-direction: column; }
-.content-И.go-x.from-right { flex-direction: column-reverse; }
+.content-S.go-x.from-right, .content-S .go-x.from-right { flex-direction: row; }
+.content-N.go-x.from-right, .content-N .go-x.from-right { flex-direction: column; }
+.content-И.go-x.from-right, .content-И .go-x.from-right { flex-direction: column-reverse; }
 
 /* 在纵向铺陈子元素时，保证从上方开始。（默认行为，无需额外规则） */
 /* .go-y.from-top { …… }
@@ -74,7 +76,8 @@
 
 /* 在纵向铺陈子元素时，保证从下方开始。 */
 .go-y.from-bottom { flex-direction: column-reverse; }
-.content-N.go-y.from-bottom, .content-И.go-y.from-bottom { flex-direction: row-reverse; }
+.content-N.go-y.from-bottom, .content-N .go-y.from-bottom,
+.content-И.go-y.from-bottom, .content-И .go-y.from-bottom { flex-direction: row-reverse; }
 
 /*-----------------------flex布局专用--------------------------*/
 .single-line {flex-wrap: nowrap;}
