@@ -8,9 +8,12 @@
 body { padding: 20px; font-family: sans-serif; font-size: 14px; }
 h1 { border-bottom: 2px solid #333; }
 h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
+#verify-summary { position: sticky; top: 0; z-index: 100; padding: 8px 16px; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
 h3 { margin-top: 20px; color: #777; }
 .section { margin: 15px 0; display: flex; gap: 15px; flex-wrap: wrap; align-items: flex-start; }
 .case { border: 1px solid #999; padding: 10px; background: #fafafa; }
+.case.pass { background: #e8f5e9; border-color: #4caf50; }
+.case.fail { background: #ffebee; border-color: #f44336; }
 .case-title { font-weight: bold; margin-bottom: 3px; }
 .case-code { font-family: monospace; font-size: 11px; color: #555; margin-bottom: 6px; }
 .case-num { color: #ff6b6b; }
@@ -443,13 +446,10 @@ h3 { margin-top: 20px; color: #777; }
     </div>
 </div>
 
-<h2>自动验证</h2>
-<div id="verify-result" style="font-family:monospace;font-size:12px;background:#f5f5f5;padding:10px;white-space:pre-wrap;max-height:400px;overflow:auto;"></div>
 <script>
 (function(){
   var props={jc:'justifyContent',ac:'alignContent',ji:'justifyItems',ai:'alignItems'};
   var fail=0, total=0;
-  var out='';
   var cases = document.querySelectorAll('.case');
   cases.forEach(function(c){
     var num=(c.querySelector('.case-num')||{}).textContent||'';
@@ -485,21 +485,19 @@ h3 { margin-top: 20px; color: #777; }
       var expected=exps[k];
       var ok=!expected||actual===expected;
       if(!ok){ allOK=false; }
-      out+=k+':'+(actual||'-').padEnd(12)+(ok?' ✓':' ✗ expected '+expected).padEnd(16);
     });
-    out+='
-';
     if(!allOK) fail++;
     total++;
+    c.classList.add(allOK?'pass':'fail');
   });
-  document.getElementById('verify-result').textContent=
-    '  jc           ac           ji           ai           (✓=match, ✗=mismatch+expected)
-'
-    +'─'.repeat(72)+'
-'+out
-    +'─'.repeat(72)+'
-'
-    +(total-fail)+'/'+total+' pass, '+fail+' fail';
+  var summary = document.createElement('div');
+  summary.id = 'verify-summary';
+  summary.style.cssText = 'position:sticky;top:0;z-index:100;padding:8px 16px;font-size:14px;font-weight:bold;margin-bottom:10px;';
+  var allPass = fail === 0;
+  summary.style.background = allPass ? '#e8f5e9' : '#ffebee';
+  summary.style.color = allPass ? '#2e7d32' : '#c62828';
+  summary.textContent = (total-fail) + ' 通过 / ' + fail + ' 失败 / ' + total + ' 总计' + (allPass ? ' ✓' : ' ✗');
+  document.body.insertBefore(summary, document.body.firstChild);
 })();
 </script>
 

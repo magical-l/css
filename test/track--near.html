@@ -33,6 +33,9 @@
         .label { font-size: 14px; margin-bottom: 8px; }
         .code { font-family: monospace; background: #ddd; padding: 2px 6px; }
         .case-num { font-weight: bold; color: #ffab91; }
+.section.pass { background: #e8f5e9; border-color: #4caf50; }
+.section.fail { background: #ffebee; border-color: #f44336; }
+        #verify-summary { position: sticky; top: 0; z-index: 100; padding: 8px 16px; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -171,5 +174,84 @@
     </div>
 </div>
 
+<script>
+(function() {
+  const MAP = {
+    'col-near-left': {
+      'Z': { jc:'start' },
+      'S': { jc:'end' },
+      'N': { ac:'end' },
+      'И': { ac:'start' }
+    },
+    'col-near-right': {
+      'Z': { jc:'end' },
+      'S': { jc:'start' },
+      'N': { ac:'start' },
+      'И': { ac:'end' }
+    },
+    'row-near-top': {
+      'Z': { ac:'start' },
+      'N': { jc:'start' },
+      'И': { jc:'start' }
+    },
+    'row-near-bottom': {
+      'Z': { ac:'end' },
+      'N': { jc:'end' },
+      'И': { jc:'end' }
+    }
+  };
+
+  let pass = 0, fail = 0, total = 0;
+  const details = [];
+
+  document.querySelectorAll('.section').forEach(section => {
+    const container = section.querySelector('.container');
+    if (!container) return;
+    const cls = [...container.classList];
+    const mode = (cls.find(c => /^content-./.test(c)) || '').replace('content-', '');
+    const tracks = Object.keys(MAP).filter(t => container.classList.contains(t));
+    if (!tracks.length || !mode || !MAP[tracks[0]][mode]) return;
+
+    let expJC = null, expAC = null;
+    tracks.forEach(t => {
+      const e = MAP[t][mode];
+      if (!e) return;
+      if (e.jc) expJC = e.jc;
+      if (e.ac) expAC = e.ac;
+    });
+
+    total++;
+    const style = getComputedStyle(container);
+    const jcOK = !expJC || style.justifyContent === expJC;
+    const acOK = !expAC || style.alignContent === expAC;
+    const passed = jcOK && acOK;
+
+    if (passed) pass++; else fail++;
+    section.classList.add(passed ? 'pass' : 'fail');
+
+    const caseNum = section.querySelector('.case-num')?.textContent || '';
+    if (!passed) {
+      const issues = [];
+      if (expJC && !jcOK) issues.push('justifyContent=' + style.justifyContent + ' (expected ' + expJC + ')');
+      if (expAC && !acOK) issues.push('alignContent=' + style.alignContent + ' (expected ' + expAC + ')');
+      details.push(caseNum + ': ' + issues.join('; '));
+    }
+  });
+
+  var summary = document.createElement('div');
+  summary.id = 'verify-summary';
+  var allPass = fail === 0;
+  summary.style.background = allPass ? '#e8f5e9' : '#ffebee';
+  summary.style.color = allPass ? '#2e7d32' : '#c62828';
+  summary.textContent = pass + ' 通过 / ' + fail + ' 失败 / ' + total + ' 总计' + (allPass ? ' ✓' : ' ✗');
+  document.body.insertBefore(summary, document.body.firstChild);
+  if (details.length) {
+    var detailDiv = document.createElement('div');
+    detailDiv.style.cssText = 'margin-top:10px;padding:15px;background:#f5f5f5;border:2px solid #999;font-size:14px;line-height:1.8;';
+    detailDiv.innerHTML = '<h2 style="margin:0 0 10px">失败明细</h2><p style="color:#f44336">' + details.join('<br>') + '</p>';
+    document.body.appendChild(detailDiv);
+  }
+})();
+</script>
 </body>
 </html>

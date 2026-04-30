@@ -31,6 +31,9 @@
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
         .case-num { font-weight: bold; color: #ffab91; }
+        .section.pass { background: #e8f5e9; border-color: #4caf50; }
+        .section.fail { background: #ffebee; border-color: #f44336; }
+        #verify-summary { position: sticky; top: 0; z-index: 100; padding: 8px 16px; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body class="content-Z">
@@ -65,5 +68,42 @@
     </div>
 </div>
 
+<script>
+(function() {
+  const expect = {
+    'content-Z': { writingMode: 'horizontal-tb', direction: 'ltr' },
+    'content-S': { writingMode: 'horizontal-tb', direction: 'rtl' },
+    'content-N': { writingMode: 'vertical-rl', direction: 'ltr' },
+    'content-И': { writingMode: 'vertical-lr', direction: 'ltr' }
+  };
+
+  let pass = 0, fail = 0;
+
+  for (const section of document.querySelectorAll('.section')) {
+    const container = section.querySelector('.container');
+    if (!container) continue;
+
+    const cls = ['content-Z', 'content-S', 'content-N', 'content-И']
+      .find(c => container.classList.contains(c) || document.body.classList.contains(c));
+
+    if (!cls) continue;
+
+    const style = getComputedStyle(container);
+    const exp = expect[cls];
+    const ok = style.writingMode === exp.writingMode && style.direction === exp.direction;
+
+    section.classList.add(ok ? 'pass' : 'fail');
+    if (ok) pass++; else fail++;
+  }
+
+  var summary = document.createElement('div');
+  summary.id = 'verify-summary';
+  var allPass = fail === 0;
+  summary.style.background = allPass ? '#e8f5e9' : '#ffebee';
+  summary.style.color = allPass ? '#2e7d32' : '#c62828';
+  summary.textContent = pass + ' 通过 / ' + fail + ' 失败 / ' + (pass + fail) + ' 总计' + (allPass ? ' ✓' : ' ✗');
+  document.body.insertBefore(summary, document.body.firstChild);
+})();
+</script>
 </body>
 </html>

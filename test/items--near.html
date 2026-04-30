@@ -59,6 +59,9 @@
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; border-radius: 3px; }
         .case-num { font-weight: bold; color: #ffab91; }
+        .section.pass { background: #e8f5e9; border-color: #4caf50; }
+        .section.fail { background: #ffebee; border-color: #f44336; }
+        #verify-summary { position: sticky; top: 0; z-index: 100; padding: 8px 16px; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body class="content-Z">
@@ -206,5 +209,55 @@
     </div>
 </div>
 
+
+<script>
+(function(){
+  // Expected [ji, ai] for [items-near-left, items-near-right, items-near-top, items-near-bottom]
+  // Keyed by content mode: Z (ltr horizontal), S (rtl horizontal), N (vertical-rl), И (vertical-lr)
+  var expectMap = {
+    'content-Z': { 'items-near-left':['start',null], 'items-near-right':['end',null], 'items-near-top':[null,'start'], 'items-near-bottom':[null,'end'] },
+    'content-S': { 'items-near-left':['end',null], 'items-near-right':['start',null] },
+    'content-N': { 'items-near-left':[null,'end'], 'items-near-right':[null,'start'], 'items-near-top':['start',null], 'items-near-bottom':['end',null] },
+    'content-И': { 'items-near-left':[null,'start'], 'items-near-right':[null,'end'] }
+  };
+
+  var sections = document.querySelectorAll('.section');
+  var fail = 0, total = 0;
+  sections.forEach(function(sec){
+    var ct = sec.querySelector('.container');
+    if (!ct) return;
+    var cls = ct.classList;
+    // Determine content mode
+    var content = '';
+    for (var i = 0; i < cls.length; i++) {
+      if (/^content-[ZSNИ]$/.test(cls[i])) { content = cls[i]; break; }
+    }
+    // Determine near-* class
+    var near = '';
+    for (var i = 0; i < cls.length; i++) {
+      if (/^items-near-/.test(cls[i])) { near = cls[i]; break; }
+    }
+    var map = expectMap[content];
+    if (!map) { map = expectMap['content-Z']; }
+    var exp = map[near];
+    if (!exp) { return; }
+    var s = getComputedStyle(ct);
+    var ji = s.justifyItems, ai = s.alignItems;
+    var jiOK = exp[0] === null || ji === exp[0];
+    var aiOK = exp[1] === null || ai === exp[1];
+    var allOK = jiOK && aiOK;
+    if (!allOK) fail++;
+    total++;
+    sec.classList.add(allOK ? 'pass' : 'fail');
+  });
+  var summary = document.createElement('div');
+  summary.id = 'verify-summary';
+  var allPass = fail === 0;
+  summary.style.background = allPass ? '#e8f5e9' : '#ffebee';
+  summary.style.color = allPass ? '#2e7d32' : '#c62828';
+  summary.textContent = (total - fail) + ' 通过 / ' + fail + ' 失败 / ' + total + ' 总计' + (allPass ? ' ✓' : ' ✗');
+  document.body.insertBefore(summary, document.body.firstChild);
+})();
+</script>
 </body>
 </html>

@@ -13,6 +13,8 @@ h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
 .case-num { color: #ff6b6b; font-weight: bold; }
 .case-class { font-family: monospace; font-size: 11px; }
 .case-expect { font-family: monospace; font-size: 10px; color: #2e7d32; }
+.case.pass { background: #e8f5e9; border-color: #4caf50; }
+.case.fail { background: #ffebee; border-color: #f44336; }
 .container { border: 3px solid #333; background: #f0f0f0; }
 
 .grid-dist { display: grid; grid-template-columns: 60px 60px; grid-template-rows: 60px 60px; width: 200px; height: 200px; }
@@ -20,6 +22,8 @@ h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
 
 .flex-dist { display: flex; width: 200px; height: 200px; align-items: start; flex-wrap: wrap; }
 .flex-dist .item { background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; width: 45px; height: 45px; box-sizing: border-box; flex: none; }
+#verify-summary.all-pass { background: #e8f5e9; color: #2e7d32; }
+#verify-summary.has-fail { background: #ffebee; color: #c62828; }
 </style>
 </head>
 <body>
@@ -126,15 +130,11 @@ makeFlexSimple('items-space-around（别名）','items-space-around','jc+ac');
 makeFlexCombo('items-x + items-y','items-x-space-around','items-y-space-around',xMech,yMech);
 </script>
 
-<h2>对比：期望 vs 实际</h2>
-<pre id="r" style="font:12px monospace;background:#f5f5f5;padding:10px;overflow:auto;"></pre>
 <script>
 (function(){
     var DIST='space-around';
     var fail=0, total=0;
-    var out='';
     document.querySelectorAll('.case').forEach(function(c){
-        var n=c.querySelector('.case-num').textContent;
         var ct=c.querySelector('.container');
         if(!ct)return;
         var exp=c.getAttribute('data-exp')||'';
@@ -148,20 +148,17 @@ makeFlexCombo('items-x + items-y','items-x-space-around','items-y-space-around',
         var acOK=!checkAc || ac===DIST;
         if(!jcOK||!acOK) fail++;
         total++;
-
-        function cell(actual, check, ok){
-            if(!check) return actual.padEnd(16);
-            return actual.padEnd(16)+(ok?' ✓':' ✗ 期望 '+DIST);
-        }
-
-        var tag=ct.classList.contains('grid')?'G':'F';
-        out+=n.padStart(3)+' '+tag+' jc:'+cell(jc,checkJc,jcOK)+' ac:'+cell(ac,checkAc,acOK)+'\n';
+        c.classList.add(jcOK&&acOK?'pass':'fail');
     });
-    document.getElementById('r').textContent=
-        '  jc/ac: 实际值 (✓=匹配, ✗=不匹配+期望值)\n'
-        +'─'.repeat(72)+'\n'+out
-        +'─'.repeat(72)+'\n'
-        +(total-fail)+'/'+total+' 通过, '+fail+' 失败';
+    var summary = document.createElement('div');
+    summary.id = 'verify-summary';
+    summary.style.cssText = 'position:sticky;top:0;z-index:100;padding:8px 16px;font-size:14px;font-weight:bold;margin-bottom:10px;';
+    var allPass = fail === 0;
+    summary.className = allPass ? 'all-pass' : 'has-fail';
+    summary.style.background = allPass ? '#e8f5e9' : '#ffebee';
+    summary.style.color = allPass ? '#2e7d32' : '#c62828';
+    summary.textContent = (total-fail) + ' 通过 / ' + fail + ' 失败 / ' + total + ' 总计' + (allPass ? ' ✓' : ' ✗');
+    document.body.insertBefore(summary, document.body.firstChild);
 })();
 </script>
 </body>

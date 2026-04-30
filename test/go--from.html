@@ -38,6 +38,9 @@
         .label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .code { font-family: monospace; background: #e8e8e8; padding: 2px 6px; }
         .case-num { font-weight: bold; color: #ffab91; }
+        .section.pass { background: #e8f5e9; border-color: #4caf50; }
+        .section.fail { background: #ffebee; border-color: #f44336; }
+        #verify-summary { position: sticky; top: 0; z-index: 100; padding: 8px 16px; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
     </style>
 </head>
 <body class="content-Z">
@@ -166,5 +169,76 @@
     </div>
 </div>
 
-</body>
+<script>
+(function() {
+  const sections = document.querySelectorAll('.section');
+  let pass = 0, fail = 0;
+  sections.forEach(section => {
+    const container = section.querySelector('.container');
+    if (!container) return;
+    const cls = container.classList;
+    const isGrid = cls.contains('grid');
+    const isFlex = cls.contains('flex');
+    if (!isFlex && !isGrid) return;
+
+    let ok = false;
+    if (isFlex) {
+      const expected = expectedFlexDir(cls);
+      const actual = getComputedStyle(container).flexDirection;
+      ok = actual === expected;
+    } else {
+      const expected = expectedGridFlow(cls);
+      const actual = getComputedStyle(container).gridAutoFlow;
+      ok = actual === expected;
+    }
+
+    section.classList.add(ok ? 'pass' : 'fail');
+    if (ok) pass++; else fail++;
+  });
+
+  function expectedFlexDir(cls) {
+    const isX = cls.contains('go-x');
+    const isY = cls.contains('go-y');
+    const vert = cls.contains('content-N') || cls.contains('content-И');
+    if (isX) {
+      if (cls.contains('from-right')) {
+        if (cls.contains('content-S')) return 'row';
+        if (cls.contains('content-N')) return 'column';
+        if (cls.contains('content-И')) return 'column-reverse';
+        return 'row-reverse';
+      }
+      if (cls.contains('from-left')) {
+        if (cls.contains('content-S')) return 'row-reverse';
+        if (cls.contains('content-N')) return 'column-reverse';
+        if (cls.contains('content-И')) return 'column';
+        return 'row';
+      }
+      return vert ? 'column' : 'row';
+    }
+    if (isY) {
+      if (cls.contains('from-bottom')) {
+        return vert ? 'row-reverse' : 'column-reverse';
+      }
+      return vert ? 'row' : 'column';
+    }
+    return null;
+  }
+
+  function expectedGridFlow(cls) {
+    const vert = cls.contains('content-N') || cls.contains('content-И');
+    if (cls.contains('go-x')) return vert ? 'column' : 'row';
+    if (cls.contains('go-y')) return vert ? 'row' : 'column';
+    return null;
+  }
+
+  var div = document.createElement('div');
+  div.id = 'verify-summary';
+  var allPass = fail === 0;
+  div.style.background = allPass ? '#e8f5e9' : '#ffebee';
+  div.style.color = allPass ? '#2e7d32' : '#c62828';
+  div.textContent = pass + ' 通过 / ' + fail + ' 失败 / ' + (pass + fail) + ' 总计' + (allPass ? ' ✓' : ' ✗');
+  document.body.insertBefore(div, document.body.firstChild);
+  if (fail) document.title = '[FAIL] ' + document.title;
+})();
+</script></body>
 </html>
