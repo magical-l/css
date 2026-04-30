@@ -447,56 +447,59 @@ h3 { margin-top: 20px; color: #777; }
 <div id="verify-result" style="font-family:monospace;font-size:12px;background:#f5f5f5;padding:10px;white-space:pre-wrap;max-height:400px;overflow:auto;"></div>
 <script>
 (function(){
-  var results = [];
+  var props={jc:'justifyContent',ac:'alignContent',ji:'justifyItems',ai:'alignItems'};
+  var fail=0, total=0;
+  var out='';
   var cases = document.querySelectorAll('.case');
   cases.forEach(function(c){
-    var num = (c.querySelector('.case-num')||{}).textContent||'';
-    if (!num) return;
-    var container = c.querySelector('.container');
-    if (!container) return;
-    var cs = getComputedStyle(container);
-    var expected = (c.querySelector('.case-code')||{}).textContent||'';
-    var classes = Array.from(container.classList).join(' ');
+    var num=(c.querySelector('.case-num')||{}).textContent||'';
+    if(!num) return;
+    var ct=c.querySelector('.container');
+    if(!ct) return;
+    var cs=getComputedStyle(ct);
+    var code=(c.querySelector('.case-code')||{}).textContent||'';
 
-    // Determine if Grid or Flex
-    var isGrid = cs.display === 'grid';
-    var isFlex = cs.display === 'flex';
-    var mode = isGrid ? 'Grid' : isFlex ? 'Flex' : 'Other';
-
-    // Determine go direction
-    var hasGox = classes.indexOf('go-x') >= 0;
-    var hasGoy = classes.indexOf('go-y') >= 0;
-    var go = hasGoy ? 'go-y' : 'go-x';
-
-    results.push({
-      num: num,
-      mode: mode,
-      go: go,
-      jc: cs.justifyContent,
-      ac: cs.alignContent,
-      ji: cs.justifyItems,
-      ai: cs.alignItems,
-      fd: cs.flexDirection,
-      expected: expected
-    });
-  });
-
-  var out = '';
-  var pass = 0, fail = 0;
-  results.forEach(function(r, i){
-    // Quick checks
-    var issues = [];
-
-    // row-near-top: should position at top
-    if (r.expected.indexOf('row-near-top') >= 0 || (r.expected.indexOf('.row-near-top') >= 0)) {
+    // Parse expected from case-code: '... → align-content+align-items:start'
+    var exps={};
+    var arrow=code.indexOf('→');
+    if(arrow>=0){
+      var part=code.substring(arrow+1).trim();
+      var match=part.match(/(align|justify)-content\+?(align|justify)?-?items?:(\w+)/);
+      if(match){
+        var p1=(match[1]==='align'?'ac':'jc');
+        var p2=match[2]?(match[2]==='align'?'ai':'ji'):null;
+        var val=match[3];
+        exps[p1]=val;
+        if(p2) exps[p2]=val;
+        // Also set jc/ji from justify-*
+        if(match[0].indexOf('justify-content')>=0) exps['jc']=val;
+        if(match[0].indexOf('justify-items')>=0) exps['ji']=val;
+        if(match[0].indexOf('align-content')>=0) exps['ac']=val;
+        if(match[0].indexOf('align-items')>=0) exps['ai']=val;
+      }
     }
 
-    out += r.num.padStart(2,' ') + ' ' + r.mode + ' ' + r.go + ' | jc=' + r.jc + ' ac=' + r.ac + ' ji=' + r.ji + ' ai=' + r.ai + '\n';
+    var allOK=true;
+    ['jc','ac','ji','ai'].forEach(function(k){
+      var actual=cs[props[k]];
+      var expected=exps[k];
+      var ok=!expected||actual===expected;
+      if(!ok){ allOK=false; }
+      out+=k+':'+(actual||'-').padEnd(12)+(ok?' ✓':' ✗ expected '+expected).padEnd(16);
+    });
+    out+='
+';
+    if(!allOK) fail++;
+    total++;
   });
-
-  document.getElementById('verify-result').textContent =
-    '用例 布局  go   | justify-content  align-content  justify-items  align-items\n' +
-    '──────────────────────────────────────────────────────────────────────────\n' + out;
+  document.getElementById('verify-result').textContent=
+    '  jc           ac           ji           ai           (✓=match, ✗=mismatch+expected)
+'
+    +'─'.repeat(72)+'
+'+out
+    +'─'.repeat(72)+'
+'
+    +(total-fail)+'/'+total+' pass, '+fail+' fail';
 })();
 </script>
 

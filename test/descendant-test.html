@@ -191,15 +191,42 @@ h3 { margin-top: 16px; color: #777; }
 <pre id="r" style="font:12px monospace;background:#f5f5f5;padding:10px;max-height:500px;overflow:auto;"></pre>
 <script>
 (function(){
-    var out='';
+    var fail=0, total=0, out='';
+    var props={jc:'justifyContent',ac:'alignContent',ji:'justifyItems',ai:'alignItems'};
     document.querySelectorAll('.case').forEach(function(c){
         var n=c.querySelector('.case-num').textContent;
         var ct=c.querySelector('.container');
         if(!ct)return;
+        var expText=(c.querySelector('.case-expect')||{}).textContent||'';
         var s=getComputedStyle(ct);
-        out+=n.padStart(2)+' jc='+s.justifyContent.padEnd(11)+' ac='+s.alignContent.padEnd(11)+' ji='+s.justifyItems.padEnd(11)+' ai='+s.alignItems+'\n';
+
+        var exps={};
+        expText.split(/\s+/).forEach(function(pair){
+            var kv=pair.split(':');
+            if(kv.length===2) exps[kv[0]]=kv[1];
+        });
+
+        var allOK=true;
+        ['jc','ac','ji','ai'].forEach(function(k){
+            var actual=s[props[k]];
+            var expected=exps[k];
+            var ok=!expected||actual===expected;
+            if(!ok){ allOK=false; }
+            out+=k+':'+(actual||'-').padEnd(12)+(ok?' ✓':' ✗ expected '+expected).padEnd(18);
+        });
+        out+='
+';
+        if(!allOK) fail++;
+        total++;
     });
-    document.getElementById('r').textContent='#  jc          ac          ji          ai\n'+'─'.repeat(52)+'\n'+out;
+    document.getElementById('r').textContent=
+        '  jc           ac           ji           ai           (✓=match, ✗=mismatch+expected)
+'
+        +'─'.repeat(70)+'
+'+out
+        +'─'.repeat(70)+'
+'
+        +(total-fail)+'/'+total+' pass, '+fail+' fail';
 })();
 </script>
 </body>
