@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>items-x/y-space-between 测试</title>
+<link rel="stylesheet" href="../layout.css">
+<style>
+body { padding: 20px; font-family: sans-serif; font-size: 14px; }
+h1 { border-bottom: 2px solid #333; }
+h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
+.section { margin: 12px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+.case { border: 1px solid #999; padding: 7px; background: #fafafa; }
+.case-num { color: #ff6b6b; font-weight: bold; }
+.case-class { font-family: monospace; font-size: 11px; }
+.case-expect { font-family: monospace; font-size: 10px; color: #2e7d32; }
+.container { border: 3px solid #333; background: #f0f0f0; }
+
+.grid-dist { display: grid; grid-template-columns: 60px 60px; grid-template-rows: 60px 60px; width: 200px; height: 200px; }
+.grid-dist .item { background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+
+.flex-dist { display: flex; width: 200px; height: 200px; align-items: start; flex-wrap: wrap; }
+.flex-dist .item { background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; width: 45px; height: 45px; box-sizing: border-box; flex: none; }
+</style>
+</head>
+<body>
+
+<script>
+var num=0;
+function cls(s){return s?' '+s.replace(/\./g,' '):'';}
+
+var contents=['','content-Z','content-S','content-N','content-И'];
+var cnames={ '':'Z(默认)','content-Z':'Z','content-S':'S','content-N':'N','content-И':'И' };
+var gos=['','go-x','go-y'];
+var goname={ '':'默认','go-x':'.go-x','go-y':'.go-y' };
+
+// 期望：Grid inline=水平(Z/S)或block=水平(N/И)，Flex 交轴/主轴
+function xMech(co,go){
+  if(co==='content-N'||co==='content-И') return go!=='go-x' ? 'ac' : 'jc';
+  return go==='go-y' ? 'ac' : 'jc';
+}
+function yMech(co,go){
+  if(co==='content-N'||co==='content-И') return go==='go-x' ? 'ac' : 'jc';
+  return go!=='go-y' ? 'ac' : 'jc';
+}
+
+// Grid 期望值
+function gridXExpect(co){
+  return co==='content-N'||co==='content-И' ? 'ac' : 'jc';
+}
+function gridYExpect(co){
+  return co==='content-N'||co==='content-И' ? 'jc' : 'ac';
+}
+
+// ========== Grid ==========
+function makeGrid(title, clsName, getExpect){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    var exp=getExpect(co);
+    num++; document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">同 '+cnames[co]+'</div><div class="case-expect">'+exp+'</div><div class="container grid grid-dist'+cls(co)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>');
+    num++; var w=co?'<div class="'+co+'">':'<div>';
+    document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">上 '+cnames[co]+'</div><div class="case-expect">'+exp+'</div>'+w+'<div class="container grid grid-dist '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>');
+  }
+  document.write('</div>');
+}
+
+// ========== Flex ==========
+function makeFlex(title, clsName, getMech){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    for(var gi=0;gi<gos.length;gi++){
+      var go=gos[gi];
+      var mech=getMech(co,go);
+      num++; document.write('<div class="case" data-exp="'+mech+'"><div class="case-num">'+num+'</div><div class="case-class">同 '+cnames[co]+' '+goname[go]+'</div><div class="case-expect">'+mech+'</div><div class="container flex flex-dist'+cls(co)+' '+cls(go)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div>');
+      num++; var w=co?'<div class="'+co+'">':'<div>';
+      document.write('<div class="case" data-exp="'+mech+'"><div class="case-num">'+num+'</div><div class="case-class">上 '+cnames[co]+' 子'+goname[go]+'</div><div class="case-expect">'+mech+'</div>'+w+'<div class="container flex flex-dist '+cls(go)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div></div>');
+    }
+  }
+  document.write('</div>');
+}
+
+function makeFlexSimple(title, clsName, expect){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    num++; document.write('<div class="case" data-exp="'+expect+'"><div class="case-num">'+num+'</div><div class="case-class">同 '+cnames[co]+'</div><div class="case-expect">'+expect+'</div><div class="container flex flex-dist'+cls(co)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div>');
+    num++; var w=co?'<div class="'+co+'">':'<div>';
+    document.write('<div class="case" data-exp="'+expect+'"><div class="case-num">'+num+'</div><div class="case-class">上 '+cnames[co]+'</div><div class="case-expect">'+expect+'</div>'+w+'<div class="container flex flex-dist '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div></div>');
+  }
+  document.write('</div>');
+}
+
+function makeFlexCombo(title, clsX, clsY, getMechX, getMechY){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    for(var gi=0;gi<gos.length;gi++){
+      var go=gos[gi];
+      var mx=getMechX(co,go), my=getMechY(co,go);
+      var exp=mx+'+'+my;
+      num++; document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">同 '+cnames[co]+' '+goname[go]+'</div><div class="case-expect">x:'+mx+' y:'+my+'</div><div class="container flex flex-dist'+cls(co)+' '+cls(go)+' '+clsX+' '+clsY+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div>');
+      num++; var w=co?'<div class="'+co+'">':'<div>';
+      document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">上 '+cnames[co]+' 子'+goname[go]+'</div><div class="case-expect">x:'+mx+' y:'+my+'</div>'+w+'<div class="container flex flex-dist '+cls(go)+' '+clsX+' '+clsY+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div><div class="item">5</div></div></div></div>');
+    }
+  }
+  document.write('</div>');
+}
+</script>
+
+<h1>Grid</h1>
+
+<script>
+makeGrid('items-x-space-between','items-x-space-between',gridXExpect);
+makeGrid('items-y-space-between','items-y-space-between',gridYExpect);
+makeGrid('items-space-between（别名）','items-space-between',function(){return 'jc+ac';});
+makeGrid('items-x + items-y','items-x-space-between items-y-space-between',function(){return 'jc+ac';});
+</script>
+
+<h1>Flex（5×45×45 强制换行）</h1>
+
+<script>
+makeFlex('items-x-space-between','items-x-space-between',xMech);
+makeFlex('items-y-space-between','items-y-space-between',yMech);
+makeFlexSimple('items-space-between（别名）','items-space-between','jc+ac');
+makeFlexCombo('items-x + items-y','items-x-space-between','items-y-space-between',xMech,yMech);
+</script>
+
+<h2>对比：期望 vs 实际</h2>
+<pre id="r" style="font:12px monospace;background:#f5f5f5;padding:10px;overflow:auto;"></pre>
+<script>
+(function(){
+    var DIST='space-between';
+    var fail=0, total=0;
+    var out='';
+    document.querySelectorAll('.case').forEach(function(c){
+        var n=c.querySelector('.case-num').textContent;
+        var ct=c.querySelector('.container');
+        if(!ct)return;
+        var exp=c.getAttribute('data-exp')||'';
+        var s=getComputedStyle(ct);
+        var jc=s.justifyContent, ac=s.alignContent;
+
+        // 只检查期望中包含的方向
+        var checkJc=exp.indexOf('jc')!==-1;
+        var checkAc=exp.indexOf('ac')!==-1;
+        var jcOK=!checkJc || jc===DIST;
+        var acOK=!checkAc || ac===DIST;
+        if(!jcOK||!acOK) fail++;
+        total++;
+
+        function cell(actual, check, ok){
+            if(!check) return actual.padEnd(16);
+            return actual.padEnd(16)+(ok?' ✓':' ✗ 期望 '+DIST);
+        }
+
+        var tag=ct.classList.contains('grid')?'G':'F';
+        out+=n.padStart(3)+' '+tag+' jc:'+cell(jc,checkJc,jcOK)+' ac:'+cell(ac,checkAc,acOK)+'\n';
+    });
+    document.getElementById('r').textContent=
+        '  jc/ac: 实际值 (✓=匹配, ✗=不匹配+期望值)\n'
+        +'─'.repeat(72)+'\n'+out
+        +'─'.repeat(72)+'\n'
+        +(total-fail)+'/'+total+' 通过, '+fail+' 失败';
+})();
+</script>
+</body>
+</html>
