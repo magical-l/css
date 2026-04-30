@@ -35,6 +35,13 @@ h3 { margin-top: 20px; color: #777; }
 .flex-box.wrap-row { width: 130px; height: 150px; }
 .flex-box.wrap-col { width: 170px; height: 80px; }
 .flex-box .item.small { width: 40px; height: 30px; }
+
+/* 后代继承测试专用 */
+.desc-grid-box { display: grid; gap: 0; grid-template-columns: 70px 70px; grid-template-rows: 50px 50px; width: 200px; height: 200px; }
+.desc-grid-box .item { width: 40px; height: 30px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+.desc-grid-box.v { grid-template-columns: 50px 50px; grid-template-rows: 70px 70px; width: 200px; height: 200px; }
+.desc-flex-box { display: flex; gap: 0; width: 200px; height: 200px; }
+.desc-flex-box .item { width: 50px; height: 40px; background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
 </style>
 </head>
 <body>
@@ -446,6 +453,170 @@ h3 { margin-top: 20px; color: #777; }
     </div>
 </div>
 
+<!-- 后代继承测试（合并自 content--descendant.html）-->
+<h1>后代继承测试</h1>
+<p>父/祖级设 content-*，容器本身无 content 类。每组同时覆盖 grid、flex(go-x)、flex go-y（N/И 为 go-x）。</p>
+
+<!-- Z -->
+<h2>上层 .content-Z / 无 content 类</h2>
+
+<h3>.col-near-left</h3>
+<div class="section">
+    <div class="case"><div class="case-num">49</div><div class="case-class">grid</div><div class="case-expect">jc:start ji:start</div><div class="container desc-grid-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">50</div><div class="case-class">flex</div><div class="case-expect">jc:start</div><div class="container desc-flex-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">51</div><div class="case-class">flex .go-y</div><div class="case-expect">ac:start ai:start</div><div class="container desc-flex-box go-y col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">52</div><div class="case-class">grid (.content-Z 显式)</div><div class="case-expect">jc:start ji:start</div><div class="content-Z"><div class="container desc-grid-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<h3>.col-near-right</h3>
+<div class="section">
+    <div class="case"><div class="case-num">53</div><div class="case-class">grid</div><div class="case-expect">jc:end ji:end</div><div class="container desc-grid-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">54</div><div class="case-class">flex</div><div class="case-expect">jc:end</div><div class="container desc-flex-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">55</div><div class="case-class">flex .go-y</div><div class="case-expect">ac:end ai:end</div><div class="container desc-flex-box go-y col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">56</div><div class="case-class">grid (.content-Z 显式)</div><div class="case-expect">jc:end ji:end</div><div class="content-Z"><div class="container desc-grid-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<h3>.row-near-top</h3>
+<div class="section">
+    <div class="case"><div class="case-num">57</div><div class="case-class">grid</div><div class="case-expect">ac:start ai:start</div><div class="container desc-grid-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">58</div><div class="case-class">flex</div><div class="case-expect">ac:start ai:start</div><div class="container desc-flex-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">59</div><div class="case-class">flex .go-y</div><div class="case-expect">jc:start ji:start</div><div class="container desc-flex-box go-y row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">60</div><div class="case-class">grid (.content-Z 显式)</div><div class="case-expect">ac:start ai:start</div><div class="content-Z"><div class="container desc-grid-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<h3>.row-near-bottom</h3>
+<div class="section">
+    <div class="case"><div class="case-num">61</div><div class="case-class">grid</div><div class="case-expect">ac:end ai:end</div><div class="container desc-grid-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">62</div><div class="case-class">flex</div><div class="case-expect">ac:end ai:end</div><div class="container desc-flex-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">63</div><div class="case-class">flex .go-y</div><div class="case-expect">jc:end ji:end</div><div class="container desc-flex-box go-y row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>
+    <div class="case"><div class="case-num">64</div><div class="case-class">grid (.content-Z 显式)</div><div class="case-expect">ac:end ai:end</div><div class="content-Z"><div class="container desc-grid-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<h3>.items-near-*</h3>
+<div class="section">
+    <div class="case"><div class="case-num">65</div><div class="case-class">grid .items-near-top</div><div class="case-expect">ai:start</div><div class="container desc-grid-box items-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">66</div><div class="case-class">grid .items-near-bottom</div><div class="case-expect">ai:end</div><div class="container desc-grid-box items-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">67</div><div class="case-class">grid .items-near-left</div><div class="case-expect">ji:start</div><div class="container desc-grid-box items-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+    <div class="case"><div class="case-num">68</div><div class="case-class">grid .items-near-right</div><div class="case-expect">ji:end</div><div class="container desc-grid-box items-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+</div>
+
+<!-- S -->
+<h2>上层 .content-S</h2>
+
+<h3>.col-near-left</h3>
+<div class="section">
+    <div class="case"><div class="case-num">69</div><div class="case-class">grid</div><div class="case-expect">jc:end ji:end</div><div class="content-S"><div class="container desc-grid-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">70</div><div class="case-class">flex</div><div class="case-expect">jc:end</div><div class="content-S"><div class="container desc-flex-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">71</div><div class="case-class">flex .go-y</div><div class="case-expect">ac:end ai:end</div><div class="content-S"><div class="container desc-flex-box go-y col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.col-near-right</h3>
+<div class="section">
+    <div class="case"><div class="case-num">72</div><div class="case-class">grid</div><div class="case-expect">jc:start ji:start</div><div class="content-S"><div class="container desc-grid-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">73</div><div class="case-class">flex</div><div class="case-expect">jc:start</div><div class="content-S"><div class="container desc-flex-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">74</div><div class="case-class">flex .go-y</div><div class="case-expect">ac:start ai:start</div><div class="content-S"><div class="container desc-flex-box go-y col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-top</h3>
+<div class="section">
+    <div class="case"><div class="case-num">75</div><div class="case-class">grid</div><div class="case-expect">ac:start ai:start</div><div class="content-S"><div class="container desc-grid-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">76</div><div class="case-class">flex</div><div class="case-expect">ac:start ai:start</div><div class="content-S"><div class="container desc-flex-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">77</div><div class="case-class">flex .go-y</div><div class="case-expect">jc:start ji:start</div><div class="content-S"><div class="container desc-flex-box go-y row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-bottom</h3>
+<div class="section">
+    <div class="case"><div class="case-num">78</div><div class="case-class">grid</div><div class="case-expect">ac:end ai:end</div><div class="content-S"><div class="container desc-grid-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">79</div><div class="case-class">flex</div><div class="case-expect">ac:end ai:end</div><div class="content-S"><div class="container desc-flex-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">80</div><div class="case-class">flex .go-y</div><div class="case-expect">jc:end ji:end</div><div class="content-S"><div class="container desc-flex-box go-y row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.items-near-*</h3>
+<div class="section">
+    <div class="case"><div class="case-num">81</div><div class="case-class">grid .items-near-top</div><div class="case-expect">ai:start</div><div class="content-S"><div class="container desc-grid-box items-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">82</div><div class="case-class">grid .items-near-bottom</div><div class="case-expect">ai:end</div><div class="content-S"><div class="container desc-grid-box items-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">83</div><div class="case-class">grid .items-near-left</div><div class="case-expect">ji:end</div><div class="content-S"><div class="container desc-grid-box items-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">84</div><div class="case-class">grid .items-near-right</div><div class="case-expect">ji:start</div><div class="content-S"><div class="container desc-grid-box items-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<!-- N -->
+<h2>上层 .content-N</h2>
+
+<h3>.col-near-left</h3>
+<div class="section">
+    <div class="case"><div class="case-num">85</div><div class="case-class">grid</div><div class="case-expect">ac:end ai:end</div><div class="content-N"><div class="container desc-grid-box v col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">86</div><div class="case-class">flex</div><div class="case-expect">ac:end ai:end</div><div class="content-N"><div class="container desc-flex-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">87</div><div class="case-class">flex .go-x</div><div class="case-expect">jc:end ji:end</div><div class="content-N"><div class="container desc-flex-box go-x col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.col-near-right</h3>
+<div class="section">
+    <div class="case"><div class="case-num">88</div><div class="case-class">grid</div><div class="case-expect">ac:start ai:start jc:normal ji:normal</div><div class="content-N"><div class="container desc-grid-box v col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">89</div><div class="case-class">flex</div><div class="case-expect">ac:start ai:start jc:normal ji:normal</div><div class="content-N"><div class="container desc-flex-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">90</div><div class="case-class">flex .go-x</div><div class="case-expect">jc:start ji:start</div><div class="content-N"><div class="container desc-flex-box go-x col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-top</h3>
+<div class="section">
+    <div class="case"><div class="case-num">91</div><div class="case-class">grid</div><div class="case-expect">jc:start ji:start ac:normal ai:normal</div><div class="content-N"><div class="container desc-grid-box v row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">92</div><div class="case-class">flex</div><div class="case-expect">jc:start ji:start ac:normal ai:normal</div><div class="content-N"><div class="container desc-flex-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">93</div><div class="case-class">flex .go-x</div><div class="case-expect">ac:start ai:start</div><div class="content-N"><div class="container desc-flex-box go-x row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-bottom</h3>
+<div class="section">
+    <div class="case"><div class="case-num">94</div><div class="case-class">grid</div><div class="case-expect">jc:end ji:end ac:normal ai:normal</div><div class="content-N"><div class="container desc-grid-box v row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">95</div><div class="case-class">flex</div><div class="case-expect">jc:end ji:end ac:normal ai:normal</div><div class="content-N"><div class="container desc-flex-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">96</div><div class="case-class">flex .go-x</div><div class="case-expect">ac:end ai:end</div><div class="content-N"><div class="container desc-flex-box go-x row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.items-near-*</h3>
+<div class="section">
+    <div class="case"><div class="case-num">97</div><div class="case-class">grid .items-near-top</div><div class="case-expect">ji:start ai:normal</div><div class="content-N"><div class="container desc-grid-box v items-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">98</div><div class="case-class">grid .items-near-bottom</div><div class="case-expect">ji:end ai:normal</div><div class="content-N"><div class="container desc-grid-box v items-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">99</div><div class="case-class">grid .items-near-left</div><div class="case-expect">ai:end ji:normal</div><div class="content-N"><div class="container desc-grid-box v items-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">100</div><div class="case-class">grid .items-near-right</div><div class="case-expect">ai:start ji:normal</div><div class="content-N"><div class="container desc-grid-box v items-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
+<!-- И -->
+<h2>上层 .content-И</h2>
+
+<h3>.col-near-left</h3>
+<div class="section">
+    <div class="case"><div class="case-num">101</div><div class="case-class">grid</div><div class="case-expect">ac:start ai:start</div><div class="content-И"><div class="container desc-grid-box v col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">102</div><div class="case-class">flex</div><div class="case-expect">ac:start ai:start</div><div class="content-И"><div class="container desc-flex-box col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">103</div><div class="case-class">flex .go-x</div><div class="case-expect">jc:start ji:start</div><div class="content-И"><div class="container desc-flex-box go-x col-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.col-near-right</h3>
+<div class="section">
+    <div class="case"><div class="case-num">104</div><div class="case-class">grid</div><div class="case-expect">ac:end ai:end jc:normal ji:normal</div><div class="content-И"><div class="container desc-grid-box v col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">105</div><div class="case-class">flex</div><div class="case-expect">ac:end ai:end jc:normal ji:normal</div><div class="content-И"><div class="container desc-flex-box col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">106</div><div class="case-class">flex .go-x</div><div class="case-expect">jc:end ji:end</div><div class="content-И"><div class="container desc-flex-box go-x col-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-top</h3>
+<div class="section">
+    <div class="case"><div class="case-num">107</div><div class="case-class">grid</div><div class="case-expect">jc:start ji:start ac:normal ai:normal</div><div class="content-И"><div class="container desc-grid-box v row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">108</div><div class="case-class">flex</div><div class="case-expect">jc:start ji:start ac:normal ai:normal</div><div class="content-И"><div class="container desc-flex-box row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">109</div><div class="case-class">flex .go-x</div><div class="case-expect">ac:start ai:start</div><div class="content-И"><div class="container desc-flex-box go-x row-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.row-near-bottom</h3>
+<div class="section">
+    <div class="case"><div class="case-num">110</div><div class="case-class">grid</div><div class="case-expect">jc:end ji:end ac:normal ai:normal</div><div class="content-И"><div class="container desc-grid-box v row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">111</div><div class="case-class">flex</div><div class="case-expect">jc:end ji:end ac:normal ai:normal</div><div class="content-И"><div class="container desc-flex-box row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+    <div class="case"><div class="case-num">112</div><div class="case-class">flex .go-x</div><div class="case-expect">ac:end ai:end</div><div class="content-И"><div class="container desc-flex-box go-x row-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>
+</div>
+
+<h3>.items-near-*</h3>
+<div class="section">
+    <div class="case"><div class="case-num">113</div><div class="case-class">grid .items-near-top</div><div class="case-expect">ji:start ai:normal</div><div class="content-И"><div class="container desc-grid-box v items-near-top"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">114</div><div class="case-class">grid .items-near-bottom</div><div class="case-expect">ji:end ai:normal</div><div class="content-И"><div class="container desc-grid-box v items-near-bottom"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">115</div><div class="case-class">grid .items-near-left</div><div class="case-expect">ai:start ji:normal</div><div class="content-И"><div class="container desc-grid-box v items-near-left"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+    <div class="case"><div class="case-num">116</div><div class="case-class">grid .items-near-right</div><div class="case-expect">ai:end ji:normal</div><div class="content-И"><div class="container desc-grid-box v items-near-right"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>
+</div>
+
 <script>
 (function(){
   var props={jc:'justifyContent',ac:'alignContent',ji:'justifyItems',ai:'alignItems'};
@@ -458,8 +629,7 @@ h3 { margin-top: 20px; color: #777; }
     if(!ct) return;
     var cs=getComputedStyle(ct);
     var code=(c.querySelector('.case-code')||{}).textContent||'';
-
-    // Parse expected from case-code: '... → align-content+align-items:start'
+    // Parse expected: try .case-code '→' format first, then .case-expect 'key:val' format
     var exps={};
     var arrow=code.indexOf('→');
     if(arrow>=0){
@@ -471,12 +641,18 @@ h3 { margin-top: 20px; color: #777; }
         var val=match[3];
         exps[p1]=val;
         if(p2) exps[p2]=val;
-        // Also set jc/ji from justify-*
         if(match[0].indexOf('justify-content')>=0) exps['jc']=val;
         if(match[0].indexOf('justify-items')>=0) exps['ji']=val;
         if(match[0].indexOf('align-content')>=0) exps['ac']=val;
         if(match[0].indexOf('align-items')>=0) exps['ai']=val;
       }
+    } else {
+      // Fallback: .case-expect format like 'jc:start ji:start'
+      var expText=(c.querySelector('.case-expect')||{}).textContent||'';
+      expText.split(/\s+/).forEach(function(pair){
+        var kv=pair.split(':');
+        if(kv.length===2) exps[kv[0]]=kv[1];
+      });
     }
 
     var allOK=true;
@@ -500,6 +676,7 @@ h3 { margin-top: 20px; color: #777; }
   document.body.insertBefore(summary, document.body.firstChild);
 })();
 </script>
+
 
 </body>
 </html>
