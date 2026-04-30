@@ -403,12 +403,44 @@
 
 /* ===== 项目水平分布 ===== */
 /* Grid: Z/S → jc（inline=水平）, N/И → ac（block=水平） */
-.grid.items-x-space-between:where(:not(.content-N, .content-N .grid.items-x-space-between,
-                                        .content-И, .content-И .grid.items-x-space-between)) {
+.grid.items-x-space-between:where(
+	:not(.content-N, .content-И,
+			.content-N .grid.items-x-space-between,
+			.content-И .grid.items-x-space-between,
+			.content-N .grid.items-x-mutex,
+			.content-И .grid.items-x-mutex,
+			.content-N .grid.items-x-social-phobia,
+			.content-И .grid.items-x-social-phobia)),
+.grid.items-x-mutex:where(
+	:not(.content-N, .content-И,
+			.content-N .grid.items-x-mutex,
+			.content-И .grid.items-x-mutex,
+			.content-N .grid.items-x-space-between,
+			.content-И .grid.items-x-space-between,
+			.content-N .grid.items-x-social-phobia,
+			.content-И .grid.items-x-social-phobia)),
+.grid.items-x-social-phobia:where(
+	:not(.content-N, .content-И,
+			.content-N .grid.items-x-social-phobia,
+			.content-И .grid.items-x-social-phobia,
+			.content-N .grid.items-x-space-between,
+			.content-И .grid.items-x-space-between,
+			.content-N .grid.items-x-mutex,
+			.content-И .grid.items-x-mutex)) {
 	justify-content: space-between;
 }
-.grid.content-N.items-x-space-between, .content-N .grid.items-x-space-between,
-.grid.content-И.items-x-space-between, .content-И .grid.items-x-space-between {
+.grid.content-N.items-x-space-between,
+.content-N .grid.items-x-space-between,
+.grid.content-И.items-x-space-between,
+.content-И .grid.items-x-space-between,
+.grid.content-N.items-x-mutex,
+.grid.content-N.items-x-social-phobia,
+.content-N .grid.items-x-mutex,
+.content-N .grid.items-x-social-phobia,
+.grid.content-И.items-x-mutex,
+.grid.content-И.items-x-social-phobia,
+.content-И .grid.items-x-mutex,
+.content-И .grid.items-x-social-phobia {
 	align-content: space-between;
 }
 /* Flex: 交轴=水平 → ac, 主轴=水平 → jc */
@@ -416,156 +448,274 @@
 .flex.content-N.items-x-space-between:where(:not(.go-x)),
 .content-N .flex.items-x-space-between:where(:not(.go-x)),
 .flex.content-И.items-x-space-between:where(:not(.go-x)),
-.content-И .flex.items-x-space-between:where(:not(.go-x)) {
+.content-И .flex.items-x-space-between:where(:not(.go-x)),
+.flex.items-x-mutex.go-y:where(:not(.content-N, .content-И)),
+.flex.items-x-social-phobia.go-y:where(:not(.content-N, .content-И)),
+.flex.content-N.items-x-mutex:where(:not(.go-x)),
+.flex.content-N.items-x-social-phobia:where(:not(.go-x)),
+.content-N .flex.items-x-mutex:where(:not(.go-x)),
+.content-N .flex.items-x-social-phobia:where(:not(.go-x)),
+.flex.content-И.items-x-mutex:where(:not(.go-x)),
+.flex.content-И.items-x-social-phobia:where(:not(.go-x)),
+.content-И .flex.items-x-mutex:where(:not(.go-x)),
+.content-И .flex.items-x-social-phobia:where(:not(.go-x)) {
 	align-content: space-between;
 	flex-wrap: wrap;
 }
-.flex.items-x-space-between:where(:not(.go-y, .content-N, .content-И,
-    .content-N .flex.items-x-space-between,
-    .content-И .flex.items-x-space-between)),
+.flex.items-x-space-between:where(
+	:not(.go-y, .content-N, .content-И,
+			.content-N .flex.items-x-space-between,
+			.content-И .flex.items-x-space-between,
+			.content-N .flex.items-x-mutex,
+			.content-И .flex.items-x-mutex,
+			.content-N .flex.items-x-social-phobia,
+			.content-И .flex.items-x-social-phobia)),
 .flex.content-N.go-x.items-x-space-between,
 .content-N .flex.go-x.items-x-space-between,
 .flex.content-И.go-x.items-x-space-between,
-.content-И .flex.go-x.items-x-space-between {
+.content-И .flex.go-x.items-x-space-between,
+.flex.items-x-mutex:where(
+	:not(.go-y, .content-N, .content-И,
+			.content-N .flex.items-x-mutex,
+			.content-И .flex.items-x-mutex,
+			.content-N .flex.items-x-space-between,
+			.content-И .flex.items-x-space-between,
+			.content-N .flex.items-x-social-phobia,
+			.content-И .flex.items-x-social-phobia)),
+.flex.items-x-social-phobia:where(
+	:not(.go-y, .content-N, .content-И,
+			.content-N .flex.items-x-social-phobia,
+			.content-И .flex.items-x-social-phobia,
+			.content-N .flex.items-x-space-between,
+			.content-И .flex.items-x-space-between,
+			.content-N .flex.items-x-mutex,
+			.content-И .flex.items-x-mutex)),
+.flex.content-N.go-x.items-x-mutex,
+.flex.content-N.go-x.items-x-social-phobia,
+.content-N .flex.go-x.items-x-mutex,
+.content-N .flex.go-x.items-x-social-phobia,
+.flex.content-И.go-x.items-x-mutex,
+.flex.content-И.go-x.items-x-social-phobia,
+.content-И .flex.go-x.items-x-mutex,
+.content-И .flex.go-x.items-x-social-phobia {
 	justify-content: space-between;
 }
 
-.grid.items-x-space-around:where(:not(.content-N, .content-N .grid.items-x-space-around,
-                                       .content-И, .content-И .grid.items-x-space-around)) {
+.grid.items-x-space-around:where(:not(.content-N, .content-N .grid.items-x-space-around, .content-И, .content-И .grid.items-x-space-around, .content-N .grid.items-x-unfamiliar, .content-И .grid.items-x-unfamiliar)),
+.grid.items-x-unfamiliar:where(:not(.content-N, .content-N .grid.items-x-unfamiliar, .content-И, .content-И .grid.items-x-unfamiliar, .content-N .grid.items-x-space-around, .content-И .grid.items-x-space-around)) {
 	justify-content: space-around;
 }
-.grid.content-N.items-x-space-around, .content-N .grid.items-x-space-around,
-.grid.content-И.items-x-space-around, .content-И .grid.items-x-space-around {
+.grid.content-N.items-x-space-around,
+.content-N .grid.items-x-space-around,
+.grid.content-И.items-x-space-around,
+.content-И .grid.items-x-space-around,
+.grid.content-N.items-x-unfamiliar,
+.content-N .grid.items-x-unfamiliar,
+.grid.content-И.items-x-unfamiliar,
+.content-И .grid.items-x-unfamiliar {
 	align-content: space-around;
 }
 .flex.items-x-space-around.go-y:where(:not(.content-N, .content-И)),
 .flex.content-N.items-x-space-around:where(:not(.go-x)),
 .content-N .flex.items-x-space-around:where(:not(.go-x)),
 .flex.content-И.items-x-space-around:where(:not(.go-x)),
-.content-И .flex.items-x-space-around:where(:not(.go-x)) {
+.content-И .flex.items-x-space-around:where(:not(.go-x)),
+.flex.items-x-unfamiliar.go-y:where(:not(.content-N, .content-И)),
+.flex.content-N.items-x-unfamiliar:where(:not(.go-x)),
+.content-N .flex.items-x-unfamiliar:where(:not(.go-x)),
+.flex.content-И.items-x-unfamiliar:where(:not(.go-x)),
+.content-И .flex.items-x-unfamiliar:where(:not(.go-x)) {
 	align-content: space-around;
 	flex-wrap: wrap;
 }
-.flex.items-x-space-around:where(:not(.go-y, .content-N, .content-И,
-    .content-N .flex.items-x-space-around,
-    .content-И .flex.items-x-space-around)),
+.flex.items-x-space-around:where(:not(.go-y, .content-N, .content-И, .content-N .flex.items-x-space-around, .content-И .flex.items-x-space-around, .content-N .flex.items-x-unfamiliar, .content-И .flex.items-x-unfamiliar)),
 .flex.content-N.go-x.items-x-space-around,
 .content-N .flex.go-x.items-x-space-around,
 .flex.content-И.go-x.items-x-space-around,
-.content-И .flex.go-x.items-x-space-around {
+.content-И .flex.go-x.items-x-space-around,
+.flex.items-x-unfamiliar:where(:not(.go-y, .content-N, .content-И, .content-N .flex.items-x-unfamiliar, .content-И .flex.items-x-unfamiliar, .content-N .flex.items-x-space-around, .content-И .flex.items-x-space-around)),
+.flex.content-N.go-x.items-x-unfamiliar,
+.content-N .flex.go-x.items-x-unfamiliar,
+.flex.content-И.go-x.items-x-unfamiliar,
+.content-И .flex.go-x.items-x-unfamiliar {
 	justify-content: space-around;
 }
 
-.grid.items-x-space-evenly:where(:not(.content-N, .content-N .grid.items-x-space-evenly,
-                                       .content-И, .content-И .grid.items-x-space-evenly)) {
+.grid.items-x-space-evenly:where(:not(.content-N, .content-N .grid.items-x-space-evenly, .content-И, .content-И .grid.items-x-space-evenly, .content-N .grid.items-x-friendly, .content-И .grid.items-x-friendly)),
+.grid.items-x-friendly:where(:not(.content-N, .content-N .grid.items-x-friendly, .content-И, .content-И .grid.items-x-friendly, .content-N .grid.items-x-space-evenly, .content-И .grid.items-x-space-evenly)) {
 	justify-content: space-evenly;
 }
-.grid.content-N.items-x-space-evenly, .content-N .grid.items-x-space-evenly,
-.grid.content-И.items-x-space-evenly, .content-И .grid.items-x-space-evenly {
+.grid.content-N.items-x-space-evenly,
+.content-N .grid.items-x-space-evenly,
+.grid.content-И.items-x-space-evenly,
+.content-И .grid.items-x-space-evenly,
+.grid.content-N.items-x-friendly,
+.content-N .grid.items-x-friendly,
+.grid.content-И.items-x-friendly,
+.content-И .grid.items-x-friendly {
 	align-content: space-evenly;
 }
 .flex.items-x-space-evenly.go-y:where(:not(.content-N, .content-И)),
 .flex.content-N.items-x-space-evenly:where(:not(.go-x)),
 .content-N .flex.items-x-space-evenly:where(:not(.go-x)),
 .flex.content-И.items-x-space-evenly:where(:not(.go-x)),
-.content-И .flex.items-x-space-evenly:where(:not(.go-x)) {
+.content-И .flex.items-x-space-evenly:where(:not(.go-x)),
+.flex.items-x-friendly.go-y:where(:not(.content-N, .content-И)),
+.flex.content-N.items-x-friendly:where(:not(.go-x)),
+.content-N .flex.items-x-friendly:where(:not(.go-x)),
+.flex.content-И.items-x-friendly:where(:not(.go-x)),
+.content-И .flex.items-x-friendly:where(:not(.go-x)) {
 	align-content: space-evenly;
 	flex-wrap: wrap;
 }
-.flex.items-x-space-evenly:where(:not(.go-y, .content-N, .content-И,
-    .content-N .flex.items-x-space-evenly,
-    .content-И .flex.items-x-space-evenly)),
+.flex.items-x-space-evenly:where(:not(.go-y, .content-N, .content-И, .content-N .flex.items-x-space-evenly, .content-И .flex.items-x-space-evenly, .content-N .flex.items-x-friendly, .content-И .flex.items-x-friendly)),
 .flex.content-N.go-x.items-x-space-evenly,
 .content-N .flex.go-x.items-x-space-evenly,
 .flex.content-И.go-x.items-x-space-evenly,
-.content-И .flex.go-x.items-x-space-evenly {
+.content-И .flex.go-x.items-x-space-evenly,
+.flex.items-x-friendly:where(:not(.go-y, .content-N, .content-И, .content-N .flex.items-x-friendly, .content-И .flex.items-x-friendly, .content-N .flex.items-x-space-evenly, .content-И .flex.items-x-space-evenly)),
+.flex.content-N.go-x.items-x-friendly,
+.content-N .flex.go-x.items-x-friendly,
+.flex.content-И.go-x.items-x-friendly,
+.content-И .flex.go-x.items-x-friendly {
 	justify-content: space-evenly;
 }
 
 /* ===== 项目垂直分布 ===== */
 /* Grid: Z/S → ac（block=垂直）, N/И → jc（inline=垂直） */
-.grid.items-y-space-between:where(:not(.content-N, .content-N .grid.items-y-space-between,
-                                        .content-И, .content-И .grid.items-y-space-between)) {
+.grid.items-y-space-between:where(:not(.content-N, .content-N .grid.items-y-space-between, .content-И, .content-И .grid.items-y-space-between, .content-N .grid.items-y-mutex, .content-И .grid.items-y-mutex, .content-N .grid.items-y-social-phobia, .content-И .grid.items-y-social-phobia)),
+.grid.items-y-mutex:where(:not(.content-N, .content-N .grid.items-y-mutex, .content-И, .content-И .grid.items-y-mutex, .content-N .grid.items-y-space-between, .content-И .grid.items-y-space-between, .content-N .grid.items-y-social-phobia, .content-И .grid.items-y-social-phobia)),
+.grid.items-y-social-phobia:where(:not(.content-N, .content-N .grid.items-y-social-phobia, .content-И, .content-И .grid.items-y-social-phobia, .content-N .grid.items-y-space-between, .content-И .grid.items-y-space-between, .content-N .grid.items-y-mutex, .content-И .grid.items-y-mutex)) {
 	align-content: space-between;
 }
-.grid.content-N.items-y-space-between, .content-N .grid.items-y-space-between,
-.grid.content-И.items-y-space-between, .content-И .grid.items-y-space-between {
+.grid.content-N.items-y-space-between,
+.content-N .grid.items-y-space-between,
+.grid.content-И.items-y-space-between,
+.content-И .grid.items-y-space-between,
+.grid.content-N.items-y-mutex,
+.grid.content-N.items-y-social-phobia,
+.content-N .grid.items-y-mutex,
+.content-N .grid.items-y-social-phobia,
+.grid.content-И.items-y-mutex,
+.grid.content-И.items-y-social-phobia,
+.content-И .grid.items-y-mutex,
+.content-И .grid.items-y-social-phobia {
 	justify-content: space-between;
 }
 /* Flex: 交轴=垂直 → ac, 主轴=垂直 → jc */
-.flex.items-y-space-between:where(:not(.content-N, .content-И, .go-y,
-    .content-N .flex.items-y-space-between,
-    .content-И .flex.items-y-space-between)),
+.flex.items-y-space-between:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia)),
 .flex.content-N.go-x.items-y-space-between,
 .content-N .flex.go-x.items-y-space-between,
 .flex.content-И.go-x.items-y-space-between,
-.content-И .flex.go-x.items-y-space-between {
+.content-И .flex.go-x.items-y-space-between,
+.flex.items-y-mutex:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia)),
+.flex.items-y-social-phobia:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex)),
+.flex.content-N.go-x.items-y-mutex,
+.flex.content-N.go-x.items-y-social-phobia,
+.content-N .flex.go-x.items-y-mutex,
+.content-N .flex.go-x.items-y-social-phobia,
+.flex.content-И.go-x.items-y-mutex,
+.flex.content-И.go-x.items-y-social-phobia,
+.content-И .flex.go-x.items-y-mutex,
+.content-И .flex.go-x.items-y-social-phobia {
 	align-content: space-between;
 	flex-wrap: wrap;
 }
-.flex.items-y-space-between.go-y:where(:not(.content-N, .content-И,
-    .content-N .flex.items-y-space-between,
-    .content-И .flex.items-y-space-between)),
+.flex.items-y-space-between.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia)),
 .flex.content-N.items-y-space-between:where(:not(.go-x)),
 .content-N .flex.items-y-space-between:where(:not(.go-x)),
 .flex.content-И.items-y-space-between:where(:not(.go-x)),
-.content-И .flex.items-y-space-between:where(:not(.go-x)) {
+.content-И .flex.items-y-space-between:where(:not(.go-x)),
+.flex.items-y-mutex.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia)),
+.flex.items-y-social-phobia.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-social-phobia, .content-И .flex.items-y-social-phobia, .content-N .flex.items-y-space-between, .content-И .flex.items-y-space-between, .content-N .flex.items-y-mutex, .content-И .flex.items-y-mutex)),
+.flex.content-N.items-y-mutex:where(:not(.go-x)),
+.flex.content-N.items-y-social-phobia:where(:not(.go-x)),
+.content-N .flex.items-y-mutex:where(:not(.go-x)),
+.content-N .flex.items-y-social-phobia:where(:not(.go-x)),
+.flex.content-И.items-y-mutex:where(:not(.go-x)),
+.flex.content-И.items-y-social-phobia:where(:not(.go-x)),
+.content-И .flex.items-y-mutex:where(:not(.go-x)),
+.content-И .flex.items-y-social-phobia:where(:not(.go-x)) {
 	justify-content: space-between;
 }
 
-.grid.items-y-space-around:where(:not(.content-N, .content-N .grid.items-y-space-around,
-                                       .content-И, .content-И .grid.items-y-space-around)) {
+.grid.items-y-space-around:where(:not(.content-N, .content-N .grid.items-y-space-around, .content-И, .content-И .grid.items-y-space-around, .content-N .grid.items-y-unfamiliar, .content-И .grid.items-y-unfamiliar)),
+.grid.items-y-unfamiliar:where(:not(.content-N, .content-N .grid.items-y-unfamiliar, .content-И, .content-И .grid.items-y-unfamiliar, .content-N .grid.items-y-space-around, .content-И .grid.items-y-space-around)) {
 	align-content: space-around;
 }
-.grid.content-N.items-y-space-around, .content-N .grid.items-y-space-around,
-.grid.content-И.items-y-space-around, .content-И .grid.items-y-space-around {
+.grid.content-N.items-y-space-around,
+.content-N .grid.items-y-space-around,
+.grid.content-И.items-y-space-around,
+.content-И .grid.items-y-space-around,
+.grid.content-N.items-y-unfamiliar,
+.content-N .grid.items-y-unfamiliar,
+.grid.content-И.items-y-unfamiliar,
+.content-И .grid.items-y-unfamiliar {
 	justify-content: space-around;
 }
-.flex.items-y-space-around:where(:not(.content-N, .content-И, .go-y,
-    .content-N .flex.items-y-space-around,
-    .content-И .flex.items-y-space-around)),
+.flex.items-y-space-around:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-space-around, .content-И .flex.items-y-space-around, .content-N .flex.items-y-unfamiliar, .content-И .flex.items-y-unfamiliar)),
 .flex.content-N.go-x.items-y-space-around,
 .content-N .flex.go-x.items-y-space-around,
 .flex.content-И.go-x.items-y-space-around,
-.content-И .flex.go-x.items-y-space-around {
+.content-И .flex.go-x.items-y-space-around,
+.flex.items-y-unfamiliar:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-unfamiliar, .content-И .flex.items-y-unfamiliar, .content-N .flex.items-y-space-around, .content-И .flex.items-y-space-around)),
+.flex.content-N.go-x.items-y-unfamiliar,
+.content-N .flex.go-x.items-y-unfamiliar,
+.flex.content-И.go-x.items-y-unfamiliar,
+.content-И .flex.go-x.items-y-unfamiliar {
 	align-content: space-around;
 	flex-wrap: wrap;
 }
-.flex.items-y-space-around.go-y:where(:not(.content-N, .content-И,
-    .content-N .flex.items-y-space-around,
-    .content-И .flex.items-y-space-around)),
+.flex.items-y-space-around.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-space-around, .content-И .flex.items-y-space-around, .content-N .flex.items-y-unfamiliar, .content-И .flex.items-y-unfamiliar)),
 .flex.content-N.items-y-space-around:where(:not(.go-x)),
 .content-N .flex.items-y-space-around:where(:not(.go-x)),
 .flex.content-И.items-y-space-around:where(:not(.go-x)),
-.content-И .flex.items-y-space-around:where(:not(.go-x)) {
+.content-И .flex.items-y-space-around:where(:not(.go-x)),
+.flex.items-y-unfamiliar.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-unfamiliar, .content-И .flex.items-y-unfamiliar, .content-N .flex.items-y-space-around, .content-И .flex.items-y-space-around)),
+.flex.content-N.items-y-unfamiliar:where(:not(.go-x)),
+.content-N .flex.items-y-unfamiliar:where(:not(.go-x)),
+.flex.content-И.items-y-unfamiliar:where(:not(.go-x)),
+.content-И .flex.items-y-unfamiliar:where(:not(.go-x)) {
 	justify-content: space-around;
 }
 
-.grid.items-y-space-evenly:where(:not(.content-N, .content-N .grid.items-y-space-evenly,
-                                       .content-И, .content-И .grid.items-y-space-evenly)) {
+.grid.items-y-space-evenly:where(:not(.content-N, .content-N .grid.items-y-space-evenly, .content-И, .content-И .grid.items-y-space-evenly, .content-N .grid.items-y-friendly, .content-И .grid.items-y-friendly)),
+.grid.items-y-friendly:where(:not(.content-N, .content-N .grid.items-y-friendly, .content-И, .content-И .grid.items-y-friendly, .content-N .grid.items-y-space-evenly, .content-И .grid.items-y-space-evenly)) {
 	align-content: space-evenly;
 }
-.grid.content-N.items-y-space-evenly, .content-N .grid.items-y-space-evenly,
-.grid.content-И.items-y-space-evenly, .content-И .grid.items-y-space-evenly {
+.grid.content-N.items-y-space-evenly,
+.content-N .grid.items-y-space-evenly,
+.grid.content-И.items-y-space-evenly,
+.content-И .grid.items-y-space-evenly,
+.grid.content-N.items-y-friendly,
+.content-N .grid.items-y-friendly,
+.grid.content-И.items-y-friendly,
+.content-И .grid.items-y-friendly {
 	justify-content: space-evenly;
 }
-.flex.items-y-space-evenly:where(:not(.content-N, .content-И, .go-y,
-    .content-N .flex.items-y-space-evenly,
-    .content-И .flex.items-y-space-evenly)),
+.flex.items-y-space-evenly:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-space-evenly, .content-И .flex.items-y-space-evenly, .content-N .flex.items-y-friendly, .content-И .flex.items-y-friendly)),
 .flex.content-N.go-x.items-y-space-evenly,
 .content-N .flex.go-x.items-y-space-evenly,
 .flex.content-И.go-x.items-y-space-evenly,
-.content-И .flex.go-x.items-y-space-evenly {
+.content-И .flex.go-x.items-y-space-evenly,
+.flex.items-y-friendly:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-friendly, .content-И .flex.items-y-friendly, .content-N .flex.items-y-space-evenly, .content-И .flex.items-y-space-evenly)),
+.flex.content-N.go-x.items-y-friendly,
+.content-N .flex.go-x.items-y-friendly,
+.flex.content-И.go-x.items-y-friendly,
+.content-И .flex.go-x.items-y-friendly {
 	align-content: space-evenly;
 	flex-wrap: wrap;
 }
-.flex.items-y-space-evenly.go-y:where(:not(.content-N, .content-И,
-    .content-N .flex.items-y-space-evenly,
-    .content-И .flex.items-y-space-evenly)),
+.flex.items-y-space-evenly.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-space-evenly, .content-И .flex.items-y-space-evenly, .content-N .flex.items-y-friendly, .content-И .flex.items-y-friendly)),
 .flex.content-N.items-y-space-evenly:where(:not(.go-x)),
 .content-N .flex.items-y-space-evenly:where(:not(.go-x)),
 .flex.content-И.items-y-space-evenly:where(:not(.go-x)),
-.content-И .flex.items-y-space-evenly:where(:not(.go-x)) {
+.content-И .flex.items-y-space-evenly:where(:not(.go-x)),
+.flex.items-y-friendly.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-friendly, .content-И .flex.items-y-friendly, .content-N .flex.items-y-space-evenly, .content-И .flex.items-y-space-evenly)),
+.flex.content-N.items-y-friendly:where(:not(.go-x)),
+.content-N .flex.items-y-friendly:where(:not(.go-x)),
+.flex.content-И.items-y-friendly:where(:not(.go-x)),
+.content-И .flex.items-y-friendly:where(:not(.go-x)) {
 	justify-content: space-evenly;
 }
 
