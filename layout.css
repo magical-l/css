@@ -35,7 +35,8 @@
 	flex-direction: row; /* Flex: 横向排列 */
 	grid-auto-flow: row; /* Grid: 横向填充 */
 }
-.go-x:is(.content-N, .content-И, .content-N *, .content-И *) {
+.go-x:where(.content-N, .content-И, .content-N *, .content-И *) {
+	/* :where用来清掉参数选择器的权重，保持跟默认情况下.go-x一致的权重 */
 	flex-direction: column;
 	grid-auto-flow: column;
 }
@@ -45,32 +46,32 @@
 	flex-direction: column;
 	grid-auto-flow: column;
 }
-.go-y:is(.content-N, .content-И, .content-N *, .content-И *) {
+.go-y:where(.content-N, .content-И, .content-N *, .content-И *) {
 	flex-direction: row;
 	grid-auto-flow: row;
 }
 
 /* ------ .go-x.from-left：在横向铺陈子元素时，保证从左边开始（适配任何书写模式）。 ------ */
-.from-left.go-x { flex-direction: row; }
-.from-left:is(.content-S.go-x, .content-S .go-x) { flex-direction: row-reverse; }
-.from-left:is(.content-N.go-x, .content-N .go-x) { flex-direction: column-reverse; }
-.from-left:is(.content-И.go-x, .content-И .go-x) { flex-direction: column; }
+.go-x.from-left { flex-direction: row; }
+.go-x.from-left:where(.content-S, .content-S *) { flex-direction: row-reverse; }
+.go-x.from-left:where(.content-N, .content-N *) { flex-direction: column-reverse; }
+.go-x.from-left:where(.content-И, .content-И *) { flex-direction: column; }
 
 /* ------ .go-x.from-right：在横向铺陈子元素时，保证从右边开始（适配任何书写模式）。 ------ */
-.from-right.go-x { flex-direction: row-reverse; }
-.from-right:is(.content-S.go-x, .content-S .go-x) { flex-direction: row; }
-.from-right:is(.content-N.go-x, .content-N .go-x) { flex-direction: column; }
-.from-right:is(.content-И.go-x, .content-И .go-x) { flex-direction: column-reverse; }
+.go-x.from-right { flex-direction: row-reverse; }
+.go-x.from-right:where(.content-S, .content-S *) { flex-direction: row; }
+.go-x.from-right:where(.content-N, .content-N *) { flex-direction: column; }
+.go-x.from-right:where(.content-И, .content-И *) { flex-direction: column-reverse; }
 
 /* ------ .go-y.from-top：在纵向铺陈子元素时，保证从上方开始（适配任何书写模式）。 ------ */
 /* 默认行为，无需额外规则
 .go-y.from-top { …… }
-.go-y:is(.content-N, .content-И).from-top { …… }
+.go-y.from-top:where(.content-N, .content-И, .content-N *, .content-И *) { …… }
 */
 
 /* ------ .go-y.from-bottom：在纵向铺陈子元素时，保证从下方开始（适配任何书写模式）。 ------ */
 .go-y.from-bottom { flex-direction: column-reverse; }
-.go-y.from-bottom:is(.content-N, .content-И, .content-N *, .content-И *) { flex-direction: row-reverse; }
+.go-y.from-bottom:where(.content-N, .content-И, .content-N *, .content-И *) { flex-direction: row-reverse; }
 
 /*-----------------------flex布局专用--------------------------*/
 .single-line {flex-wrap: nowrap;}
