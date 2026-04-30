@@ -29,6 +29,9 @@
 .grid {display: grid}
 .grid.inline {display: inline-grid}
 
+.single-line {flex-wrap: nowrap;}
+.multi-line {flex-wrap: wrap;}
+
 /* ================== 物理方向/绝对方向 ================== */
 /* ------ 保证按x轴/物理横向/行方向铺陈子元素（适配任何书写模式）。 ------ */
 .go-x {
@@ -73,10 +76,6 @@
 .go-y.from-bottom { flex-direction: column-reverse; }
 .go-y.from-bottom:where(.content-N, .content-И, .content-N *, .content-И *) { flex-direction: row-reverse; }
 
-/*-----------------------flex布局专用--------------------------*/
-.single-line {flex-wrap: nowrap;}
-.multi-line {flex-wrap: wrap;}
-
 /* ============ 线路之间（align-content） ============ */
 /* ------ 所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。 ------ */
 .multi-line.lines-stretch { align-content: stretch; }
@@ -99,7 +98,264 @@
 /* ------ 线路不熟但比较友好。受项目实际排布方向影响。 ------ */
 .multi-line:is(.lines-space-evenly, .lines-friendly) { align-content: space-evenly; }
 
-/* ============ 项目本身 ============ */
+/* ================== 行列位置：在任何书写模式、任何方向，grid或flex下，保证行/列视觉效果的统一（靠上/下/左/右之类） ================== */
+/* ============ 行位置 ============ */
+/* ------ .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z/S模式+（显式|不显式）横向*/
+.row-near-top:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
+/*（继承|直接）N/И模式+横向*/
+.row-near-top:where(:is(.content-N, .content-И).go-x,
+					:is(.content-N, .content-И) .go-x:not(.content-S, .content-Z)) {
+	align-content: start;
+	align-items: start;
+}
+/*（显式|不显式）继承+（显式|不显式）Z/S模式+纵向*/
+.row-near-top:where(.go-y:not(.content-N, .content-И, .content-N *, .content-И *)),
+/*（继承|直接）N/И模式+（显式|不显式）纵向*/
+.row-near-top:where(:is(.content-N, .content-И):not(.go-x),
+					:is(.content-N, .content-И) :not(.go-x, .content-S, .content-Z)) {
+	justify-content: start;
+	justify-items: start;
+}
+
+/* ------ .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z/S模式+（显式|不显式）横向*/
+.row-near-bottom:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
+/*（继承|直接）N/И模式+横向*/
+.row-near-bottom:where(:is(.content-N, .content-И).go-x,
+					:is(.content-N, .content-И) .go-x:not(.content-S, .content-Z)) {
+	align-content: end;
+	align-items: end;
+}
+/*（显式|不显式）继承+（显式|不显式）Z/S模式+纵向*/
+.row-near-bottom:where(.go-y:not(.content-N, .content-И, .content-N *, .content-И *)),
+/*（继承|直接）N/И模式+（显式|不显式）纵向*/
+.row-near-bottom:where(:is(.content-N, .content-И):not(.go-x),
+					:is(.content-N, .content-И) :not(.go-x, .content-S, .content-Z)) {
+	justify-content: end;
+	justify-items: end;
+}
+
+/* ============ 列位置 ============ */
+/* ------ .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
+.col-near-left:where(:not(.go-y, .content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+横向*/
+.col-near-left:where(.content-И.go-x,
+					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
+	justify-content: start;
+	justify-items: start;
+}
+/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
+.col-near-left:where(.go-y:not(.content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+（显式|不显式）纵向*/
+.col-near-left:where(.content-И:not(.go-x),
+					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
+	align-content: start;
+	align-items: start;
+}
+
+/*（继承|直接）S模式+（显式|不显式）横向*/
+.col-near-left:where(.content-S:not(.go-y),
+					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+横向*/
+.col-near-left:where(.content-N.go-x,
+					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+	justify-content: end;
+	justify-items: end;
+}
+/*（继承|直接）S模式+纵向*/
+.col-near-left:where(.content-S.go-y,
+					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+（显式|不显式）纵向*/
+.col-near-left:where(.content-N:not(.go-x),
+					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
+	align-content: end;
+	align-items: end;
+}
+
+/* ------ .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
+.col-near-right:where(:not(.go-y, .content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+横向*/
+.col-near-right:where(.content-И.go-x,
+					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
+	justify-content: end;
+	justify-items: end;
+}
+/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
+.col-near-right:where(.go-y:not(.content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+（显式|不显式）纵向*/
+.col-near-right:where(.content-И:not(.go-x),
+					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
+	align-content: end;
+	align-items: end;
+}
+
+/*（继承|直接）S模式+（显式|不显式）横向*/
+.col-near-right:where(.content-S:not(.go-y),
+					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+横向*/
+.col-near-right:where(.content-N.go-x,
+					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+	justify-content: start;
+	justify-items: start;
+}
+/*（继承|直接）S模式+纵向*/
+.col-near-right:where(.content-S.go-y,
+					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+（显式|不显式）纵向*/
+.col-near-right:where(.content-N:not(.go-x),
+					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
+	align-content: start;
+	align-items: start;
+}
+
+/* ============ 项目位置：items-near-* ============ */
+/* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
+/* ------ .items-near-top：保证子元素靠上（grid、flex都适用，适配任何书写模式）。 ------ */
+.items-near-top:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
+.items-near-top:where(.go-x:is(.content-N, .content-И, .content-N *, .content-И *)) {
+	align-items: start;
+}
+.items-near-top:where(:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x)),
+.items-near-top:where(.go-y) {
+	justify-items: start;
+}
+/* ------ .items-near-bottom：保证子元素靠下（grid、flex都适用，适配任何书写模式）。 ------ */
+.items-near-bottom:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
+.items-near-bottom:where(.go-x:is(.content-N, .content-И, .content-N *, .content-И *)) {
+	align-items: end;
+}
+.items-near-bottom:where(:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x)),
+.items-near-bottom:where(.go-y) {
+	justify-items: end;
+}
+/* ------ .items-near-left：保证子元素靠左（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
+.items-near-left:where(:not(.go-y, .content-S, .content-N, .content-И,
+							.content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+横向*/
+.items-near-left:where(.content-И.go-x,
+					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
+	justify-items: start;
+}
+/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
+.items-near-left:where(.go-y:not(.content-S, .content-N, .content-И,
+							.content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+（显式|不显式）纵向*/
+.items-near-left:where(.content-И:not(.go-x),
+					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
+	align-items: start;
+}
+
+/*（继承|直接）S模式+（显式|不显式）横向*/
+.items-near-left:where(.content-S:not(.go-y),
+					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+横向*/
+.items-near-left:where(.content-N.go-x,
+					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+	justify-items: end;
+}
+/*（继承|直接）S模式+纵向*/
+.items-near-left:where(.content-S.go-y,
+					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+（显式|不显式）纵向*/
+.items-near-left:where(.content-N:not(.go-x),
+					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
+	align-items: end;
+}
+/* ------ .items-near-right：保证子元素靠右（grid、flex都适用，适配任何书写模式）。 ------ */
+/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
+.items-near-right:where(:not(.go-y, .content-S, .content-N, .content-И,
+							.content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+横向*/
+.items-near-right:where(.content-И.go-x,
+						.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
+	justify-items: end;
+}
+/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
+.items-near-right:where(.go-y:not(.content-S, .content-N, .content-И,
+							.content-S *, .content-N *, .content-И *)),
+/*（继承|直接）И模式+（显式|不显式）纵向*/
+.items-near-right:where(.content-И:not(.go-x),
+						.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
+	align-items: end;
+}
+
+/*（继承|直接）S模式+（显式|不显式）横向*/
+.items-near-right:where(.content-S:not(.go-y),
+						.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+横向*/
+.items-near-right:where(.content-N.go-x,
+						.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+	justify-items: start;
+}
+/*（继承|直接）S模式+纵向*/
+.items-near-right:where(.content-S.go-y,
+						.content-S .go-y:not(.content-N, .content-И, .content-Z)),
+/*（继承|直接）N模式+（显式|不显式）纵向*/
+.items-near-right:where(.content-N:not(.go-x),
+						.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
+	align-items: start;
+}
+
+/* ------ .items-near-center：保证子元素居中 ------ */
+.items-near-center {
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+	justify-items: center;
+	text-align: center;
+}
+
+/* ------ 子项目属性：让自己居中 ------ */
+.near-center {
+	justify-self: center;
+	align-self: center;
+	margin: auto;
+}
+
+/* ================== 项目分布：items-x/y-* ================== */
+/* ============ 拉伸：.items-stretch、.items-x/y-stretch ============ */
+/* ------ .items-x-stretch：保证在横向上拉伸，占满容器宽度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.grid.items-x-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
+	justify-items: stretch;
+}
+.grid.items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
+	align-items: stretch;
+}
+.flex.go-y.items-x-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)),
+.flex:not(.go-x).items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
+	align-items: stretch;
+}
+/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
+.flex.items-x-stretch:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)) > *,
+.flex.go-x.items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) > * {
+	flex: 1;
+}
+
+/* ------ .items-y-stretch：保证在竖向上拉伸，占满容器高度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.grid.items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
+	align-items: stretch;
+}
+.grid.items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
+	justify-items: stretch;
+}
+.flex:not(.go-y).items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)),
+.flex.go-x.items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
+	align-items: stretch;
+}
+/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
+.flex.go-y.items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) > *,
+.flex:not(.go-x).items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) > * {
+	flex: 1;
+}
+/* ------ .items-stretch：在xy两个方向都尽量拉伸，占满容器。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.items-stretch { justify-items: stretch; align-items: stretch; }
+.items-stretch > * { flex: 1; }
+
+/* ------ flex专属拉伸 ------ */
 /* 在横向flex容器里，保证本项目独占一行 */
 .multi-line.go-x .monopoly-x,
 /* 在纵向flex容器里，保证本项目独占一列 */
@@ -117,216 +373,60 @@
 	min-height: 0;
 }
 
-/* ================== grid布局专用 ================== */
-
+/* ------grid专属拉伸 ------ */
 /* 不一定真的能独占一行/列。如果另有项目也安排在同一行/列，两者会堆叠 */
 .one-row {grid-column: 1 / -1;}
 .one-column {grid-row: 1 / -1;}
 
-/* ================== 行列位置：在任何书写模式、任何方向，grid或flex下，保证行/列视觉效果的统一（靠上/下/左/右之类） ================== */
-/* ============ 行位置 ============ */
-/* ------ .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 ------ */
-.row-near-top:where(/* :where用来清掉参数选择器的权重 */
-	:not(/* 默认选择器（等同Z字形横向）必须排除这些，避免规则泄漏。S字形与Z字形对于上下的设置相同，可以不排除 */
-		.content-N, .content-N .row-near-top, .content-И, .content-И .row-near-top, .go-y)),
-.row-near-top.go-x:is(.content-N, .content-И, .content-N *, .content-И *) {
-	align-content: start;
-	align-items: start;
-}
-.row-near-top:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)),
-.row-near-top.go-y {
-	justify-content: start;
-	justify-items: start;
-}
-
-/* ------ .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 ------ */
-.row-near-bottom:where(:not(.content-N, .content-N .row-near-bottom, .content-И, .content-И .row-near-bottom, .go-y)),
-.go-x.row-near-bottom:is(.content-N, .content-И, .content-N *, .content-И *) {
-	align-content: end;
-	align-items: end;
-}
-.row-near-bottom:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)),
-.row-near-bottom.go-y {
-	justify-content: end;
-	justify-items: end;
-}
-
-/* ============ 列位置 ============ */
-/* ------ .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 ------ */
-.col-near-left:where(:not(.content-S, .content-S .col-near-left, .content-N, .content-N .col-near-left, .content-И, .content-И .col-near-left, .go-y)),
-.col-near-left.go-x:is(.content-И, .content-И *) {
-	justify-content: start;
-	justify-items: start;
-}
-.content-S.col-near-left:where(:not(.go-y)),
-.content-S .col-near-left:where(:not(.content-N, .content-И, .go-y)),
-.col-near-left.go-x:is(.content-N, .content-N *) {
-	justify-content: end;
-	justify-items: end;
-}
-.col-near-left.go-y:where(:not(.content-S, .content-S .col-near-left, .content-N, .content-N .col-near-left, .content-И, .content-И .col-near-left)),
-.col-near-left:where(:not(.go-x)):is(.content-И, .content-И *) {
-	align-content: start;
-	align-items: start;
-}
-.col-near-left.go-y:is(.content-S, .content-S *),
-.col-near-left:is(.content-N, .content-N *):where(:not(.go-x)) {
-	align-content: end;
-	align-items: end;
-}
-
-/* ------ .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 ------ */
-.col-near-right:where(:not(.content-S, .content-S .col-near-right, .content-N, .content-N .col-near-right, .content-И, .content-И .col-near-right, .go-y)),
-.col-near-right.go-x:is(.content-И, .content-И *) {
-	justify-content: end;
-	justify-items: end;
-}
-.content-S.col-near-right:where(:not(.go-y)),
-.content-S .col-near-right:where(:not(.content-N, .content-И, .go-y)),
-.col-near-right.go-x:is(.content-N, .content-N *) {
-	justify-content: start;
-	justify-items: start;
-}
-.col-near-right.go-y:where(:not(.content-S, .content-S .col-near-right, .content-N, .content-N .col-near-right, .content-И, .content-И .col-near-right)),
-.col-near-right:is(.content-И, .content-И *):where(:not(.go-x)) {
-	align-content: end;
-	align-items: end;
-}
-.col-near-right.go-y:is(.content-S, .content-S *),
-.col-near-right:where(:not(.go-x)):is(.content-N, .content-N *) {
-	align-content: start;
-	align-items: start;
-}
-
-/* ============ 项目位置：items-near-* ============ */
-/* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
-/* ------ .items-near-top：保证子元素靠上（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-top:where(:not(.content-N, .content-N .items-near-top, .content-И, .content-И .items-near-top, .go-y)),
-.go-x.items-near-top:is(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: start;
-}
-.items-near-top:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)),
-.items-near-top.go-y {
-	justify-items: start;
-}
-/* ------ .items-near-bottom：保证子元素靠下（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-bottom:where(:not(.content-N, .content-N .items-near-bottom, .content-И, .content-И .items-near-bottom, .go-y)),
-.go-x.items-near-bottom:is(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: end;
-}
-.items-near-bottom:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)),
-.items-near-bottom.go-y {
-	justify-items: end;
-}
-/* ------ .items-near-left：保证子元素靠左（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-left:where(:not(.content-S, .content-S .items-near-left, .content-N, .content-N .items-near-left, .content-И, .content-И .items-near-left, .go-y)),
-.go-x.items-near-left:is(.content-И, .content-И *) {
-	justify-items: start;
-}
-.content-S.items-near-left:where(:not(.go-y)),
-.content-S .items-near-left:where(:not(.content-N, .content-И, .go-y)),
-.go-x.items-near-left:is(.content-N, .content-N *) {
-	justify-items: end;
-}
-.items-near-left.go-y:where(:not(.content-S, .content-S .items-near-left, .content-N, .content-N .items-near-left, .content-И, .content-И .items-near-left)),
-.items-near-left:where(:not(.go-x)):is(.content-И, .content-И *) {
-	align-items: start;
-}
-.items-near-left.go-y:is(.content-S, .content-S *),
-.items-near-left:is(.content-N, .content-N *):where(:not(.go-x)) {
-	align-items: end;
-}
-/* ------ .items-near-right：保证子元素靠右（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-right:where(:not(.content-S, .content-S .items-near-right, .content-N, .content-N .items-near-right, .content-И, .content-И .items-near-right, .go-y)),
-.go-x.items-near-right:is(.content-И, .content-И *) {
-	justify-items: end;
-}
-.content-S.items-near-right:where(:not(.go-y)),
-.content-S .items-near-right:where(:not(.content-N, .content-И, .go-y)),
-.go-x.items-near-right:is(.content-N, .content-N *) {
-	justify-items: start;
-}
-.items-near-right.go-y:where(:not(.content-S, .content-S .items-near-right, .content-N, .content-N .items-near-right, .content-И, .content-И .items-near-right)),
-.items-near-right:where(:not(.go-x)):is(.content-И, .content-И *) {
-	align-items: end;
-}
-.items-near-right.go-y:is(.content-S, .content-S *),
-.items-near-right:is(.content-N, .content-N *):where(:not(.go-x)) {
-	align-items: start;
-}
-
-/* ================== 项目分布：items-x/y-* ================== */
-/* ============ 拉伸：.items-stretch、.items-x/y-stretch ============ */
-/* ------ .items-x-stretch：保证在横向上拉伸，占满容器宽度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.grid.items-x-stretch:where(:not(.content-N, .content-N .grid.items-x-stretch, .content-И, .content-И .grid.items-x-stretch)) {
-	justify-items: stretch;
-}
-.grid.items-x-stretch:is(.content-N, .content-И),
-:is(.content-N, .content-И) .grid.items-x-stretch {
-	align-items: stretch;
-}
-.flex.items-x-stretch.go-y:where(:not(.content-N, .content-И)),
-.flex.items-x-stretch:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)) {
-	align-items: stretch;
-}
-/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
-.flex.items-x-stretch:where(:not(.go-y, .content-N, .content-И, .content-N .flex.items-x-stretch, .content-И .flex.items-x-stretch)) > *,
-.flex.go-x.items-x-stretch:is(.content-N, .content-И, .content-N *, .content-И *) > * {
-	flex: 1;
-}
-
-/* ------ .items-y-stretch：保证在竖向上拉伸，占满容器高度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.grid.items-y-stretch:where(:not(.content-N, .content-N .grid.items-y-stretch, .content-И, .content-И .grid.items-y-stretch)) {
-	align-items: stretch;
-}
-.grid.items-y-stretch:is(.content-N, .content-И, .content-N *, .content-И *) {
-	justify-items: stretch;
-}
-.flex.items-y-stretch:where(:not(.content-N, .content-И, .go-y, .content-N .flex.items-y-stretch, .content-И .flex.items-y-stretch)),
-.flex.go-x.items-y-stretch:is(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: stretch;
-}
-.flex.items-y-stretch.go-y:where(:not(.content-N, .content-И, .content-N .flex.items-y-stretch, .content-И .flex.items-y-stretch)) > *,
-.flex.items-y-stretch:is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)) > * {
-	flex: 1;
-}
-/* ------ .items-stretch：在xy两个方向都尽量拉伸，占满容器。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.items-stretch { justify-items: stretch; align-items: stretch; }
-.items-stretch > * { flex: 1; }
-
 /* ------ .items-x-space-between/.items-x-mutex/.items-x-social-phobia：在横向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
-.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):where(:not(.content-N, .content-И, .content-N .grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia), .content-И .grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia))) {
+.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):where(
+	:not(.content-N, .content-И, .content-N *, .content-И *))
+{
 	justify-content: space-between;
 }
-.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *) {
+.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
+	):where(.content-N, .content-И, .content-N *, .content-И *)
+{
 	align-content: space-between;
 }
 
-.flex.go-y:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):where(:not(.content-N, .content-И)),
-.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)) {
+.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	align-content: space-between;
 	flex-wrap: wrap;
 }
-.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):where(:not(.go-y, .content-N, .content-И, .content-N .flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia), .content-И .flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia))),
-.flex.go-x:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *) {
+.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	justify-content: space-between;
 }
 
 /* ------ .items-y-space-between/.items-y-mutex/.items-y-social-phobia：在竖向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
-.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):where(:not(.content-N, .content-N .grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia), .content-И, .content-И .grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia))) {
+.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):where(
+	:not(.content-N, .content-И, .content-N *, .content-И *))
+{
 	align-content: space-between;
 }
-.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *) {
+.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
+	):where(.content-N, .content-И, .content-N *, .content-И *)
+{
 	justify-content: space-between;
 }
 
-.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):where(:not(.content-N, .content-И, .go-y, .content-N .flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia), .content-И .flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia))),
-.flex.go-x:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *) {
+.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	align-content: space-between;
 	flex-wrap: wrap;
 }
-.flex.go-y:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):where(:not(.content-N, .content-И, .content-N .flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia), .content-И .flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia))),
-.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):is(.content-N, .content-И, .content-N *, .content-И *):where(:not(.go-x)) {
+.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	justify-content: space-between;
 }
 
@@ -337,40 +437,46 @@
 
 /* ============ 空隙环绕：.items-space-around、.items-x/y-space-around ============ */
 /* ------ .items-x-space-around/.items-x-unfamiliar：保证在横向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.content-N, .content-И, .content-И .grid:is(.items-x-space-around, .items-x-unfamiliar))) {
+.grid:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.content-N, .content-И, .content-N *, .content-И *))
+{
 	justify-content: space-around;
 }
-.grid:is(.items-x-space-around, .items-x-unfamiliar):is(.content-N, .content-И, .content-N *, .content-И *) {
+.grid:is(.items-x-space-around, .items-x-unfamiliar):where(.content-N, .content-И, .content-N *, .content-И *)
+{
 	align-content: space-around;
 }
-.flex.go-y:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.content-N, .content-И)),
-.flex:is(.content-N, .content-И):is(.items-x-space-around, .items-x-unfamiliar):where(:not(.go-x)),
-:is(.content-N, .content-И) .flex:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.go-x)) {
+.flex:is(.items-x-space-around, .items-x-unfamiliar
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	align-content: space-around;
 	flex-wrap: wrap;
 }
-.flex:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.go-y, .content-N, .content-И, .content-N .flex:is(.items-x-space-around, .items-x-unfamiliar), .content-И .flex:is(.items-x-space-around, .items-x-unfamiliar))),
-.flex.go-x:is(.content-N, .content-И):is(.items-x-space-around, .items-x-unfamiliar),
-:is(.content-N, .content-И) .flex.go-x:is(.items-x-space-around, .items-x-unfamiliar) {
+.flex:is(.items-x-space-around, .items-x-unfamiliar
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	justify-content: space-around;
 }
 
 /* ------ .items-y-space-around/.items-y-unfamiliar：保证在竖向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.content-N, .content-N .grid:is(.items-y-space-around, .items-y-unfamiliar), .content-И, .content-И .grid:is(.items-y-space-around, .items-y-unfamiliar))) {
+.grid:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
 	align-content: space-around;
 }
 .grid:is(.items-y-space-around, .items-y-unfamiliar):is(.content-N, .content-И, .content-N *, .content-И *) {
 	justify-content: space-around;
 }
-.flex:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.content-N, .content-И, .go-y, .content-N .flex:is(.items-y-space-around, .items-y-unfamiliar), .content-И .flex:is(.items-y-space-around, .items-y-unfamiliar))),
-.flex.go-x:is(.content-N, .content-И):is(.items-y-space-around, .items-y-unfamiliar),
-:is(.content-N, .content-И) .flex.go-x:is(.items-y-space-around, .items-y-unfamiliar) {
+.flex:is(.items-y-space-around, .items-y-unfamiliar
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	align-content: space-around;
 	flex-wrap: wrap;
 }
-.flex.go-y:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.content-N, .content-И, .content-N .flex:is(.items-y-space-around, .items-y-unfamiliar), .content-И .flex:is(.items-y-space-around, .items-y-unfamiliar))),
-.flex:is(.content-N, .content-И):is(.items-y-space-around, .items-y-unfamiliar):where(:not(.go-x)),
-:is(.content-N, .content-И) .flex:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.go-x)) {
+.flex:is(.items-y-space-around, .items-y-unfamiliar
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	justify-content: space-around;
 }
 
@@ -380,40 +486,44 @@
 
 /* ============ 空隙均分：.items-space-evenly、.items-x/y-space-evenly ============ */
 /* ------ .items-x-space-evenly/.items-x-friendly：保证在横向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-x-space-evenly, .items-x-friendly):where(:not(.content-N, .content-И, .content-И .grid:is(.items-x-space-evenly, .items-x-friendly))) {
+.grid:is(.items-x-space-evenly, .items-x-friendly):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
 	justify-content: space-evenly;
 }
-.grid:is(.items-x-space-evenly, .items-x-friendly):is(.content-N, .content-И, .content-N *, .content-И *) {
+.grid:is(.items-x-space-evenly, .items-x-friendly):where(.content-N, .content-И, .content-N *, .content-И *) {
 	align-content: space-evenly;
 }
-.flex.go-y:is(.items-x-space-evenly, .items-x-friendly):where(:not(.content-N, .content-И)),
-.flex:is(.content-N, .content-И):is(.items-x-space-evenly, .items-x-friendly):where(:not(.go-x)),
-:is(.content-N, .content-И) .flex:is(.items-x-space-evenly, .items-x-friendly):where(:not(.go-x)) {
+.flex:is(.items-x-space-evenly, .items-x-friendly
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	align-content: space-evenly;
 	flex-wrap: wrap;
 }
-.flex:is(.items-x-space-evenly, .items-x-friendly):where(:not(.go-y, .content-N, .content-И, .content-N .flex:is(.items-x-space-evenly, .items-x-friendly), .content-И .flex:is(.items-x-space-evenly, .items-x-friendly))),
-.flex.go-x:is(.content-N, .content-И):is(.items-x-space-evenly, .items-x-friendly),
-:is(.content-N, .content-И) .flex.go-x:is(.items-x-space-evenly, .items-x-friendly) {
+.flex:is(.items-x-space-evenly, .items-x-friendly
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	justify-content: space-evenly;
 }
 
 /* ------ .items-y-space-evenly/.items-y-friendly：保证在竖向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-y-space-evenly, .items-y-friendly):where(:not(.content-N, .content-N .grid:is(.items-y-space-evenly, .items-y-friendly), .content-И, .content-И .grid:is(.items-y-space-evenly, .items-y-friendly))) {
+.grid:is(.items-y-space-evenly, .items-y-friendly):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
 	align-content: space-evenly;
 }
-.grid:is(.items-y-space-evenly, .items-y-friendly):is(.content-N, .content-И, .content-N *, .content-И *) {
+.grid:is(.items-y-space-evenly, .items-y-friendly):where(.content-N, .content-И, .content-N *, .content-И *) {
 	justify-content: space-evenly;
 }
-.flex:is(.items-y-space-evenly, .items-y-friendly):where(:not(.content-N, .content-И, .go-y, .content-N .flex:is(.items-y-space-evenly, .items-y-friendly), .content-И .flex:is(.items-y-space-evenly, .items-y-friendly))),
-.flex.go-x:is(.content-N, .content-И):is(.items-y-space-evenly, .items-y-friendly),
-:is(.content-N, .content-И) .flex.go-x:is(.items-y-space-evenly, .items-y-friendly) {
+.flex:is(.items-y-space-evenly, .items-y-friendly
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
+			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
+{
 	align-content: space-evenly;
 	flex-wrap: wrap;
 }
-.flex.go-y:is(.items-y-space-evenly, .items-y-friendly):where(:not(.content-N, .content-И, .content-N .flex:is(.items-y-space-evenly, .items-y-friendly), .content-И .flex:is(.items-y-space-evenly, .items-y-friendly))),
-.flex:is(.content-N, .content-И):is(.items-y-space-evenly, .items-y-friendly):where(:not(.go-x)),
-:is(.content-N, .content-И) .flex:is(.items-y-space-evenly, .items-y-friendly):where(:not(.go-x)) {
+.flex:is(.items-y-space-evenly, .items-y-friendly
+	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
+			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
+{
 	justify-content: space-evenly;
 }
 
@@ -486,7 +596,7 @@
 		'footer';
 }
 
-/*==========================================用于项目=========================================*/
+/* ------------ 配套 ------------ */
 /* 为防父元素没有使用.grid类之类，所以不使用 .grid > header ，直接设置grid-area。若父元素非display:grid也没事，会被浏览器忽略。下同 */
 header, .header {
 	grid-area: header;
@@ -501,26 +611,8 @@ footer, .footer {
 	flex: 1 1 100%;
 }
 
-.left-sidebar {grid-area: left-sidebar;}
-
-.right-sidebar {grid-area: right-sidebar;}
-
 main, .main, .body {grid-area: main; flex: 1;}
 
-/* 容器属性：让子项目居中 */
-.item-near-center {
-	justify-content: center;
-	align-items: center;
-	align-content: center;
-	justify-items: center;
-	text-align: center;
-}
-
-/* 子项目属性：让自己居中 */
-.near-center {
-	justify-self: center;
-	align-self: center;
-	margin: auto;
-}
-
+.left-sidebar {grid-area: left-sidebar;}
+.right-sidebar {grid-area: right-sidebar;}
 
