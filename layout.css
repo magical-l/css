@@ -13,7 +13,7 @@
 
 .no-gap { gap: 0 !important; }
 
-/* ======================== 书写模式：决定文字排列方向，一些布局"行"、"列"会受其影响 ================== */
+/* ======================== 书写模式：决定内容排列方向，一些布局"行"、"列"会受其影响 ======================== */
 /* Z字形：横向（行），行内从左到右。行之间肯定是从上到下。现行最常见的书写模式。 */
 .content-Z { writing-mode: horizontal-tb; direction: ltr; }
 /* S字形：横向（行），行内从右到左 。行之间肯定是从上到下。阿拉伯语的书写模式。 */
@@ -23,14 +23,14 @@
 /* И字形：竖向（列），列之间从左到右。列内肯定是从上到下。蒙文的书写模式。 */
 .content-И { writing-mode: vertical-lr; direction: ltr; }
 
-/*============================布局容器===========================*/
+/* ======================== 布局容器 ======================== */
 .flex {display: flex}
 .flex.inline {display: inline-flex}
 .grid {display: grid}
 .grid.inline {display: inline-grid}
 
-/*========================= 物理方向/绝对方向 ========================*/
-/* 保证按x轴/物理横向/行方向铺陈子元素（适配任何书写模式）。 */
+/* ================== 物理方向/绝对方向 ================== */
+/* ------ 保证按x轴/物理横向/行方向铺陈子元素（适配任何书写模式）。 ------ */
 .go-x {
 	flex-direction: row;     /* Flex: 横向排列 */
 	grid-auto-flow: row;     /* Grid: 横向填充 */
@@ -41,7 +41,7 @@
 	grid-auto-flow: column;
 }
 
-/* 保证按y轴/物理纵向/列方向铺陈子元素（适配任何书写模式）。 */
+/* ------ 保证按y轴/物理纵向/列方向铺陈子元素（适配任何书写模式）。 ------ */
 .go-y {
 	flex-direction: column;
 	grid-auto-flow: column;
@@ -52,25 +52,25 @@
 	grid-auto-flow: row;
 }
 
-/* .go-x.from-left：在横向铺陈子元素时，保证从左边开始（适配任何书写模式）。 */
+/* ------ .go-x.from-left：在横向铺陈子元素时，保证从左边开始（适配任何书写模式）。 ------ */
 .go-x.from-left { flex-direction: row; }
 .content-S.go-x.from-left, .content-S .go-x.from-left { flex-direction: row-reverse; }
 .content-N.go-x.from-left, .content-N .go-x.from-left { flex-direction: column-reverse; }
 .content-И.go-x.from-left, .content-И .go-x.from-left { flex-direction: column; }
 
-/* .go-x.from-right：在横向铺陈子元素时，保证从右边开始（适配任何书写模式）。 */
+/* ------ .go-x.from-right：在横向铺陈子元素时，保证从右边开始（适配任何书写模式）。 ------ */
 .go-x.from-right { flex-direction: row-reverse; }
 .content-S.go-x.from-right, .content-S .go-x.from-right { flex-direction: row; }
 .content-N.go-x.from-right, .content-N .go-x.from-right { flex-direction: column; }
 .content-И.go-x.from-right, .content-И .go-x.from-right { flex-direction: column-reverse; }
 
-/* .go-y.from-top：在纵向铺陈子元素时，保证从上方开始（适配任何书写模式）。 */
+/* ------ .go-y.from-top：在纵向铺陈子元素时，保证从上方开始（适配任何书写模式）。 ------ */
 /* 默认行为，无需额外规则
 .go-y.from-top { …… }
 .content-N.go-y.from-top, .content-И.go-y.from-top { …… }
 */
 
-/* .go-y.from-bottom：在纵向铺陈子元素时，保证从下方开始（适配任何书写模式）。 */
+/* ------ .go-y.from-bottom：在纵向铺陈子元素时，保证从下方开始（适配任何书写模式）。 ------ */
 .go-y.from-bottom { flex-direction: column-reverse; }
 .content-N.go-y.from-bottom, .content-N .go-y.from-bottom,
 .content-И.go-y.from-bottom, .content-И .go-y.from-bottom { flex-direction: row-reverse; }
@@ -79,29 +79,29 @@
 .single-line {flex-wrap: nowrap;}
 .multi-line {flex-wrap: wrap;}
 
-/*----------线路之间（align-content）----------*/
-/*所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。*/
+/* ============ 线路之间（align-content） ============ */
+/* ------ 所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。 ------ */
 .multi-line.lines-stretch { align-content: stretch; }
 
-/*所有线路都拥到第一条线路这边。受项目实际排布方向影响。*/
+/* ------ 所有线路都拥到第一条线路这边。受项目实际排布方向影响。 ------ */
 .multi-line.lines-near-start { align-content: start; }
 
-/*所有线路都退到最后一条线路这边。受项目实际排布方向影响。*/
+/* ------ 所有线路都退到最后一条线路这边。受项目实际排布方向影响。 ------ */
 .multi-line.lines-near-end { align-content: end; }
 
-/*所有线路都挤在中间。受项目实际排布方向影响。*/
+/* ------ 所有线路都挤在中间。受项目实际排布方向影响。 ------ */
 .multi-line.lines-near-center { align-content: center; }
 
-/*线路互斥（社恐），即线路互相之间距离尽量远。受项目实际排布方向影响。*/
+/* ------ 线路互斥（社恐），即线路互相之间距离尽量远。受项目实际排布方向影响。 ------ */
 .multi-line.lines-space-between, .multi-line.lines-mutex, .multi-line.lines-social-phobia { align-content: space-between; }
 
-/*线路不熟，即线路互相之间保持距离但又不极端排斥。受项目实际排布方向影响。*/
+/* ------ 线路不熟，即线路互相之间保持距离但又不极端排斥。受项目实际排布方向影响。 ------ */
 .multi-line.lines-space-around, .multi-line.lines-unfamiliar { align-content: space-around; }
 
-/*线路不熟但比较友好。受项目实际排布方向影响。*/
+/* ------ 线路不熟但比较友好。受项目实际排布方向影响。 ------ */
 .multi-line.lines-space-evenly, .multi-line.lines-friendly { align-content: space-evenly; }
 
-/*-----------项目本身------------*/
+/* ============ 项目本身 ============ */
 /* 在横向flex容器里，保证本项目独占一行 */
 .multi-line.go-x .monopoly-x,
 /* 在纵向flex容器里，保证本项目独占一列 */
@@ -119,15 +119,15 @@
 	min-height: 0;
 }
 
-/*-----------------------grid布局专用--------------------------*/
+/* ================== grid布局专用 ================== */
 
 /* 不一定真的能独占一行/列。如果另有项目也安排在同一行/列，两者会堆叠 */
 .one-row {grid-column: 1 / -1;}
 .one-column {grid-row: 1 / -1;}
 
-/* ========== 行列位置：在任何书写模式、任何方向，grid或flex下，保证行/列视觉效果的统一（靠上/下/左/右之类） ========== */
-/* ================= 行位置 ================= */
-/* --- .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 --- */
+/* ================== 行列位置：在任何书写模式、任何方向，grid或flex下，保证行/列视觉效果的统一（靠上/下/左/右之类） ================== */
+/* ============ 行位置 ============ */
+/* ------ .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 ------ */
 .row-near-top:where(/* :where用来清掉参数选择器的权重 */
 	:not(/* 默认选择器（等同Z字形横向）必须排除这些，避免规则泄漏。S字形与Z字形对于上下的设置相同，可以不排除 */
 		.content-N,
@@ -151,7 +151,7 @@
 	justify-items: start;
 }
 
-/* --- .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 ------ */
 .row-near-bottom:where(:not(.content-N, .content-N .row-near-bottom,
 							.content-И, .content-И .row-near-bottom,
 							.go-y)),
@@ -171,8 +171,8 @@
 	justify-items: end;
 }
 
-/* ================= 列位置 ================= */
-/* --- .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 --- */
+/* ============ 列位置 ============ */
+/* ------ .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 ------ */
 .col-near-left:where(:not(.content-S, .content-S .col-near-left,
 						.content-N, .content-N .col-near-left,
 						.content-И, .content-И .col-near-left,
@@ -205,7 +205,7 @@
 	align-items: end;
 }
 
-/* --- .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 ------ */
 .col-near-right:where(:not(.content-S, .content-S .col-near-right,
 						.content-N, .content-N .col-near-right,
 						.content-И, .content-И .col-near-right,
@@ -238,9 +238,9 @@
 	align-items: start;
 }
 
-/*========== 项目位置：items-near-* ==========*/
+/* ============ 项目位置：items-near-* ============ */
 /* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
-/* --- .items-near-top：保证子元素靠上（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .items-near-top：保证子元素靠上（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-near-top:where(:not(.content-N, .content-N .items-near-top,
 						.content-И, .content-И .items-near-top,
 						.go-y)),
@@ -257,7 +257,7 @@
 .items-near-top.go-y {
 	justify-items: start;
 }
-/* --- .items-near-bottom：保证子元素靠下（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .items-near-bottom：保证子元素靠下（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-near-bottom:where(:not(.content-N, .content-N .items-near-bottom,
 							.content-И, .content-И .items-near-bottom,
 							.go-y)),
@@ -274,7 +274,7 @@
 .items-near-bottom.go-y {
 	justify-items: end;
 }
-/* --- .items-near-left：保证子元素靠左（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .items-near-left：保证子元素靠左（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-near-left:where(:not(.content-S, .content-S .items-near-left,
 						.content-N, .content-N .items-near-left,
 						.content-И, .content-И .items-near-left,
@@ -302,7 +302,7 @@
 .content-N .items-near-left:where(:not(.go-x)) {
 	align-items: end;
 }
-/* --- .items-near-right：保证子元素靠右（grid、flex都适用，适配任何书写模式）。 --- */
+/* ------ .items-near-right：保证子元素靠右（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-near-right:where(:not(.content-S, .content-S .items-near-right,
 							.content-N, .content-N .items-near-right,
 							.content-И, .content-И .items-near-right,
@@ -331,8 +331,8 @@
 	align-items: start;
 }
 
-/* ============ 项目分布：items-x/y-* ============ */
-/* ====== 拉伸：.items-stretch、.items-x/y-stretch ====== */
+/* ================== 项目分布：items-x/y-* ================== */
+/* ============ 拉伸：.items-stretch、.items-x/y-stretch ============ */
 /* ------ .items-x-stretch：保证在横向上拉伸，占满容器宽度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
 .grid.items-x-stretch:where(:not(.content-N, .content-N .grid.items-x-stretch,
                                   .content-И, .content-И .grid.items-x-stretch)) {
@@ -550,7 +550,7 @@
 /* ------ .items-space-between/.items-mutex/.items-social-phobia：在xy双向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
 .items-space-between, .items-mutex, .items-social-phobia { justify-content: space-between; align-content: space-between; }
 
-/* ====== 空隙环绕：.items-space-around、.items-x/y-space-around ====== */
+/* ============ 空隙环绕：.items-space-around、.items-x/y-space-around ============ */
 /* ------ .items-x-space-around/.items-x-unfamiliar：保证在横向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
 .grid.items-x-space-around:where(:not(.content-N, .content-N .grid.items-x-space-around, .content-И, .content-И .grid.items-x-space-around, .content-N .grid.items-x-unfamiliar, .content-И .grid.items-x-unfamiliar)),
 .grid.items-x-unfamiliar:where(:not(.content-N, .content-N .grid.items-x-unfamiliar, .content-И, .content-И .grid.items-x-unfamiliar, .content-N .grid.items-x-space-around, .content-И .grid.items-x-space-around)) {
@@ -636,6 +636,7 @@
 /* ------ .items-space-around/.items-unfamiliar：保证在xy双向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-space-around, .items-unfamiliar { justify-content: space-around; align-content: space-around; flex-wrap: wrap; }
 
+/* ============ 空隙均分：.items-space-evenly、.items-x/y-space-evenly ============ */
 /* ------ .items-x-space-evenly/.items-x-friendly：保证在横向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
 .grid.items-x-space-evenly:where(:not(.content-N, .content-N .grid.items-x-space-evenly, .content-И, .content-И .grid.items-x-space-evenly, .content-N .grid.items-x-friendly, .content-И .grid.items-x-friendly)),
 .grid.items-x-friendly:where(:not(.content-N, .content-N .grid.items-x-friendly, .content-И, .content-И .grid.items-x-friendly, .content-N .grid.items-x-space-evenly, .content-И .grid.items-x-space-evenly)) {
@@ -721,7 +722,7 @@
 /* ------ .items-space-evenly/.items-friendly：保证在xy双向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
 .items-space-evenly, .items-friendly { justify-content: space-evenly; align-content: space-evenly; flex-wrap: wrap; }
 
-/*===============================Grid 预设布局===============================*/
+/* ============================== Grid 预设布局 ============================== */
 .grid.朋字形 {
 	grid-template-columns: 50% 50%;
 	grid-template-rows: auto 1fr auto;
@@ -731,7 +732,7 @@
 		'footer footer';
 }
 
-/* "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 */
+/* ------ "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 ------ */
 .grid.亚字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -747,7 +748,7 @@
 		'footer footer footer';
 }
 
-/* "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 */
+/* ------ "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 ------ */
 .grid.叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -760,7 +761,7 @@
 		'footer footer';
 }
 
-/* "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 */
+/*------  "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 ------ */
 .grid.反叵字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -773,7 +774,7 @@
 		'footer footer';
 }
 
-/* "目字形"布局，上部导航栏，底部页脚 */
+/* ------ "目字形"布局，上部导航栏，底部页脚 ------ */
 .grid.目字形 {
 	grid-template-rows:
 		auto    /* Header 高度自适应内容 */
@@ -823,16 +824,4 @@ main, .main, .body {grid-area: main; flex: 1;}
 	margin: auto;
 }
 
-@media (max-width: 1024px) {
-	body {
-		grid-template-columns: 1fr;
-		grid-template-areas:
-			'header'
-			'main'
-			'right-sidebar';
-	}
 
-	aside {
-		width: 100%;
-	}
-}

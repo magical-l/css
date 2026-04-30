@@ -53,8 +53,6 @@ function makeGrid(title, clsName, getExp){
   for(var ci=0;ci<contents.length;ci++){
     var co=contents[ci];
     var exp=getExp(co);
-    var label=getExp===gridXExpect?'Z/S→ji, N/И→ai':'Z/S→ai, N/И→ji';
-    if(getExp===function(c){return 'ji+ai';}) label='ji+ai';
     num++; document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">同 '+cnames[co]+'</div><div class="case-expect">'+exp+'</div><div class="container grid grid-box ctrl'+cls(co)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>');
     num++; var w=co?'<div class="'+co+'">':'<div>';
     document.write('<div class="case" data-exp="'+exp+'"><div class="case-num">'+num+'</div><div class="case-class">上 '+cnames[co]+'</div><div class="case-expect">'+exp+'</div>'+w+'<div class="container grid grid-box ctrl '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>');
