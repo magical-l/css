@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>stretch 测试</title>
+<link rel="stylesheet" href="../layout.css">
+<style>
+body { padding: 20px; font-family: sans-serif; font-size: 14px; }
+h1 { border-bottom: 2px solid #333; }
+h2 { margin-top: 30px; color: #555; border-bottom: 1px solid #999; }
+h3 { margin-top: 16px; color: #777; }
+.section { margin: 12px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start; }
+.case { border: 1px solid #999; padding: 7px; background: #fafafa; }
+.case-num { color: #ff6b6b; font-weight: bold; }
+.case-class { font-family: monospace; font-size: 12px; }
+.case-expect { font-family: monospace; font-size: 11px; color: #2e7d32; }
+.case-expect.no { color: #999; }
+.container { border: 3px solid #333; background: #f0f0f0; }
+
+:where(.ctrl) { justify-items: start; align-items: start; }
+.grid-box { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 200px; height: 200px; }
+.grid-box .item { background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+
+.flex-box { display: flex; width: 200px; height: 200px; align-items: start; }
+.flex-box .item { background: #a5d6a7; border: 2px solid #333; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #333; }
+
+/* stretch 规则已迁至 layout.css */
+</style>
+</head>
+<body>
+
+<h1>Grid stretch</h1>
+<p>对照：ji:start ai:start</p>
+<div class="section">
+    <div class="case"><div class="case-num">C</div><div class="case-class">对照</div><div class="container grid grid-box ctrl"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>
+</div>
+
+<script>
+var num=0;
+function cls(s){return s?' '+s.replace(/\./g,' '):'';}
+function esc(s){return s.replace(/</g,'&lt;')}
+
+var contents=['','content-Z','content-S','content-N','content-И'];
+var cnames={ '':'Z(默认)','content-Z':'Z','content-S':'S','content-N':'N','content-И':'И' };
+
+function makeGrid(title, clsName, expect){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    // 同元素
+    num++; document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">同元素 '+cnames[co]+'</div><div class="case-expect">'+expect+'</div><div class="container grid grid-box ctrl'+cls(co)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div>');
+    // 上层
+    num++; var w=co?'<div class="'+co+'">':'<div>';
+    document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">上层 '+cnames[co]+'</div><div class="case-expect">'+expect+'</div>'+w+'<div class="container grid grid-box ctrl '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div><div class="item">4</div></div></div></div>');
+  }
+  document.write('</div>');
+}
+makeGrid('items-x-stretch','items-x-stretch','Z/S→ji:stretch, N/И→ai:stretch');
+makeGrid('items-y-stretch','items-y-stretch','Z/S→ai:stretch, N/И→ji:stretch');
+makeGrid('items-stretch','items-stretch','ji+ai:stretch');
+</script>
+
+<h1>Flex stretch</h1>
+
+<script>
+var gos=['','go-x','go-y'];
+var goname={ '':'默认','go-x':'.go-x','go-y':'.go-y' };
+
+function makeFlex(title, clsName, getMech){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    for(var gi=0;gi<gos.length;gi++){
+      var go=gos[gi];
+      var mech=getMech(co,go);
+      // 同元素
+      num++; document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">同元素 '+cnames[co]+' '+goname[go]+'</div><div class="case-expect">'+mech+'</div><div class="container flex flex-box'+cls(co)+' '+cls(go)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div>');
+      // 上层
+      num++; var w=co?'<div class="'+co+'">':'<div>';
+      document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">上层 '+cnames[co]+' 子级'+goname[go]+'</div><div class="case-expect">'+mech+'</div>'+w+'<div class="container flex flex-box '+cls(go)+' '+clsName+'"><div class="item">1</div><div class="item">2</div><div class="item">3</div></div></div></div>');
+    }
+  }
+  document.write('</div>');
+}
+
+// items-x-stretch: 交轴=水平→ai:stretch, 主轴=水平→flex:1
+function fxMech(co,go){
+  if(co==='content-N'||co==='content-И') return go!=='go-x' ? 'ai:stretch' : 'flex:1';
+  return go==='go-y' ? 'ai:stretch' : 'flex:1';
+}
+makeFlex('items-x-stretch','items-x-stretch',fxMech);
+
+// items-y-stretch: 交轴=垂直→ai:stretch, 主轴=垂直→flex:1
+function fyMech(co,go){
+  if(co==='content-N'||co==='content-И') return go==='go-x' ? 'ai:stretch' : 'flex:1';
+  return go!=='go-y' ? 'ai:stretch' : 'flex:1';
+}
+makeFlex('items-y-stretch','items-y-stretch',fyMech);
+
+// items-stretch: 交轴=ai:stretch + 主轴=flex:1
+function fsMech(co,go){ return 'ai + flex:1'; }
+makeFlex('items-stretch','items-stretch',fsMech);
+</script>
+
+<h1>Flex stretch 换行</h1>
+
+<script>
+// 按主轴方向决定窄化维度：主轴水平→width:90px，主轴垂直→height:90px
+function wrapDim(co,go){
+  if(co==='content-N'||co==='content-И'){
+    // N/И: go-x→column→主水平, 默认/go-y→row→主垂直
+    return go==='go-x' ? 'width:90px;flex-wrap:wrap' : 'height:90px;flex-wrap:wrap';
+  }
+  // Z/S: 默认/go-x→row→主水平, go-y→column→主垂直
+  return go==='go-y' ? 'height:90px;flex-wrap:wrap' : 'width:90px;flex-wrap:wrap';
+}
+
+function makeFlexWrap(title, clsName, getMech){
+  document.write('<h2>'+title+'</h2><div class="section">');
+  for(var ci=0;ci<contents.length;ci++){
+    var co=contents[ci];
+    for(var gi=0;gi<gos.length;gi++){
+      var go=gos[gi];
+      var mech=getMech(co,go);
+      var style=wrapDim(co,go);
+      // 同元素
+      num++; document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">同元素 '+cnames[co]+' '+goname[go]+'</div><div class="case-expect">'+mech+' 换行</div><div class="container flex flex-box'+cls(co)+' '+cls(go)+' '+clsName+'" style="'+style+'"><div class="item" style="min-width:40px;min-height:40px">1</div><div class="item" style="min-width:40px;min-height:40px">2</div><div class="item" style="min-width:40px;min-height:40px">3</div><div class="item" style="min-width:40px;min-height:40px">4</div><div class="item" style="min-width:40px;min-height:40px">5</div></div></div>');
+      // 上层
+      num++; var w=co?'<div class="'+co+'">':'<div>';
+      document.write('<div class="case"><div class="case-num">'+num+'</div><div class="case-class">上层 '+cnames[co]+' 子级'+goname[go]+'</div><div class="case-expect">'+mech+' 换行</div>'+w+'<div class="container flex flex-box '+cls(go)+' '+clsName+'" style="'+style+'"><div class="item" style="min-width:40px;min-height:40px">1</div><div class="item" style="min-width:40px;min-height:40px">2</div><div class="item" style="min-width:40px;min-height:40px">3</div><div class="item" style="min-width:40px;min-height:40px">4</div><div class="item" style="min-width:40px;min-height:40px">5</div></div></div></div>');
+    }
+  }
+  document.write('</div>');
+}
+
+makeFlexWrap('items-x-stretch','items-x-stretch',fxMech);
+makeFlexWrap('items-y-stretch','items-y-stretch',fyMech);
+makeFlexWrap('items-stretch','items-stretch',fsMech);
+</script>
+
+<h2>computed</h2>
+<pre id="r" style="font:12px monospace;background:#f5f5f5;padding:10px;"></pre>
+<script>
+(function(){
+    var out='';
+    document.querySelectorAll('.case').forEach(function(c){
+        var n=c.querySelector('.case-num').textContent;
+        var ct=c.querySelector('.container');
+        if(!ct)return;
+        var s=getComputedStyle(ct);
+        out+=n.padStart(2)+' ji='+s.justifyItems.padEnd(11)+' ai='+s.alignItems+'\n';
+    });
+    document.getElementById('r').textContent='#  ji          ai\n'+'─'.repeat(28)+'\n'+out;
+})();
+</script>
+</body>
+</html>

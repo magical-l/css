@@ -340,10 +340,67 @@
 	align-items: start;
 }
 
-/*----------分布类----------*/
-/*内容拉伸充满空间*/
-.items-stretch {align-items: stretch;}
-.content-N.items-stretch, .content-И.items-stretch {justify-items: stretch;}
+/* ============ 项目分布：items-x/y-* ============ */
+/* ====== 拉伸：.items-stretch、.items-x/y-stretch ====== */
+/* ------ .items-x-stretch：保证在横向上拉伸，占满容器宽度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.grid.items-x-stretch:where(:not(.content-N, .content-N .grid.items-x-stretch,
+                                  .content-И, .content-И .grid.items-x-stretch)) {
+	justify-items: stretch;
+}
+.grid.content-N.items-x-stretch, .content-N .grid.items-x-stretch,
+.grid.content-И.items-x-stretch, .content-И .grid.items-x-stretch {
+	align-items: stretch;
+}
+.flex.items-x-stretch.go-y:where(:not(.content-N, .content-И)),
+.content-N.flex.items-x-stretch:where(:not(.go-x)),
+.content-N .flex.items-x-stretch:where(:not(.go-x)),
+.content-И.flex.items-x-stretch:where(:not(.go-x)),
+.content-И .flex.items-x-stretch:where(:not(.go-x)) {
+	align-items: stretch;
+}
+/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
+.flex.items-x-stretch:where(:not(.go-y, .content-N, .content-И,
+    .content-N .flex.items-x-stretch,
+    .content-И .flex.items-x-stretch)) > *,
+.content-N.flex.go-x.items-x-stretch > *,
+.content-N .flex.go-x.items-x-stretch > *,
+.content-И.flex.go-x.items-x-stretch > *,
+.content-И .flex.go-x.items-x-stretch > * {
+	flex: 1;
+}
+
+/* ------ .items-y-stretch：保证在竖向上拉伸，占满容器高度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.grid.items-y-stretch:where(:not(.content-N, .content-N .grid.items-y-stretch,
+                                  .content-И, .content-И .grid.items-y-stretch)) {
+	align-items: stretch;
+}
+.grid.content-N.items-y-stretch, .content-N .grid.items-y-stretch,
+.grid.content-И.items-y-stretch, .content-И .grid.items-y-stretch {
+	justify-items: stretch;
+}
+.flex.items-y-stretch:where(:not(.content-N, .content-И, .go-y,
+    .content-N .flex.items-y-stretch,
+    .content-И .flex.items-y-stretch)),
+.content-N.flex.go-x.items-y-stretch,
+.content-N .flex.go-x.items-y-stretch,
+.content-И.flex.go-x.items-y-stretch,
+.content-И .flex.go-x.items-y-stretch {
+	align-items: stretch;
+}
+.flex.items-y-stretch.go-y:where(:not(.content-N, .content-И,
+    .content-N .flex.items-y-stretch,
+    .content-И .flex.items-y-stretch)) > *,
+.content-N.flex.items-y-stretch:where(:not(.go-x)) > *,
+.content-N .flex.items-y-stretch:where(:not(.go-x)) > *,
+.content-И.flex.items-y-stretch:where(:not(.go-x)) > *,
+.content-И .flex.items-y-stretch:where(:not(.go-x)) > * {
+	flex: 1;
+}
+
+/* ------ .items-stretch：在xy两个方向都尽量拉伸，占满容器。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
+.items-stretch { justify-items: stretch; align-items: stretch; }
+.items-stretch > * { flex: 1; }
+
 /*项目均匀分布（互斥/社恐）*/
 .items-space-between, .items-mutex, .items-social-phobia {justify-content: space-between;}
 /*项目均匀分布（不熟）*/
