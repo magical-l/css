@@ -30,26 +30,29 @@
 }
 
 /* ======================== 脉动动画 ======================== */
-.border-pulse {
-	--border-pulse-color: #3498db;
-	border-color: var(--border-pulse-color);
-	animation: border-shadow-pulse 2s infinite;
+.animation.pulse {
+	--pulse-color: #3498db;
+	--pulse-time: 2s;
+	--pulse-count: infinite;
 }
 
-@keyframes border-shadow-pulse {
-	0% { box-shadow: 0 0 0 0 var(--border-pulse-color); }
+.animation.shadow.pulse {
+	animation: shadow-pulse var(--pulse-time) var(--pulse-count);
+}
+
+@keyframes shadow-pulse {
+	0% { box-shadow: 0 0 0 0 var(--pulse-color); }
 	70% { box-shadow: 0 0 0 10px transparent; }
 	100% { box-shadow: 0 0 0 0 transparent; }
 }
 
-.color-pulse {
-	--color-pulse-color: #3498db;
-	color: var(--color-pulse-color);
-	animation: text-color-pulse 2s infinite;
+.animation.color.pulse {
+	color: var(--pulse-color);
+	animation: color-pulse var(--pulse-time) var(--pulse-count);
 }
 
-@keyframes text-color-pulse {
-	0%, 100% { color: var(--color-pulse-color); }
+@keyframes color-pulse {
+	0%, 100% { color: var(--pulse-color); }
 	50% { color: transparent; }
 }
 
