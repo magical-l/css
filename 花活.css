@@ -2,8 +2,9 @@
 
 /* ======================== 太极图 ======================== */
 .taiji {
-	--taiji-yin-color: #000; /* 阴鱼颜色，必须全不透明 */
-	--taiji-yang-color: #fff; /* 阳鱼颜色，必须全不透明 */
+	--taiji-yin-color: #000;
+	--taiji-yang-color: #fff;
+	--taiji-border-color: #999;
 	position: relative;
 	width: 100px;
 	height: 100px;
@@ -14,19 +15,18 @@
 	position: absolute;
 	inset: 0;
 	border-radius: 50%;
-	background: /* 阴鱼头，在上 */ radial-gradient(circle closest-side at 50% 25%,
-	var(--taiji-yang-color) 0%,
-	var(--taiji-yang-color) 25%,
-	var(--taiji-yin-color) 25%,
-	var(--taiji-yin-color) 100%,
-	transparent 100%),
-		/* 阳鱼头，在下 */ radial-gradient(circle closest-side at 50% 75%,
-			var(--taiji-yin-color) 0%,
-			var(--taiji-yin-color) 25%,
-			var(--taiji-yang-color) 25%,
-			var(--taiji-yang-color) 100%,
+	border: 1px solid var(--taiji-border-color);
+	background:
+		/* 阴鱼头（在上，白色） */ radial-gradient(circle closest-side at 50% 25%,
+			var(--taiji-yang-color) 0%, var(--taiji-yang-color) 25%,
+			var(--taiji-yin-color) 25%, var(--taiji-yin-color) 100%,
 			transparent 100%),
-		/* 左阴右阳 */ linear-gradient(to right, var(--taiji-yin-color) 50%, var(--taiji-yang-color) 50%);
+		/* 阳鱼头（在下，黑色） */ radial-gradient(circle closest-side at 50% 75%,
+			var(--taiji-yin-color) 0%, var(--taiji-yin-color) 25%,
+			var(--taiji-yang-color) 25%, var(--taiji-yang-color) 100%,
+			transparent 100%),
+		/* 左阴右阳 */ linear-gradient(to right,
+			var(--taiji-yin-color) 50%, var(--taiji-yang-color) 50%);
 }
 
 /* ======================== 脉动动画 ======================== */
