@@ -92,7 +92,7 @@ body:focus { /*为键盘导航用户清晰焦点指示*/
 	}
 }
 
-/*================================设定一些元素的初始值==============================*/
+/* ======================== 设定一些元素的初始值 ======================== */
 
 h1, h2, h3 {color: #333;}
 
@@ -113,9 +113,15 @@ i.icon {
 	font-style: unset; /* <i>标签本来是做斜体的，但现在通常被用来做图标，因此要去掉本身的斜体。 */
 }
 
-/*================================一些工具类==============================*/
+/* ======================== 一些工具类 ======================== */
 
-/*----------------------可见性--------------------*/
+/* ------ 通用全屏 ------ */
+.fullscreen {
+	position: fixed;
+	inset: 0;
+}
+
+/* ================== 可见性 ================== */
 template, .template, .hidden, [v-cloak], .js.container {display: none !important;}
 
 /* 视觉隐藏（仍可被读屏访问，用于无障碍时隐藏控件） */
@@ -132,7 +138,7 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 	pointer-events: none;
 }
 
-/*-------------定位-------------*/
+/* ================== 定位 ================== */
 
 /* 行内元素与同行文字垂直对齐（y 轴方向居中），否则会偏上 */
 .y-middle {vertical-align: middle;}
@@ -156,8 +162,8 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 footer.sticky {bottom: 0;}
 nav.sticky {top: 0;}
 
-/*------------------------尺寸--------------------*/
-/*----------可拖放调整大小的元素----------*/
+/* ================== 尺寸 ================== */
+/* ------ 可拖放调整大小的元素 ------ */
 .resizable {
 	display: block; /* 确保是块级元素 */
 	overflow: auto; /* 必须设置且不能是visible */
@@ -175,7 +181,7 @@ nav.sticky {top: 0;}
 /* 禁止该元素内部滚动（overflow: hidden）；加在 body 上可避免整页出现滚动条 */
 .no-scroll {overflow: hidden;}
 
-/*-----------------------颜色---------------------*/
+/* ================== 颜色 ================== */
 
 .note strong {color: red;}
 
@@ -185,23 +191,23 @@ nav.sticky {top: 0;}
 .text-dangerous {color: var(--dangerous-color);}
 .bg-dangerous {background-color: var(--dangerous-color);}
 
-/*-------------------------文字--------------------------------*/
+/* ================== 文字 ================== */
 .semi-bold {font-weight: 600;}
 
 .em-as-10x-px {
 	font-size: 62.5%; /* 浏览器默认字号16px，62.5%即10px，这样可令1em=10px，方便换算 */
 }
 
-/*---------------长文本隐藏---------------*/
+/* ------ 长文本隐藏 ------ */
 .hide-long-text {
 	overflow: hidden;
 	white-space: nowrap;
 }
 
-/*结尾再加个省略号*/
-.hide-long-text.end-with-ellipsis {text-overflow: ellipsis;}
-
 .hide-long-text:hover {
 	overflow: visible;
 	text-overflow: inherit;
 }
+
+/*结尾再加个省略号*/
+.hide-long-text.end-with-ellipsis {text-overflow: ellipsis;}
