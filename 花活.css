@@ -1,6 +1,7 @@
 @charset "utf-8";
 
-/* ======================== 太极图 ======================== */
+/* ======================== 特殊图形图案 ======================== */
+/* ------------ 太极图 ------------ */
 .taiji {
 	--taiji-yin-color: #000;
 	--taiji-yang-color: #fff;
@@ -29,34 +30,7 @@
 			var(--taiji-yin-color) 50%, var(--taiji-yang-color) 50%);
 }
 
-/* ======================== 脉动动画 ======================== */
-.animation.pulse {
-	--pulse-color: #3498db;
-	--pulse-time: 2s;
-	--pulse-count: infinite;
-}
-
-.animation.shadow.pulse {
-	animation: shadow-pulse var(--pulse-time) var(--pulse-count);
-}
-
-@keyframes shadow-pulse {
-	0% { box-shadow: 0 0 0 0 var(--pulse-color); }
-	70% { box-shadow: 0 0 0 10px transparent; }
-	100% { box-shadow: 0 0 0 0 transparent; }
-}
-
-.animation.color.pulse {
-	color: var(--pulse-color);
-	animation: color-pulse var(--pulse-time) var(--pulse-count);
-}
-
-@keyframes color-pulse {
-	0%, 100% { color: var(--pulse-color); }
-	50% { color: transparent; }
-}
-
-/* ======================== 三角箭头 ======================== */
+/* ------------ 三角箭头 ------------ */
 .shape.triangle {
 	--triangle-color: #333;
 	--triangle-size: 6px;
@@ -92,13 +66,8 @@
 .shape.triangle.at-bottom::after { bottom: var(--triangle-offset); left: 50%; transform: translateX(-50%); }
 .shape.triangle.at-right::after { right: var(--triangle-offset); top: 50%; transform: translateY(-50%); }
 
-/* ======================== 撒花 ======================== */
-.confetti-container {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	overflow: hidden;
-}
+/* ======================== 动画 ======================== */
+/* ------------ 撒花 ------------ */
 
 .confetti-piece {
 	position: absolute;
@@ -176,32 +145,48 @@
 	animation-duration: 9.981s;
 }
 
-/* ======================== 一些特效 ======================== */
-/*-----------渐变色------------*/
-/* .text-gradient {
-	background: linear-gradient(90deg, #3498DB, #2ECC71);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-} */
-
-/* .highlight-input {
-	border: 2px solid #DCE4EC;
-	border-radius: 8px;
-	outline: none;
-	transition: all 0.3s ease;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+/* ============ 脉动动画 ============ */
+.animation.pulse {
+	--pulse-color: #3498db;
+	--pulse-time: 2s;
+	--pulse-count: infinite;
 }
 
-.highlight-input:hover {
-	border-color: #AEC6D3;
+.animation.shadow.pulse {
+	animation: shadow-pulse var(--pulse-time) var(--pulse-count);
 }
 
-.highlight-input:focus {
-	border-color: #3498DB;
-	box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.25);
-} */
+@keyframes shadow-pulse {
+	0% { box-shadow: 0 0 0 0 var(--pulse-color); }
+	70% { box-shadow: 0 0 0 10px transparent; }
+	100% { box-shadow: 0 0 0 0 transparent; }
+}
 
-/* ======================== 边框光晕脉冲 ======================== */
+.animation.color.pulse {
+	color: var(--pulse-color);
+	animation: color-pulse var(--pulse-time) var(--pulse-count);
+}
+
+@keyframes color-pulse {
+	0%, 100% { color: var(--pulse-color); }
+	50% { color: transparent; }
+}
+
+/* ============ 边框光晕脉冲 ============ */
+.animation.shadow-breathing.on-hover {
+	--pulse-glow-color-1: rgba(0, 255, 255, 0.6);
+	--pulse-glow-color-2: rgba(255, 0, 255, 0.4);
+	--pulse-glow-color-3: rgba(0, 255, 128, 0.2);
+	--pulse-glow-duration: 1.5s;
+	--pulse-glow-size-1: 20px;
+	--pulse-glow-size-2: 40px;
+	--pulse-glow-size-3: 60px;
+}
+
+.animation.shadow-breathing.on-hover:hover:not(:has(:hover)) {
+	animation: box-shadow-breathing var(--pulse-glow-duration, 1.5s) ease-out infinite;
+}
+
 @keyframes box-shadow-breathing {
 	0%, 100% {
 		box-shadow: 0 0 0 0 transparent;
@@ -214,21 +199,7 @@
 	}
 }
 
-.animation.hover-shadow-breathing {
-	--pulse-glow-color-1: rgba(0, 255, 255, 0.6);
-	--pulse-glow-color-2: rgba(255, 0, 255, 0.4);
-	--pulse-glow-color-3: rgba(0, 255, 128, 0.2);
-	--pulse-glow-duration: 1.5s;
-	--pulse-glow-size-1: 20px;
-	--pulse-glow-size-2: 40px;
-	--pulse-glow-size-3: 60px;
-}
-
-.animation.hover-shadow-breathing:hover:not(:has(:hover)) {
-	animation: box-shadow-breathing var(--pulse-glow-duration, 1.5s) ease-out infinite;
-}
-
-/* ======================== 金光闪闪预设 ======================== */
+/* ------ 金光闪闪预设 ------ */
 .animation.preset.golden-glow {
 	--pulse-glow-color-1: rgba(255, 215, 0, 0.8);      /* 金色核心 */
 	--pulse-glow-color-2: rgba(255, 180, 0, 0.5);      /* 金色中层 */
