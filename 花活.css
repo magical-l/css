@@ -51,14 +51,14 @@
 }
 
 /* 箭头方向 */
-.shape.triangle.down::before,
-.shape.triangle.down::after { border-top-color: var(--triangle-color); border-bottom-width: 0; }
-.shape.triangle.up::before,
-.shape.triangle.up::after { border-bottom-color: var(--triangle-color); border-top-width: 0; }
-.shape.triangle.left::before,
-.shape.triangle.left::after { border-right-color: var(--triangle-color); border-left-width: 0; }
-.shape.triangle.right::before,
-.shape.triangle.right::after { border-left-color: var(--triangle-color); border-right-width: 0; }
+.shape.triangle.to-down::before,
+.shape.triangle.to-down::after { border-top-color: var(--triangle-color); border-bottom-width: 0; }
+.shape.triangle.to-up::before,
+.shape.triangle.to-up::after { border-bottom-color: var(--triangle-color); border-top-width: 0; }
+.shape.triangle.to-left::before,
+.shape.triangle.to-left::after { border-right-color: var(--triangle-color); border-left-width: 0; }
+.shape.triangle.to-right::before,
+.shape.triangle.to-right::after { border-left-color: var(--triangle-color); border-right-width: 0; }
 
 /* 箭头位置 */
 .shape.triangle.at-top::before { top: var(--triangle-offset); left: 50%; transform: translateX(-50%); }
