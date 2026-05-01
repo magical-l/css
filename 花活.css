@@ -196,17 +196,13 @@
 	}
 }
 
-/* ------ 金光闪闪预设 ------ */
-.animation.preset.golden-glow {
-	--pulse-glow-color-1: rgba(255, 215, 0, 0.8);      /* 金色核心 */
-	--pulse-glow-color-2: rgba(255, 180, 0, 0.5);      /* 金色中层 */
-	--pulse-glow-color-3: rgba(255, 150, 50, 0.3);     /* 金色外层 */
+/* ------ 金色光晕 ------ */
+.animation.shadow-breathing.on-hover.golden-glow {
+	--pulse-glow-color-1: rgba(255, 215, 0, 0.8);
+	--pulse-glow-color-2: rgba(255, 180, 0, 0.5);
+	--pulse-glow-color-3: rgba(255, 150, 50, 0.3);
 	--pulse-glow-duration: 1.2s;
 	--pulse-glow-size-1: 15px;
 	--pulse-glow-size-2: 30px;
 	--pulse-glow-size-3: 50px;
-}
-
-.animation.preset.golden-glow:hover:not(:has(:hover)) {
-	animation: box-shadow-breathing var(--pulse-glow-duration) ease-out infinite;
 }

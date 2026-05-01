@@ -223,7 +223,3 @@ nav.sticky {top: 0;}
 	align-items: center;
 	justify-content: center;
 }
-
-.modal.fullscreen {
-	position: fixed;
-}
