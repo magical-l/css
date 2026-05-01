@@ -211,3 +211,19 @@ nav.sticky {top: 0;}
 
 /*结尾再加个省略号*/
 .hide-long-text.end-with-ellipsis {text-overflow: ellipsis;}
+
+/* ======================== 模态遮罩 ======================== */
+.modal {
+	--modal-overlay-color: rgba(0,0,0,0.5);
+	position: absolute;
+	inset: 0;
+	z-index: 1000;
+	background: var(--modal-overlay-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal.fullscreen {
+	position: fixed;
+}

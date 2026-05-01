@@ -92,10 +92,7 @@
 .shape.triangle.at-bottom::after { bottom: var(--triangle-offset); left: 50%; transform: translateX(-50%); }
 .shape.triangle.at-right::after { right: var(--triangle-offset); top: 50%; transform: translateY(-50%); }
 
-/* ======================== 撒花效果 (Confetti) - 纯 CSS 实现
-用法：容器上加 .confetti-container，需要全屏时加 .fullscreen
- ======================== 
-*/
+/* ======================== 撒花 ======================== */
 .confetti-container {
 	position: absolute;
 	inset: 0;
@@ -181,13 +178,13 @@
 
 /* ======================== 一些特效 ======================== */
 /*-----------渐变色------------*/
-.text-gradient { /* 渐变色字 */
+/* .text-gradient {
 	background: linear-gradient(90deg, #3498DB, #2ECC71);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-}
+} */
 
-.highlight-input {
+/* .highlight-input {
 	border: 2px solid #DCE4EC;
 	border-radius: 8px;
 	outline: none;
@@ -202,46 +199,7 @@
 .highlight-input:focus {
 	border-color: #3498DB;
 	box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.25);
-}
-
-/* 模态对话框 (Modal) */
-.modal-overlay {
-	position: absolute;
-	inset: 0;
-	z-index: 1000;
-	background-color: rgba(0, 0, 0, 0.6);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.modal-overlay > .body {
-	position: relative;
-	z-index: 1001;
-	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-	border-radius: 15px;
-	background: white;
-	padding: 40px 50px;
-	text-align: center;
-	transform: scale(0.7);
-	animation: modal-zoom-in 0.5s forwards;
-}
-
-@keyframes modal-zoom-in {
-	to { transform: scale(1); }
-}
-
-.modal-overlay > .body > h2 {
-	color: #27AE60;
-	font-size: 2.5em;
-	margin-bottom: 15px;
-}
-
-.modal-overlay > .body > p {
-	color: #555;
-	font-size: 1.2em;
-	margin-bottom: 30px;
-}
+} */
 
 /* ======================== 边框光晕脉冲 ======================== */
 @keyframes box-shadow-breathing {
