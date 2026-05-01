@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>全局Hover脉冲效果测试</title>
+    <title>花活特效测试</title>
     <link rel="stylesheet" href="../花活.css">
     <style>
         body {
@@ -12,7 +12,7 @@
             color: #333;
         }
         h1 { color: #2196f3; }
-        h2 { margin-top: 30px; color: #9c27b0; }
+        h2 { margin-top: 30px; color: #9c27b0; border-bottom: 1px solid #ddd; }
         .section {
             margin: 20px 0;
             padding: 15px;
@@ -47,91 +47,84 @@
             border-radius: 6px;
             cursor: pointer;
         }
-        a {
-            color: #2196f3;
-            margin: 10px;
-        }
-        .taiji-demo {
-            margin: 10px;
-            background: #e0e0e0;
-            border-radius: 50%;
-        }
+        a { color: #2196f3; margin: 10px; }
+        .taiji-demo { margin: 10px; background: #e0e0e0; border-radius: 50%; }
         .case-num { font-weight: bold; color: #ffab91; }
     </style>
 </head>
 <body>
 
-<h1>边框光晕脉冲效果测试 <code>.animation.hover-shadow-breathing</code></h1>
-<p>鼠标悬停在带类名的元素上，看到酷炫的脉冲光晕效果。可通过CSS变量调整颜色、速度、大小。</p>
-
-<h2>基础方块</h2>
-<div class="section">
-    <p><span class="case-num">用例1</span> 普通div方块</p>
-    <div class="box animation hover-shadow-breathing">方块1</div>
-    <div class="box animation hover-shadow-breathing">方块2</div>
-    <div class="box animation hover-shadow-breathing">方块3</div>
-</div>
-
-<h2>交互元素</h2>
-<div class="section">
-    <p><span class="case-num">用例2</span> 按钮与链接</p>
-    <button class="animation hover-shadow-breathing">按钮A</button>
-    <button class="animation hover-shadow-breathing">按钮B</button>
-    <a href="#" class="animation hover-shadow-breathing">链接1</a>
-    <a href="#" class="animation hover-shadow-breathing">链接2</a>
-</div>
-
-<h2>输入元素</h2>
-<div class="section">
-    <p><span class="case-num">用例3</span> 输入框与文本域</p>
-    <input type="text" placeholder="文本输入" class="animation hover-shadow-breathing">
-    <input type="password" placeholder="密码" class="animation hover-shadow-breathing">
-    <textarea placeholder="多行文本" class="animation hover-shadow-breathing"></textarea>
-</div>
+<h1>花活特效测试</h1>
 
 <h2>太极图</h2>
 <div class="section">
-    <p><span class="case-num">用例4</span> 太极图hover效果</p>
+    <p><span class="case-num">用例1</span> <code>.taiji</code> 黑白太极图</p>
     <div class="taiji taiji-demo animation hover-shadow-breathing"></div>
 </div>
 
 <h2>三角箭头</h2>
 <div class="section">
-    <p><span class="case-num">用例5</span> 三角箭头hover效果</p>
-    <div class="border triangle to down animation hover-shadow-breathing" style="display:inline-block;margin:10px;"></div>
-    <div class="border triangle to up animation hover-shadow-breathing" style="display:inline-block;margin:10px;"></div>
-    <div class="border triangle to left animation hover-shadow-breathing" style="display:inline-block;margin:10px;"></div>
-    <div class="border triangle to right animation hover-shadow-breathing" style="display:inline-block;margin:10px;"></div>
+    <p><span class="case-num">用例2</span> <code>.shape.triangle.down/up/left/right</code></p>
+    <div class="shape triangle down" style="display:inline-block;margin:10px;"></div>
+    <div class="shape triangle up" style="display:inline-block;margin:10px;"></div>
+    <div class="shape triangle left" style="display:inline-block;margin:10px;"></div>
+    <div class="shape triangle right" style="display:inline-block;margin:10px;"></div>
 </div>
 
-<h2>渐变文字</h2>
+<h2>Hover光晕脉冲</h2>
 <div class="section">
-    <p><span class="case-num">用例6</span> 渐变色文字hover效果</p>
-    <span class="text-gradient animation hover-shadow-breathing" style="font-size:24px;font-weight:bold;padding:5px;">渐变色文字</span>
+    <p><span class="case-num">用例3</span> <code>.animation.hover-shadow-breathing</code></p>
+    <div class="box animation hover-shadow-breathing">方块1</div>
+    <div class="box animation hover-shadow-breathing">方块2</div>
+    <button class="animation hover-shadow-breathing">按钮</button>
+    <a href="#" class="animation hover-shadow-breathing">链接</a>
 </div>
 
 <h2>金光闪闪预设</h2>
 <div class="section">
-    <p><span class="case-num">用例8</span> <code>.animation.preset.golden-glow</code> 金元宝效果</p>
+    <p><span class="case-num">用例4</span> <code>.animation.preset.golden-glow</code></p>
     <div class="box animation preset golden-glow" style="background:#fff8e1;border-color:#ffc107;">金元宝</div>
     <button class="animation preset golden-glow" style="background:#ffc107;color:#333;">黄金按钮</button>
-    <span class="animation preset golden-glow" style="display:inline-block;padding:8px 16px;background:#fff8e1;border-radius:4px;">金光闪闪</span>
 </div>
 
-<h2>模态框示例</h2>
-<div class="section animation hover-shadow-breathing">
-    <p><span class="case-num">用例7</span> 点击按钮触发模态框（含撒花）</p>
-    <button id="openModal" class="animation hover-shadow-breathing">打开模态框</button>
+<h2>渐变文字</h2>
+<div class="section">
+    <p><span class="case-num">用例5</span> <code>.text-gradient</code></p>
+    <span class="text-gradient" style="font-size:24px;font-weight:bold;">渐变色文字</span>
+</div>
+
+<h2>输入框高亮</h2>
+<div class="section">
+    <p><span class="case-num">用例6</span> <code>.highlight-input</code></p>
+    <input type="text" placeholder="文本输入" class="highlight-input">
+    <textarea placeholder="多行文本" class="highlight-input"></textarea>
+</div>
+
+<h2>脉动边框</h2>
+<div class="section">
+    <p><span class="case-num">用例7</span> <code>.border-pulse</code> 持续脉动</p>
+    <div class="box border-pulse" style="border:2px solid;">脉动边框</div>
+</div>
+
+<h2>脉动文字</h2>
+<div class="section">
+    <p><span class="case-num">用例8</span> <code>.color-pulse</code> 持续脉动</p>
+    <span class="color-pulse" style="font-size:20px;">脉动文字</span>
+</div>
+
+<h2>模态框 + 撒花</h2>
+<div class="section">
+    <p><span class="case-num">用例9</span> <code>.modal-overlay + .confetti-container .confetti-piece</code></p>
+    <button id="openModal">打开模态框</button>
 </div>
 
 <!-- 模态框 -->
 <div class="modal-overlay fullscreen" id="modal" style="display:none;">
-    <div class="body animation hover-shadow-breathing">
+    <div class="body">
         <h2>成功!</h2>
         <p>这是一个模态框示例</p>
-        <button id="closeModal" class="animation hover-shadow-breathing">关闭</button>
+        <button id="closeModal">关闭</button>
     </div>
-    <!-- 撒花彩纸 - 放在body外面，覆盖全屏 -->
     <div class="confetti-container fullscreen">
         <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
         <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
@@ -139,20 +132,14 @@
         <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
         <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
         <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
-        <div class="confetti-piece"></div><div class="confetti-piece"></div>
+        <div class="confetti-piece"></div><div class="confetti-piece"></div><div class="confetti-piece"></div>
     </div>
 </div>
 
 <script>
-document.getElementById('openModal').onclick = function() {
-    document.getElementById('modal').style.display = 'flex';
-};
-document.getElementById('closeModal').onclick = function() {
-    document.getElementById('modal').style.display = 'none';
-};
-document.getElementById('modal').onclick = function(e) {
-    if (e.target === this) this.style.display = 'none';
-};
+document.getElementById('openModal').onclick = () => document.getElementById('modal').style.display = 'flex';
+document.getElementById('closeModal').onclick = () => document.getElementById('modal').style.display = 'none';
+document.getElementById('modal').onclick = e => { if (e.target.id === 'modal') e.target.style.display = 'none'; };
 </script>
 
 </body>
