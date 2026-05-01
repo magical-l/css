@@ -41,7 +41,6 @@ html {
 body {
 	max-inline-size: 100%;
 	min-height: 100vh; /* 确保布局撑满视口高度 */
-	height: 100%; /*显式定义了高度且撑满父元素（html）*/
 	margin: 0;
 	padding: 0;
 
@@ -67,6 +66,8 @@ body:focus { /*为键盘导航用户清晰焦点指示*/
 		background-color: #121212;
 		color: #F0F0F0;
 	}
+
+	h1, h2, h3 { color: #E0E0E0; }
 }
 
 /* 打印优化 */
@@ -77,8 +78,8 @@ body:focus { /*为键盘导航用户清晰焦点指示*/
 		font-size: 12pt;
 	}
 
-	/* 隐藏不必要元素 */
-	nav, footer, .ad-banner {
+	/* 隐藏广告等非必要元素 */
+	.ad-banner {
 		display: none;
 	}
 }
