@@ -40,18 +40,18 @@
 </head>
 <body class="content-Z">
 
-<h1>居中类 .item-near-center / .near-center</h1>
+<h1>居中类 .items-near-center / .near-center</h1>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例1</span> <span class="code">.flex.item-near-center</span> = 容器让子项目居中</p>
-    <div class="container flex item-near-center" style="height: 150px;">
+    <p class="label"><span class="case-num">用例1</span> <span class="code">.flex.items-near-center</span> = 容器让子项目居中</p>
+    <div class="container flex items-near-center" style="height: 150px;">
         <div class="box">居中</div>
     </div>
 </div>
 
 <div class="section">
-    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.item-near-center</span> = 容器让子项目居中</p>
-    <div class="container grid item-near-center" style="height: 150px;">
+    <p class="label"><span class="case-num">用例2</span> <span class="code">.grid.items-near-center</span> = 容器让子项目居中</p>
+    <div class="container grid items-near-center" style="height: 150px;">
         <div class="box">居中</div>
     </div>
 </div>
@@ -111,7 +111,7 @@
     var s = getComputedStyle(ct);
     var allOK = true;
 
-    if (cls.contains('item-near-center')) {
+    if (cls.contains('items-near-center')) {
       // Container centers items: ji:center and ai:center
       allOK = s.justifyItems === 'center' && s.alignItems === 'center';
     } else if (sec.querySelector('.near-center')) {

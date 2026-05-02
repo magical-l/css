@@ -241,6 +241,10 @@
     if (!map) { map = expectMap['content-Z']; }
     var exp = map[near];
     if (!exp) { return; }
+    // go-y swaps top/bottom from alignItems to justifyItems
+    if (cls.contains('go-y') && (near === 'items-near-top' || near === 'items-near-bottom')) {
+      exp = [exp[1], exp[0]];
+    }
     var s = getComputedStyle(ct);
     var ji = s.justifyItems, ai = s.alignItems;
     var jiOK = exp[0] === null || ji === exp[0];
