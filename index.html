@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS 布局实验室</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        body {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+            line-height: 1.6;
+        }
+        header {
+            margin-bottom: 40px;
+        }
+        h1 {
+            margin: 0;
+            font-size: 1.6em;
+        }
+        .subtitle {
+            color: #888;
+            margin-top: 4px;
+        }
+        h2 {
+            font-size: 1.1em;
+            margin: 32px 0 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #eee;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        a {
+            display: block;
+            padding: 10px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            transition: border-color .15s, background .15s;
+        }
+        a:hover {
+            border-color: #7c5cfc;
+            background: #f9f7ff;
+        }
+        .name {
+            font-weight: 500;
+        }
+        .desc {
+            font-size: .85em;
+            color: #999;
+            margin-top: 2px;
+        }
+        footer {
+            margin-top: 60px;
+            color: #bbb;
+            font-size: .85em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CSS 布局实验室</h1>
+        <p class="subtitle">Grid / Flex 布局属性测试与演示集</p>
+    </header>
+
+    <h2>Demo 演示</h2>
+    <ul>
+        <li><a href="demo/太极.html"><span class="name">太极图</span><span class="desc">纯 CSS 太极图绘制</span></a></li>
+        <li><a href="demo/grid-writing-mode-demo.html"><span class="name">Grid × writing-mode</span><span class="desc">Grid 原生属性与书写模式关系</span></a></li>
+        <li><a href="demo/native-property-demo.html"><span class="name">原生属性验证</span><span class="desc">justify/align-content/items 验证</span></a></li>
+        <li><a href="demo/stretch.html"><span class="name">stretch 规律</span><span class="desc">stretch 行为规律探索</span></a></li>
+    </ul>
+
+    <h2>Test 测试</h2>
+    <ul>
+        <li><a href="test/animation.html"><span class="name">动画效果</span><span class="desc">CSS 动画效果测试</span></a></li>
+        <li><a href="test/modal.html"><span class="name">模态框</span><span class="desc">模态框布局测试</span></a></li>
+        <li><a href="test/shape.html"><span class="name">特殊图形</span><span class="desc">特殊图形图案测试</span></a></li>
+        <li><a href="test/flex--center.html"><span class="name">居中与弹性填充</span><span class="desc">居中与弹性填充类测试</span></a></li>
+        <li><a href="test/content--mode.html"><span class="name">书写模式</span><span class="desc">书写模式类测试</span></a></li>
+        <li><a href="test/flex--monopoly.html"><span class="name">Flex 独占</span><span class="desc">Flex 独占类测试</span></a></li>
+        <li><a href="test/go--from.html"><span class="name">方向组合</span><span class="desc">方向组合类测试</span></a></li>
+        <li><a href="test/items--near.html"><span class="name">轨道位置</span><span class="desc">items-near-left/right/top/bottom</span></a></li>
+        <li><a href="test/items--space-around.html"><span class="name">space-around</span><span class="desc">items-x/y-space-around 测试</span></a></li>
+        <li><a href="test/items--space-between.html"><span class="name">space-between</span><span class="desc">items-x/y-space-between 测试</span></a></li>
+        <li><a href="test/items--space-evenly.html"><span class="name">space-evenly</span><span class="desc">items-x/y-space-evenly 测试</span></a></li>
+        <li><a href="test/items--stretch.html"><span class="name">stretch</span><span class="desc">stretch 行为测试</span></a></li>
+        <li><a href="test/row-col-near.html"><span class="name">row/col-near</span><span class="desc">row-near-* / col-near-*（Grid + Flex）</span></a></li>
+    </ul>
+
+    <footer>
+        CSS 布局实验室 · <a href="https://github.com" style="display:inline;padding:0;border:0;color:inherit;">GitHub</a>
+    </footer>
+</body>
+</html>
