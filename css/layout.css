@@ -1,7 +1,6 @@
 @charset "utf-8";
 
 :root {
-	--gap: 1em;
 	--layout-main-row-min: min(260px, 80vmin);
 	--sidebar-min-width: 150px;
 	--sidebar-max-width: 20%;
@@ -11,358 +10,486 @@
 	--right-sidebar-max-width: var(--sidebar-max-width);
 }
 
-.no-gap { gap: 0 !important; }
+/* ======================== 布局 ======================== */
+.inline {
+	display: inline;
+}
 
-/* ======================== 书写模式：决定内容排列方向，一些布局"行"、"列"会受其影响 ======================== */
-/* Z字形：横向（行），行内从左到右。行之间肯定是从上到下。现行最常见的书写模式。 */
-.content-Z { writing-mode: horizontal-tb; direction: ltr; }
-/* S字形：横向（行），行内从右到左 。行之间肯定是从上到下。阿拉伯语的书写模式。 */
-.content-S { writing-mode: horizontal-tb; direction: rtl; }
-/* N字形：竖向（列），列之间从右到左。列内肯定是从上到下。汉字字符保持头朝上，字母数字头朝右。古代汉语的书写模式。 */
-.content-N { writing-mode: vertical-rl; direction: ltr; }
-/* И字形：竖向（列），列之间从左到右。列内肯定是从上到下。蒙文的书写模式。 */
-.content-И { writing-mode: vertical-lr; direction: ltr; }
+.block {
+	display: block;
+}
 
-/* ======================== 布局容器 ======================== */
-.flex {display: flex}
-.flex.inline {display: inline-flex}
-.grid {display: grid}
-.grid.inline {display: inline-grid}
+.block.inline {
+	display: inline-block;
+}
 
-.single-line {flex-wrap: nowrap;}
-.multi-line {
+.table {
+	display: table;
+}
+
+.table.inline {
+	display: inline-table;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex.inline {
+	display: inline-flex;
+}
+
+.grid {
+	display: grid;
+}
+
+.grid.inline {
+	display: inline-grid;
+}
+
+/*
+ * 单行/多行
+ * 适用于：flex、grid、块级（block）、行内级（inline/inline-block）
+ * 默认实现：把布局修改为flex。grid布局按grid适配
+ */
+:not(.grid).items-single-line {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+:not(.grid).items-multi-line {
+	display: flex;
 	flex-wrap: wrap;
-	/* ------ 线路之间（align-content） ------ */
-	/* 所有线路都拉伸膨胀，充满空间。受项目实际排布方向影响。 */
-	&.lines-stretch { align-content: stretch; }
-	/* 所有线路都拥到第一条线路这边。受项目实际排布方向影响。 */
-	&.lines-near-start { align-content: start; }
-	/* 所有线路都退到最后一条线路这边。受项目实际排布方向影响。 */
-	&.lines-near-end { align-content: end; }
-	/* 所有线路都挤在中间。受项目实际排布方向影响。 */
-	&.lines-near-center { align-content: center; }
-	/* 线路互斥（社恐），即线路互相之间距离尽量远。受项目实际排布方向影响。 */
-	&:is(.lines-space-between, .lines-mutex, .lines-social-phobia) { align-content: space-between; }
-	/* 线路不熟，即线路互相之间保持距离但又不极端排斥。受项目实际排布方向影响。 */
-	&:is(.lines-space-around, .lines-unfamiliar) { align-content: space-around; }
-	/* 线路不熟但比较友好。受项目实际排布方向影响。 */
-	&:is(.lines-space-evenly, .lines-friendly) { align-content: space-evenly; }
 }
 
-/* ================== 物理方向/绝对方向 ================== */
-/* ------ 保证按x轴/物理横向/行方向铺陈子元素（适配任何书写模式）。 ------ */
-.go-x {
-	flex-direction: row; /* Flex: 横向排列 */
-	grid-auto-flow: row; /* Grid: 横向填充 */
-}
-.go-x:where(.content-N, .content-И, .content-N *, .content-И *) {
-	/* :where用来清掉参数选择器的权重，保持跟默认情况下.go-x一致的权重 */
-	flex-direction: column;
-	grid-auto-flow: column;
+/* 已被覆盖，无需声明
+.items-single-line.grid、.items-multi-line.grid
+*/
+.items-no-gap {
+	gap: 0;
 }
 
-/* ------ 保证按y轴/物理纵向/列方向铺陈子元素（适配任何书写模式）。 ------ */
-.go-y {
-	flex-direction: column;
-	grid-auto-flow: column;
-}
-.go-y:where(.content-N, .content-И, .content-N *, .content-И *) {
+/* ========================================================================
+ * 确保容器的子元素排列方向
+ * 	横向从左到右
+ * 	横向从右到左
+ * 	纵向从上到下
+ * 	纵向从下到上
+ * 适用于：flex、grid、块级（block）、行内级（inline/inline-block）
+ * 注：只有flex同时支持这4种排列，其他布局不支持横向从右到左、纵向从下到上。所以默认实现是把布局修改为flex。若需保持grid布局，需要搭配.grid类
+ */
+/* 横向/纵向排列。实现：把元素布局改为flex */
+.items-go-x {
+	display: flex;
 	flex-direction: row;
+}
+
+.items-go-y {
+	display: flex;
+	flex-direction: column;
+}
+
+/* 显式搭配.grid时，尽量适配grid布局。不支持横向从右到左、纵向从下到上 */
+.grid.items-go-x {
+	display: grid;
+	flex-direction: unset;
+	/* 重置避免困惑 */
 	grid-auto-flow: row;
 }
 
-/* ------ .go-x.from-left：在横向铺陈子元素时，保证从左边开始（适配任何书写模式）。 ------ */
-.go-x.from-left { flex-direction: row; }
-.go-x.from-left:where(.content-S, .content-S *) { flex-direction: row-reverse; }
-.go-x.from-left:where(.content-N, .content-N *) { flex-direction: column-reverse; }
-.go-x.from-left:where(.content-И, .content-И *) { flex-direction: column; }
+.grid.items-go-y {
+	display: grid;
+	flex-direction: unset;
+	/* 重置避免困惑 */
+	grid-auto-flow: column;
+}
 
-/* ------ .go-x.from-right：在横向铺陈子元素时，保证从右边开始（适配任何书写模式）。 ------ */
-.go-x.from-right { flex-direction: row-reverse; }
-.go-x.from-right:where(.content-S, .content-S *) { flex-direction: row; }
-.go-x.from-right:where(.content-N, .content-N *) { flex-direction: column; }
-.go-x.from-right:where(.content-И, .content-И *) { flex-direction: column-reverse; }
+/* 单独定义，可以直接搭配任意display:flex的元素 */
+.items-from-left {
+	flex-direction: row;
+}
 
-/* ------ .go-y.from-top：在纵向铺陈子元素时，保证从上方开始（适配任何书写模式）。 ------ */
-/* 默认行为，无需额外规则
-.go-y.from-top { …… }
-.go-y.from-top:where(.content-N, .content-И, .content-N *, .content-И *) { …… }
+.items-from-right {
+	flex-direction: row-reverse;
+}
+
+.items-from-top {
+	flex-direction: column;
+}
+
+.items-from-bottom {
+	flex-direction: column-reverse;
+}
+
+/* ========================================================================
+ * 确保【横向/纵向】上的【内容/空隙】的分布：
+ * 	靠上/下/左/右 — 在【横向/纵向】上，空隙全部排向另一侧。额外支持<table>。
+ * 	拉伸 — 在【横向/纵向】上，子元素占满空间，无空隙。
+ * 	集体居中 — 在【横向/纵向】上，子元素往中间挤，空隙在外部
+ * 	互斥 — 在【横向/纵向】上，子元素之间均分空隙，外部无空隙
+ * 	友好 — 在【横向/纵向】上，子元素之间和外侧等分空隙
+ * 	不熟 — 在【横向/纵向】上，子元素两侧自带空隙，间隔是双份空隙
+ * 适用于 flex、grid。
+ * 注：flex单行时align-content无效但align-items仍生效，视觉效果不变
+ */
+.items-near-left {
+	justify-content: start;
+	justify-items: start;
+
+	& td, & th {
+		text-align: left;
+	}
+}
+
+.items-near-right {
+	justify-content: end;
+	justify-items: end;
+
+	& td, & th {
+		text-align: right;
+	}
+}
+
+/* 显式指定从左向右排，已被覆盖，无需声明
+.items-from-left.items-near-left
+.items-from-left.items-near-right
 */
-
-/* ------ .go-y.from-bottom：在纵向铺陈子元素时，保证从下方开始（适配任何书写模式）。 ------ */
-.go-y.from-bottom { flex-direction: column-reverse; }
-.go-y.from-bottom:where(.content-N, .content-И, .content-N *, .content-И *) { flex-direction: row-reverse; }
-
-/* ================== 行列位置：在任何书写模式、任何方向，grid或flex下，保证行/列视觉效果的统一（靠上/下/左/右之类） ================== */
-/* ============ 行位置 ============ */
-/* ------ .row-near-top：保证行靠上（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z/S模式+（显式|不显式）横向*/
-.row-near-top:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
-/*（继承|直接）N/И模式+横向*/
-.row-near-top:where(:is(.content-N, .content-И).go-x,
-					:is(.content-N, .content-И) .go-x:not(.content-S, .content-Z)) {
-	align-content: start;
-	align-items: start;
-}
-/*（显式|不显式）继承+（显式|不显式）Z/S模式+纵向*/
-.row-near-top:where(.go-y:not(.content-N, .content-И, .content-N *, .content-И *)),
-/*（继承|直接）N/И模式+（显式|不显式）纵向*/
-.row-near-top:where(:is(.content-N, .content-И):not(.go-x),
-					:is(.content-N, .content-И) :not(.go-x, .content-S, .content-Z)) {
-	justify-content: start;
-	justify-items: start;
-}
-
-/* ------ .row-near-bottom：保证行靠下（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z/S模式+（显式|不显式）横向*/
-.row-near-bottom:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
-/*（继承|直接）N/И模式+横向*/
-.row-near-bottom:where(:is(.content-N, .content-И).go-x,
-					:is(.content-N, .content-И) .go-x:not(.content-S, .content-Z)) {
-	align-content: end;
-	align-items: end;
-}
-/*（显式|不显式）继承+（显式|不显式）Z/S模式+纵向*/
-.row-near-bottom:where(.go-y:not(.content-N, .content-И, .content-N *, .content-И *)),
-/*（继承|直接）N/И模式+（显式|不显式）纵向*/
-.row-near-bottom:where(:is(.content-N, .content-И):not(.go-x),
-					:is(.content-N, .content-И) :not(.go-x, .content-S, .content-Z)) {
+/* 显式指定从右向左排 */
+.items-from-right.items-near-left {
 	justify-content: end;
 	justify-items: end;
 }
 
-/* ============ 列位置 ============ */
-/* ------ .col-near-left：保证列靠左（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
-.col-near-left:where(:not(.go-y, .content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+横向*/
-.col-near-left:where(.content-И.go-x,
-					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
+.items-from-right.items-near-right {
 	justify-content: start;
 	justify-items: start;
 }
-/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
-.col-near-left:where(.go-y:not(.content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+（显式|不显式）纵向*/
-.col-near-left:where(.content-И:not(.go-x),
-					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
+
+.items-near-top {
 	align-content: start;
 	align-items: start;
+
+	& td, & th {
+		vertical-align: top;
+	}
 }
 
-/*（继承|直接）S模式+（显式|不显式）横向*/
-.col-near-left:where(.content-S:not(.go-y),
-					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+横向*/
-.col-near-left:where(.content-N.go-x,
-					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+.items-near-bottom {
+	align-content: end;
+	align-items: end;
+
+	& td, & th {
+		vertical-align: bottom;
+	}
+}
+
+/* 显式指定从上向下排，已被覆盖，无需声明
+.items-from-top.items-near-top
+.items-from-top.items-near-bottom
+*/
+/* 显式指定从下向上排 */
+.items-from-bottom.items-near-top {
 	justify-content: end;
 	justify-items: end;
 }
-/*（继承|直接）S模式+纵向*/
-.col-near-left:where(.content-S.go-y,
-					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+（显式|不显式）纵向*/
-.col-near-left:where(.content-N:not(.go-x),
-					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
-	align-content: end;
-	align-items: end;
-}
 
-/* ------ .col-near-right：保证列靠右（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
-.col-near-right:where(:not(.go-y, .content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+横向*/
-.col-near-right:where(.content-И.go-x,
-					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
-	justify-content: end;
-	justify-items: end;
-}
-/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
-.col-near-right:where(.go-y:not(.content-S, .content-N, .content-И, .content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+（显式|不显式）纵向*/
-.col-near-right:where(.content-И:not(.go-x),
-					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
-	align-content: end;
-	align-items: end;
-}
-
-/*（继承|直接）S模式+（显式|不显式）横向*/
-.col-near-right:where(.content-S:not(.go-y),
-					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+横向*/
-.col-near-right:where(.content-N.go-x,
-					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
+.items-from-bottom.items-near-bottom {
 	justify-content: start;
 	justify-items: start;
 }
-/*（继承|直接）S模式+纵向*/
-.col-near-right:where(.content-S.go-y,
-					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+（显式|不显式）纵向*/
-.col-near-right:where(.content-N:not(.go-x),
-					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
-	align-content: start;
-	align-items: start;
+
+/* ------ 拉伸 ------ */
+.items-x-stretch {
+	justify-content: stretch;
+	/* 轨道占满容器 */
+	justify-items: stretch;
+	/* 子元素占满轨道 */
 }
 
-/* ============ 项目位置：items-near-* ============ */
-/* 只设 items 属性（align-items/justify-items），不动 content。row-near-* / col-near-* 已包含 items 属性，通常不需要同时使用。Flex 下 justify-items 被忽略，align-items 正常生效。 */
-/* ------ .items-near-top：保证子元素靠上（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-top:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
-.items-near-top:where(.go-x:is(.content-N, .content-И, .content-N *, .content-И *)) {
-	align-items: start;
-}
-.items-near-top:where(:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x)),
-.items-near-top:where(.go-y) {
-	justify-items: start;
-}
-/* ------ .items-near-bottom：保证子元素靠下（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-near-bottom:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)),
-.items-near-bottom:where(.go-x:is(.content-N, .content-И, .content-N *, .content-И *)) {
-	align-items: end;
-}
-.items-near-bottom:where(:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x)),
-.items-near-bottom:where(.go-y) {
-	justify-items: end;
-}
-/* ------ .items-near-left：保证子元素靠左（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
-.items-near-left:where(:not(.go-y, .content-S, .content-N, .content-И,
-							.content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+横向*/
-.items-near-left:where(.content-И.go-x,
-					.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
-	justify-items: start;
-}
-/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
-.items-near-left:where(.go-y:not(.content-S, .content-N, .content-И,
-							.content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+（显式|不显式）纵向*/
-.items-near-left:where(.content-И:not(.go-x),
-					.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
-	align-items: start;
+.items-y-stretch {
+	align-content: stretch;
+	/* 轨道占满容器 */
+	align-items: stretch;
+	/* 子元素占满轨道 */
 }
 
-/*（继承|直接）S模式+（显式|不显式）横向*/
-.items-near-left:where(.content-S:not(.go-y),
-					.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+横向*/
-.items-near-left:where(.content-N.go-x,
-					.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
-	justify-items: end;
-}
-/*（继承|直接）S模式+纵向*/
-.items-near-left:where(.content-S.go-y,
-					.content-S .go-y:not(.content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+（显式|不显式）纵向*/
-.items-near-left:where(.content-N:not(.go-x),
-					.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
-	align-items: end;
-}
-/* ------ .items-near-right：保证子元素靠右（grid、flex都适用，适配任何书写模式）。 ------ */
-/*（显式|不显式）继承+（显式|不显式）Z模式+（显式|不显式）横向*/
-.items-near-right:where(:not(.go-y, .content-S, .content-N, .content-И,
-							.content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+横向*/
-.items-near-right:where(.content-И.go-x,
-						.content-И .go-x:not(.content-S, .content-N, .content-Z)) {
-	justify-items: end;
-}
-/*（显式|不显式）继承+（显式|不显式）Z模式+纵向*/
-.items-near-right:where(.go-y:not(.content-S, .content-N, .content-И,
-							.content-S *, .content-N *, .content-И *)),
-/*（继承|直接）И模式+（显式|不显式）纵向*/
-.items-near-right:where(.content-И:not(.go-x),
-						.content-И :not(.go-x, .content-S, .content-N, .content-Z)) {
-	align-items: end;
+.items-stretch {
+	place-content: stretch;
+	/* 轨道占满容器 */
+	place-items: stretch;
+	/* 子元素占满轨道 */
 }
 
-/*（继承|直接）S模式+（显式|不显式）横向*/
-.items-near-right:where(.content-S:not(.go-y),
-						.content-S :not(.go-y, .content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+横向*/
-.items-near-right:where(.content-N.go-x,
-						.content-N .go-x:not(.content-S, .content-И, .content-Z)) {
-	justify-items: start;
-}
-/*（继承|直接）S模式+纵向*/
-.items-near-right:where(.content-S.go-y,
-						.content-S .go-y:not(.content-N, .content-И, .content-Z)),
-/*（继承|直接）N模式+（显式|不显式）纵向*/
-.items-near-right:where(.content-N:not(.go-x),
-						.content-N :not(.go-x, .content-S, .content-И, .content-Z)) {
-	align-items: start;
+/* flex布局下，容器不能在主轴上拉伸子元素，需要子元素自行拉伸（次轴默认拉伸，无需额外处理） */
+:not(.items-go-y).items-x-stretch > *,
+.items-go-y.items-y-stretch > *,
+.items-stretch > * {
+	flex: 1;
 }
 
-/* ------ .items-near-center：保证子元素居中 ------ */
-.items-near-center {
+/* ------ 集体居中 ------ */
+.items-x-near-center {
 	justify-content: center;
-	align-items: center;
-	align-content: center;
 	justify-items: center;
-	text-align: center;
 }
 
-/* ------ 子项目属性：让自己居中 ------ */
+.items-y-near-center {
+	align-content: center;
+	align-items: center;
+}
+
+.items-near-center {
+	place-content: center;
+	place-items: center;
+}
+
+/* ------ 互斥 ------ */
+.items-x-space-between, .items-x-mutex, .items-x-social-phobia {
+	justify-content: space-between;
+}
+
+.items-y-space-between, .items-y-mutex, .items-y-social-phobia {
+	align-content: space-between;
+}
+
+.items-space-between, .items-mutex, .items-social-phobia {
+	place-content: space-between;
+}
+
+/* ------ 友好 ------ */
+.items-x-space-evenly, .items-x-friendly {
+	justify-content: space-evenly;
+}
+
+.items-y-space-evenly, .items-y-friendly {
+	align-content: space-evenly;
+}
+
+.items-space-evenly, .items-friendly {
+	place-content: space-evenly;
+}
+
+/* ------ 不熟 ------ */
+.items-x-space-around, .items-x-unfamiliar {
+	justify-content: space-around;
+}
+
+.items-y-space-around, .items-y-unfamiliar {
+	align-content: space-around;
+}
+
+.items-space-around, .items-unfamiliar {
+	place-content: space-around;
+}
+
+/* ========================================================================
+ * 各种搭配场景的适配实现，通常使用者不需要关注。
+ */
+/* 已被覆盖，无需声明
+.items-go-x.items-from-left
+.items-go-x.items-from-right
+.items-go-y.items-from-top
+.items-go-y.items-from-bottom
+*/
+.items-go-x {
+
+	/* 子元素排列方向=默认（从左到右）：已被覆盖，无需声明 */
+	/* 子元素排列方向=显式从左到右：已被覆盖，无需声明
+	&.items-from-left {}
+	*/
+	/* 子元素排列方向=显式从右到左 */
+	&.items-from-right {
+		&.items-near-left {
+			justify-content: end;
+			justify-items: end;
+		}
+
+		&.items-near-right {
+			justify-content: start;
+			justify-items: start;
+		}
+	}
+}
+
+.items-go-y {
+	&.items-near-top {
+		justify-content: start;
+		justify-items: start;
+	}
+
+	&.items-near-bottom {
+		justify-content: end;
+		justify-items: end;
+	}
+
+	&.items-near-left {
+		align-content: start;
+		align-items: start;
+	}
+
+	&.items-near-right {
+		align-content: end;
+		align-items: end;
+	}
+
+	&.items-y-stretch {
+		justify-content: stretch;
+		justify-items: stretch;
+	}
+
+	&.items-y-near-center {
+		justify-content: center;
+	}
+
+	&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia {
+		justify-content: space-between;
+	}
+
+	&.items-y-space-evenly, &.items-y-friendly {
+		justify-content: space-evenly;
+	}
+
+	&.items-y-space-around, &.items-y-unfamiliar {
+		justify-content: space-around;
+	}
+
+	&.items-x-stretch {
+		align-content: stretch;
+		align-items: stretch;
+	}
+
+	&.items-x-near-center {
+		align-content: center;
+	}
+
+	&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia {
+		align-content: space-between;
+	}
+
+	&.items-x-space-evenly, &.items-x-friendly {
+		align-content: space-evenly;
+	}
+
+	&.items-x-space-around, &.items-x-unfamiliar {
+		align-content: space-around;
+	}
+
+	&.items-from-bottom {
+		&.items-near-top {
+			justify-content: end;
+			justify-items: end;
+		}
+
+		&.items-near-bottom {
+			justify-content: start;
+			justify-items: start;
+		}
+	}
+}
+
+/* ================== 元素（含布局容器子元素）定位/方向 ================== */
+/* 靠左：元素无论在什么场景下都靠左 */
+.near-left {
+	/* 适配块元素、flex子元素 */
+	margin-left: 0;
+	margin-right: auto;
+	/* 适配grid子元素 */
+	justify-self: start;
+	/* 适配定位元素 */
+	left: 0;
+	right: auto;
+}
+
+/* 靠右：元素无论在什么场景下都靠右 */
+.near-right {
+	/* 适配块元素、flex子元素 */
+	margin-left: auto;
+	margin-right: 0;
+	/* 适配grid子元素 */
+	justify-self: end;
+	/* 适配定位元素 */
+	left: auto;
+	right: 0;
+}
+
+/* 靠上：元素无论在什么场景下都靠上 */
+.near-top {
+	/* 适配块元素 */
+	margin-top: 0;
+	margin-bottom: auto;
+	/* 适配flex、grid子元素 */
+	align-self: start;
+	/* 适配行内元素 */
+	vertical-align: top;
+	/* 适配定位元素 */
+	top: 0;
+	bottom: auto;
+}
+
+/* 靠下：元素无论在什么场景下都靠下 */
+.near-bottom {
+	/* 适配块元素 */
+	margin-top: auto;
+	margin-bottom: 0;
+	/* 适配flex、grid子元素 */
+	align-self: end;
+	/* 适配行内元素 */
+	vertical-align: bottom;
+	/* 适配定位元素 */
+	top: auto;
+	bottom: 0;
+}
+
+/* 水平居中：元素无论在什么场景下都水平居中 */
+.near-x-center {
+	/* 适配块元素、flex子元素 */
+	margin-left: auto;
+	margin-right: auto;
+	/* 适配grid子元素 */
+	justify-self: center;
+	/* 适配定位元素 */
+	left: 0;
+	right: 0;
+}
+
+/* 垂直居中：元素无论在什么场景下都垂直居中 */
+.near-y-center {
+	/* 适配块元素 */
+	margin-top: auto;
+	margin-bottom: auto;
+	/* 适配flex、grid子元素 */
+	align-self: center;
+	/* 适配行内元素 */
+	vertical-align: middle;
+	/* 适配定位元素 */
+	top: 0;
+	bottom: 0;
+}
+
+/* 居中：元素无论在什么场景下都居中 */
 .near-center {
+	/* 适配块元素、flex子元素 */
+	margin: auto;
+	/* 适配grid子元素 */
 	justify-self: center;
 	align-self: center;
-	margin: auto;
-}
-
-/* ================== 项目分布：items-x/y-* ================== */
-/* ============ 拉伸：.items-stretch、.items-x/y-stretch ============ */
-/* ------ .items-x-stretch：保证在横向上拉伸，占满容器宽度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.grid.items-x-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
-	justify-items: stretch;
-}
-.grid.items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: stretch;
-}
-.flex.go-y.items-x-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)),
-.flex:not(.go-x).items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: stretch;
-}
-/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
-.flex.items-x-stretch:where(:not(.go-y, .content-N, .content-И, .content-N *, .content-И *)) > *,
-.flex.go-x.items-x-stretch:where(.content-N, .content-И, .content-N *, .content-И *) > * {
-	flex: 1;
-}
-
-/* ------ .items-y-stretch：保证在竖向上拉伸，占满容器高度（grid、flex都适用，适配任何书写模式）。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.grid.items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
-	align-items: stretch;
-}
-.grid.items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
-	justify-items: stretch;
-}
-.flex:not(.go-y).items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)),
-.flex.go-x.items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) {
-	align-items: stretch;
-}
-/* flex布局专用：flex容器只能拉伸次轴方向，主轴方向要靠项目（子元素）自己拉伸 */
-.flex.go-y.items-y-stretch:where(:not(.content-N, .content-И, .content-N *, .content-И *)) > *,
-.flex:not(.go-x).items-y-stretch:where(.content-N, .content-И, .content-N *, .content-И *) > * {
-	flex: 1;
-}
-/* ------ .items-stretch：在xy两个方向都尽量拉伸，占满容器。注：多行flex布局下，最后一行/列若“不满”，在排列方向上无法拉伸占满 ------ */
-.items-stretch {
-	justify-items: stretch;
-	align-items: stretch;
-	/* 直接子元素配合拉伸 */
-	> * { flex: 1; }
+	/* 适配行内元素 */
+	vertical-align: middle;
+	/* 适配定位元素 */
+	inset: 0;
 }
 
 /* ------ flex专属拉伸 ------ */
 /* 在横向flex容器里，保证本项目独占一行 */
-.multi-line.go-x .monopoly-x,
+.items-multi-line.items-go-x .monopoly-x,
 /* 在纵向flex容器里，保证本项目独占一列 */
-.multi-line.go-y .monopoly-y {
+.items-multi-line.items-go-y .monopoly-y {
 	flex-basis: 100%;
 }
 
-.no-shrink { flex-shrink: 0; }
+.no-shrink {
+	flex-shrink: 0;
+}
 
 /* 本项目弹性填充 */
 .flexible {
@@ -372,246 +499,603 @@
 	min-height: 0;
 }
 
-/* ------grid专属拉伸 ------ */
+/* ------ grid专属拉伸 ------ */
 /* 不一定真的能独占一行/列。如果另有项目也安排在同一行/列，两者会堆叠 */
-.one-row {grid-column: 1 / -1;}
-.one-column {grid-row: 1 / -1;}
-
-/* ------ .items-x-space-between/.items-x-mutex/.items-x-social-phobia：在横向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
-.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia):where(
-	:not(.content-N, .content-И, .content-N *, .content-И *))
-{
-	justify-content: space-between;
-}
-.grid:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
-	):where(.content-N, .content-И, .content-N *, .content-И *)
-{
-	align-content: space-between;
+.one-row {
+	grid-column: 1 / -1;
 }
 
-.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	align-content: space-between;
-	flex-wrap: wrap;
-}
-.flex:is(.items-x-space-between, .items-x-mutex, .items-x-social-phobia
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	justify-content: space-between;
+.one-column {
+	grid-row: 1 / -1;
 }
 
-/* ------ .items-y-space-between/.items-y-mutex/.items-y-social-phobia：在竖向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
-.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia):where(
-	:not(.content-N, .content-И, .content-N *, .content-И *))
-{
-	align-content: space-between;
-}
-.grid:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
-	):where(.content-N, .content-И, .content-N *, .content-И *)
-{
-	justify-content: space-between;
+/* ============ （实现：需要适配更多场景的实现，使用者通常无需关心） ============ */
+/* 下面这些搭配已被覆盖，无需声明
+.items-go-x, .items-go-x.items-from-left, .items-go-x.items-from-right {
+	&.items-near-top {}
+	&.items-near-bottom {}
+	&.items-near-left {}
+	&.items-near-right {}
+
+	> .near-left {}
+	> .near-right {}
+	> .near-top {}
+	> .near-bottom {}
+	> .near-x-center {}
+	> .near-y-center {}
+	> .near-center {}
+}*/
+/* 纵向排列下保证语义 */
+.items-go-y {
+	> .near-left {
+		justify-self: unset;
+		align-self: start;
+	}
+
+	> .near-right {
+		justify-self: unset;
+		align-self: end;
+	}
+
+	> .near-top {
+		align-self: unset;
+		justify-self: start;
+	}
+
+	> .near-bottom {
+		align-self: unset;
+		justify-self: end;
+	}
+
+	> .near-x-center {
+		justify-self: unset;
+		align-self: center;
+	}
+
+	> .near-y-center {
+		align-self: unset;
+		justify-self: center;
+	}
+
+	/* > .near-center 已被覆盖，无需声明 */
 }
 
-.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	align-content: space-between;
-	flex-wrap: wrap;
-}
-.flex:is(.items-y-space-between, .items-y-mutex, .items-y-social-phobia
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	justify-content: space-between;
-}
-
-/* ------ .items-space-between/.items-mutex/.items-social-phobia：在xy双向上项目尽量互相远离，仿佛互斥/社恐。 ------ */
-.items-space-between,
-.items-mutex,
-.items-social-phobia { justify-content: space-between; align-content: space-between; }
-
-/* ============ 空隙环绕：.items-space-around、.items-x/y-space-around ============ */
-/* ------ .items-x-space-around/.items-x-unfamiliar：保证在横向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-x-space-around, .items-x-unfamiliar):where(:not(.content-N, .content-И, .content-N *, .content-И *))
-{
-	justify-content: space-around;
-}
-.grid:is(.items-x-space-around, .items-x-unfamiliar):where(.content-N, .content-И, .content-N *, .content-И *)
-{
-	align-content: space-around;
-}
-.flex:is(.items-x-space-around, .items-x-unfamiliar
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	align-content: space-around;
-	flex-wrap: wrap;
-}
-.flex:is(.items-x-space-around, .items-x-unfamiliar
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	justify-content: space-around;
+/* 下面这些搭配已被覆盖，无需声明
+.items-go-y.items-from-top, .items-go-y.items-from-bottom {
+	> .near-left {}
+	> .near-right {}
+	> .near-top {}
+	> .near-bottom {}
+	> .near-x-center {}
+	> .near-y-center {}
+	> .near-center {}
+}*/
+/* ======================== 书写模式：决定内容排列方向，一些布局"行"、"列"会受其影响 ======================== */
+/* Z字形：横向（行），行内从左到右。行之间肯定是从上到下。现行最常见&默认的书写模式。 */
+.content-Z {
+	writing-mode: horizontal-tb;
+	direction: ltr;
+	/* 已被覆盖，无需声明
+	&.items-go-x, & .items-go-x {}
+	&.items-go-y, & .items-go-y {}
+	*/
 }
 
-/* ------ .items-y-space-around/.items-y-unfamiliar：保证在竖向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-y-space-around, .items-y-unfamiliar):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
-	align-content: space-around;
-}
-.grid:is(.items-y-space-around, .items-y-unfamiliar):is(.content-N, .content-И, .content-N *, .content-И *) {
-	justify-content: space-around;
-}
-.flex:is(.items-y-space-around, .items-y-unfamiliar
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	align-content: space-around;
-	flex-wrap: wrap;
-}
-.flex:is(.items-y-space-around, .items-y-unfamiliar
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	justify-content: space-around;
+/* S字形：横向（行），行内从右到左。阿拉伯文书写模式。需翻转x轴from语义。column不受direction影响。 */
+.content-S {
+	writing-mode: horizontal-tb;
+	direction: rtl;
+
+	/* items-go-x/items-go-y 适配：保持物理语义 */
+	&.items-go-x, & .items-go-x {
+		&.items-from-left {
+			flex-direction: row-reverse;
+		}
+
+		&.items-from-right {
+			flex-direction: row;
+		}
+	}
+
+	/* items-go-y 已被覆盖，无需声明 */
+	/* grid适配：RTL翻转左右 */
+	&.grid, & .grid {
+		&.items-near-left {
+			justify-content: end;
+			justify-items: end;
+		}
+
+		&.items-near-right {
+			justify-content: start;
+			justify-items: start;
+		}
+
+		/* items-y-* items-x-stretch/center/space-* 对称值不受RTL影响，无需覆盖 */
+	}
+
+	/* at-* 适配：逻辑属性翻转 */
+	& .near-left {
+		justify-self: end;
+	}
+
+	& .near-right {
+		justify-self: start;
+	}
+
+	/* items-go-y 适配：RTL下左右翻转 */
+	&.items-go-y, & .items-go-y {
+		> .near-left {
+			justify-self: unset;
+			align-self: end;
+		}
+
+		> .near-right {
+			justify-self: unset;
+			align-self: start;
+		}
+	}
 }
 
-/* ------ .items-space-around/.items-unfamiliar：保证在xy双向上，剩余空隙均分贴在每个项目的两侧，仿佛项目间不熟（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-space-around,
-.items-unfamiliar { justify-content: space-around; align-content: space-around; flex-wrap: wrap; }
+/* N字形：竖向（列），列之间从右到左。列内肯定是从上到下。汉字字符保持头朝上，字母数字头朝右。古代汉语的书写模式。 */
+.content-N {
+	writing-mode: vertical-rl;
+	direction: ltr;
 
-/* ============ 空隙均分：.items-space-evenly、.items-x/y-space-evenly ============ */
-/* ------ .items-x-space-evenly/.items-x-friendly：保证在横向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-x-space-evenly, .items-x-friendly):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
-	justify-content: space-evenly;
-}
-.grid:is(.items-x-space-evenly, .items-x-friendly):where(.content-N, .content-И, .content-N *, .content-И *) {
-	align-content: space-evenly;
-}
-.flex:is(.items-x-space-evenly, .items-x-friendly
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	align-content: space-evenly;
-	flex-wrap: wrap;
-}
-.flex:is(.items-x-space-evenly, .items-x-friendly
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	justify-content: space-evenly;
+	/* items-go-x/items-go-y 适配：保持物理语义 */
+	&.items-go-x, & .items-go-x {
+		&.items-from-left {
+			flex-direction: column-reverse;
+		}
+
+		&.items-from-right {
+			flex-direction: column;
+		}
+	}
+
+	&.items-go-y, & .items-go-y {
+		&.items-from-top {
+			flex-direction: row;
+		}
+
+		&.items-from-bottom {
+			flex-direction: row-reverse;
+		}
+	}
+
+	/* grid适配：竖排下轴交换+块轴右→左 */
+	&.grid, & .grid {
+
+		/* 靠边：items-y-*→justify items-x-*→align */
+		&.items-near-top {
+			justify-content: start;
+			justify-items: start;
+		}
+
+		&.items-near-bottom {
+			justify-content: end;
+			justify-items: end;
+		}
+
+		&.items-near-left {
+			align-content: end;
+			align-items: end;
+		}
+
+		&.items-near-right {
+			align-content: start;
+			align-items: start;
+		}
+
+		/* 轨道分布 */
+		&.items-y-stretch {
+			justify-content: stretch;
+			justify-items: stretch;
+		}
+
+		&.items-y-near-center {
+			justify-content: center;
+		}
+
+		&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia {
+			justify-content: space-between;
+		}
+
+		&.items-y-space-around, &.items-y-unfamiliar {
+			justify-content: space-around;
+		}
+
+		&.items-y-space-evenly, &.items-y-friendly {
+			justify-content: space-evenly;
+		}
+
+		&.items-x-stretch {
+			align-content: stretch;
+			align-items: stretch;
+		}
+
+		&.items-x-near-center {
+			align-content: center;
+		}
+
+		&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia {
+			align-content: space-between;
+		}
+
+		&.items-x-space-around, &.items-x-unfamiliar {
+			align-content: space-around;
+		}
+
+		&.items-x-space-evenly, &.items-x-friendly {
+			align-content: space-evenly;
+		}
+	}
+
+	/* at-* 适配：逻辑属性轴交换 */
+	& .near-left {
+		justify-self: unset;
+		align-self: end;
+	}
+
+	& .near-right {
+		justify-self: unset;
+		align-self: start;
+	}
+
+	& .near-top {
+		align-self: unset;
+		justify-self: start;
+	}
+
+	& .near-bottom {
+		align-self: unset;
+		justify-self: end;
+	}
+
+	& .near-x-center {
+		justify-self: unset;
+		align-self: center;
+	}
+
+	& .near-y-center {
+		align-self: unset;
+		justify-self: center;
+	}
+
+	/* .near-center 已被覆盖，无需声明 */
 }
 
-/* ------ .items-y-space-evenly/.items-y-friendly：保证在竖向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
-.grid:is(.items-y-space-evenly, .items-y-friendly):where(:not(.content-N, .content-И, .content-N *, .content-И *)) {
-	align-content: space-evenly;
-}
-.grid:is(.items-y-space-evenly, .items-y-friendly):where(.content-N, .content-И, .content-N *, .content-И *) {
-	justify-content: space-evenly;
-}
-.flex:is(.items-y-space-evenly, .items-y-friendly
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *, .go-y),
-			:is(.content-N, .content-И, .content-N *, .content-И *).go-x)
-{
-	align-content: space-evenly;
-	flex-wrap: wrap;
-}
-.flex:is(.items-y-space-evenly, .items-y-friendly
-	):where(:not(.content-N, .content-И, .content-N *, .content-И *).go-y,
-			:is(.content-N, .content-И, .content-N *, .content-И *):not(.go-x))
-{
-	justify-content: space-evenly;
-}
+/* И字形：竖向（列），列之间从左到右。列内肯定是从上到下。蒙文的书写模式。 */
+.content-И {
+	writing-mode: vertical-lr;
+	direction: ltr;
 
-/* ------ .items-space-evenly/.items-friendly：保证在xy双向上，剩余空隙均分在项目之间（含外侧），仿佛项目间比较友好（grid、flex都适用，适配任何书写模式）。 ------ */
-.items-space-evenly,
-.items-friendly { justify-content: space-evenly; align-content: space-evenly; flex-wrap: wrap; }
+	/* items-go-x/items-go-y 适配：保持物理语义 */
+	&.items-go-x, & .items-go-x {
+		&.items-from-left {
+			flex-direction: column;
+		}
+
+		&.items-from-right {
+			flex-direction: column-reverse;
+		}
+	}
+
+	&.items-go-y, & .items-go-y {
+		&.items-from-top {
+			flex-direction: row;
+		}
+
+		&.items-from-bottom {
+			flex-direction: row-reverse;
+		}
+	}
+
+	/* grid适配：竖排下轴交换+块轴左→右 */
+	&.grid, & .grid {
+
+		/* 靠边：items-y-*→justify items-x-*→align */
+		&.items-near-top {
+			justify-content: start;
+			justify-items: start;
+		}
+
+		&.items-near-bottom {
+			justify-content: end;
+			justify-items: end;
+		}
+
+		&.items-near-left {
+			align-content: start;
+			align-items: start;
+		}
+
+		&.items-near-right {
+			align-content: end;
+			align-items: end;
+		}
+
+		/* 轨道分布 */
+		&.items-y-stretch {
+			justify-content: stretch;
+			justify-items: stretch;
+		}
+
+		&.items-y-near-center {
+			justify-content: center;
+		}
+
+		&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia {
+			justify-content: space-between;
+		}
+
+		&.items-y-space-around, &.items-y-unfamiliar {
+			justify-content: space-around;
+		}
+
+		&.items-y-space-evenly, &.items-y-friendly {
+			justify-content: space-evenly;
+		}
+
+		&.items-x-stretch {
+			align-content: stretch;
+			align-items: stretch;
+		}
+
+		&.items-x-near-center {
+			align-content: center;
+		}
+
+		&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia {
+			align-content: space-between;
+		}
+
+		&.items-x-space-around, &.items-x-unfamiliar {
+			align-content: space-around;
+		}
+
+		&.items-x-space-evenly, &.items-x-friendly {
+			align-content: space-evenly;
+		}
+	}
+
+	/* at-* 适配：逻辑属性轴交换 */
+	& .near-left {
+		justify-self: unset;
+		align-self: start;
+	}
+
+	& .near-right {
+		justify-self: unset;
+		align-self: end;
+	}
+
+	& .near-top {
+		align-self: unset;
+		justify-self: start;
+	}
+
+	& .near-bottom {
+		align-self: unset;
+		justify-self: end;
+	}
+
+	& .near-x-center {
+		justify-self: unset;
+		align-self: center;
+	}
+
+	& .near-y-center {
+		align-self: unset;
+		justify-self: center;
+	}
+
+	/* .near-center 已被覆盖，无需声明 */
+}
 
 /* ============================== Grid/Flex 预设布局 ============================== */
 /* 为防没有使用.grid/.flex之类，所以不显式结合.grid/.flex，直接设置。若非display:grid/flex也没事，会被浏览器忽略。下同 */
-.朋字形 {
-	grid-template-columns: 50% 50%;
+/* ------ "工字形"布局，上部导航栏，底部页脚，中间左右两栏均分。 ------ */
+.工字形 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 	grid-template-rows: auto 1fr auto;
 	grid-template-areas:
 		'header header'
 		'left right'
 		'footer footer';
+
+	> header, > .header, > .near-top {
+		grid-area: header;
+		grid-column: 1 / -1;
+	}
+
+	> footer, > .footer, > .near-bottom {
+		grid-area: footer;
+		grid-column: 1 / -1;
+	}
+
+	> .sidebar.near-left {
+		grid-area: left;
+		margin: 0;
+		justify-self: auto;
+	}
+
+	> .sidebar.near-right {
+		grid-area: right;
+		margin: 0;
+		justify-self: auto;
+	}
+}
+
+/* ------ "朋字形"布局，无顶部底部，只有左右两栏均分。 ------ */
+.朋字形 {
+	display: grid;
+	/* 50%vs50%是各占父容器的一半，如果有gap，将会突破父容器，所以用1fr vs 1fr */
+	/* grid-template-columns: 50% 50%; */
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: 'left right';
+
+	> .near-left {
+		grid-area: left;
+		margin: 0;
+		justify-self: auto;
+	}
+
+	> .near-right {
+		grid-area: right;
+		margin: 0;
+		justify-self: auto;
+	}
 }
 
 /* ------ "亚字形"布局，上部导航栏，底部页脚，中间有左右侧栏，中部是主要内容 ------ */
 .亚字形 {
+	display: grid;
 	grid-template-rows:
-		auto /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto) /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
+		auto
+		/* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)
+		/* 主内容区：有最小高度，再填充剩余 */
+		auto;
+	/* Footer 高度自适应 */
 	grid-template-columns:
-		minmax(var(--left-sidebar-min-width), var(--left-sidebar-max-width)) /* 左侧 */
-		1fr /* 中间：自适应剩余空间 */
-		minmax(var(--right-sidebar-min-width), var(--right-sidebar-max-width)); /* 右侧 */
+		minmax(var(--left-sidebar-min-width), var(--left-sidebar-max-width))
+		/* 左侧 */
+		1fr
+		/* 中间：自适应剩余空间 */
+		minmax(var(--right-sidebar-min-width), var(--right-sidebar-max-width));
+	/* 右侧 */
 	grid-template-areas:
 		'header header header'
 		'left-sidebar main right-sidebar'
 		'footer footer footer';
+
+	> header, > .header, > .near-top {
+		grid-area: header;
+		grid-column: 1 / -1;
+	}
+
+	> footer, > .footer, > .near-bottom {
+		grid-area: footer;
+		grid-column: 1 / -1;
+	}
+
+	> main, > .main, > .body {
+		grid-area: main;
+	}
+
+	> .sidebar.near-left {
+		grid-area: left-sidebar;
+		margin: 0;
+		justify-self: auto;
+	}
+
+	> .sidebar.near-right {
+		grid-area: right-sidebar;
+		margin: 0;
+		justify-self: auto;
+	}
 }
 
 /* ------ "叵字形"布局，上部导航栏，底部页脚，中间左侧栏宽度固定，右侧主要内容自适应 ------ */
 .叵字形 {
+	display: grid;
 	grid-template-rows:
-		auto /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto) /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
+		auto
+		/* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)
+		/* 主内容区：有最小高度，再填充剩余 */
+		auto;
+	/* Footer 高度自适应 */
 	grid-template-columns: minmax(var(--left-sidebar-min-width), var(--left-sidebar-max-width)) 1fr;
 	grid-template-areas:
 		'header header'
 		'left-sidebar main'
 		'footer footer';
+
+	> header, > .header, > .near-top {
+		grid-area: header;
+		grid-column: 1 / -1;
+	}
+
+	> footer, > .footer, > .near-bottom {
+		grid-area: footer;
+		grid-column: 1 / -1;
+	}
+
+	> main, > .main, > .body {
+		grid-area: main;
+	}
+
+	> .sidebar.near-left {
+		grid-area: left-sidebar;
+		margin: 0;
+		justify-self: auto;
+	}
 }
 
-/*------ "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 ------ */
+/* ------ "反叵字形"布局，上部导航栏，底部页脚，中间右侧栏宽度固定，左侧主要内容自适应 ------ */
 .反叵字形 {
+	display: grid;
 	grid-template-rows:
-		auto /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto) /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
+		auto
+		/* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)
+		/* 主内容区：有最小高度，再填充剩余 */
+		auto;
+	/* Footer 高度自适应 */
 	grid-template-columns: 1fr minmax(var(--right-sidebar-min-width), var(--right-sidebar-max-width));
 	grid-template-areas:
 		'header header'
 		'main right-sidebar'
 		'footer footer';
+
+	> header, > .header, > .near-top {
+		grid-area: header;
+		grid-column: 1 / -1;
+	}
+
+	> footer, > .footer, > .near-bottom {
+		grid-area: footer;
+		grid-column: 1 / -1;
+	}
+
+	> main, > .main, > .body {
+		grid-area: main;
+	}
+
+	> .sidebar.near-right {
+		grid-area: right-sidebar;
+		margin: 0;
+		justify-self: auto;
+	}
 }
 
-/* ------ "目字形"布局，上部导航栏，底部页脚 ------ */
-.目字形 {
+/* ------ "目字形/三字形"布局，上部导航栏，底部页脚 ------ */
+.目字形, .三字形 {
+	display: grid;
 	grid-template-rows:
-		auto /* Header 高度自适应内容 */
-		minmax(var(--layout-main-row-min), auto) /* 主内容区：有最小高度，再填充剩余 */
-		auto; /* Footer 高度自适应 */
+		auto
+		/* Header 高度自适应内容 */
+		minmax(var(--layout-main-row-min), auto)
+		/* 主内容区：有最小高度，再填充剩余 */
+		auto;
+	/* Footer 高度自适应 */
 	grid-template-columns: 1fr;
 	grid-template-areas:
 		'header'
 		'main'
 		'footer';
+
+	> header, > .header, > .near-top {
+		grid-area: header;
+	}
+
+	> footer, > .footer, > .near-bottom {
+		grid-area: footer;
+	}
+
+	> main, > .main, > .body {
+		grid-area: main;
+	}
 }
-
-/* ------------ 配套 ------------ */
-header, .header {
-	grid-area: header;
-	grid-row: 1;
-	grid-column: 1 / -1;
-	flex: 1 1 100%;
-}
-
-footer, .footer {
-	grid-area: footer;
-	grid-column: 1 / -1;
-	flex: 1 1 100%;
-}
-
-main, .main, .body {grid-area: main; flex: 1;}
-
-.left-sidebar {grid-area: left-sidebar;}
-.right-sidebar {grid-area: right-sidebar;}
-
