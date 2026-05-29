@@ -146,6 +146,11 @@
 			min-height: 25px;
 		}
 
+		.item.td-cell {
+			display: table-cell;
+			border: 2px solid #333;
+		}
+
 		.section-wrapper {
 			margin-bottom: 20px;
 			position: relative;
@@ -202,7 +207,8 @@
 				const container = c.querySelector('.container');
 				if (!container) return;
 				const cr = container.getBoundingClientRect();
-				const cs = getComputedStyle(container);
+				const targetEl = c.dataset.target ? c.querySelector(c.dataset.target) : null;
+				const cs = getComputedStyle(targetEl || container);
 				const borderL = parseFloat(cs.borderLeftWidth) || 0;
 				const borderR = parseFloat(cs.borderRightWidth) || 0;
 				const borderT = parseFloat(cs.borderTopWidth) || 0;
@@ -812,6 +818,46 @@
 		});
 		});
 		attachReference('cases', '<div class="container" style="width:200px;height:110px;display:grid;grid-template-columns:70px 70px 70px;grid-template-rows:50px 50px;gap:0;padding:4px;place-items:start">' + makeItemsGrid(4) + '</div>');
+		// ========== Table 用例 ==========
+		(function() {
+			document.write('<h2>Table</h2><div id="table-cases" class="section"></div>');
+			const el = document.getElementById('table-cases');
+
+			function addTableCase(cls, expect, label, target) {
+				let html = '<table class="container table ' + cls + '" style="border-collapse:collapse;table-layout:fixed;width:300px;height:80px;background:#f5f5f5">';
+				for (let r = 0; r < 2; r++) {
+					html += '<tr>';
+					for (let c = 0; c < 3; c++) {
+						const id = r * 3 + c + 1;
+						html += '<td class="item td-cell">item ' + id + '</td>';
+					}
+					html += '</tr>';
+				}
+				html += '</table>';
+				const div = document.createElement('div');
+				div.className = 'case';
+				div.dataset.id = caseId;
+				div.dataset.expect = expect;
+				if (target) div.dataset.target = target;
+				const clsSplit = ('table ' + cls).split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
+				const dotCls = '.table' + (cls ? '.' + cls.replace(/\s+/g, '.') : '');
+				div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="table ' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
+					+ html
+					+ '<div class="actual"></div>';
+				el.appendChild(div);
+				caseId++;
+			}
+
+			addTableCase('', 'display:table', 'table（默认）');
+			addTableCase('items-near-left', 'text-align:left', 'items-near-left', 'td');
+			addTableCase('items-near-right', 'text-align:right', 'items-near-right', 'td');
+			addTableCase('items-near-top', 'vertical-align:top', 'items-near-top', 'td');
+			addTableCase('items-near-bottom', 'vertical-align:bottom', 'items-near-bottom', 'td');
+			addTableCase('items-from-right', 'direction:rtl', 'items-from-right（表格）');
+			addTableCase('items-from-right', 'direction:ltr', 'items-from-right td', 'td');
+			attachReference('table-cases', '<table class="container" style="border-collapse:collapse;table-layout:fixed;width:300px;height:80px;background:#f5f5f5"><tr><td class="item td-cell">item 1</td><td class="item td-cell">item 2</td><td class="item td-cell">item 3</td></tr><tr><td class="item td-cell">item 4</td><td class="item td-cell">item 5</td><td class="item td-cell">item 6</td></tr></table>');
+		})();
 		// ========== 边界用例 ==========
 		document.write('<h2>边界用例</h2><div id="edge-cases" class="section"></div>');
 		setTimeout(() => {
