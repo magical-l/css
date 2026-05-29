@@ -29,6 +29,8 @@ html {
 }
 
 :root {
+	--top-z: 9999;
+	--modal-z: 1010;
 	--dangerous-color: #D32F2F;
 	--correct-color: #4CAF50;
 	--incorrect-color: #F05C6A;
@@ -55,7 +57,10 @@ body {
 
 /* ======================== 设定一些元素的初始值 ======================== */
 
-h1, h2, h3 {color: #333;}
+h1, h2, h3 {
+	text-wrap: balance;/* 保证换行时每行字数相当，避免头重脚轻 */
+	color: #333;
+}
 
 textarea {
 	width: 100%;
@@ -74,13 +79,17 @@ i.icon {
 	font-style: unset; /* <i>标签本来是做斜体的，但现在通常被用来做图标，因此要去掉本身的斜体。 */
 }
 
-/* ======================== 一些工具类 ======================== */
-
-/* ------ 通用全屏 ------ */
-.fullscreen {
-	position: fixed;
-	inset: 0;
+svg {
+	/* svg线段端点改为圆头，更柔和 */
+	stroke-linecap: round;
+	stroke-linejoin: round;
 }
+/* 有必填项未填的表单加红框 */
+form:has(input:invalid:not(:placeholder-shown)) {
+	border: 2px solid #f56c6c;
+}
+
+/* ======================== 一些工具类 ======================== */
 
 /* ================== 可见性 ================== */
 template, .template, .hidden, [v-cloak], .js.container {display: none !important;}
@@ -99,25 +108,17 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 	pointer-events: none;
 }
 
-/* ================== 定位 ================== */
+/* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
+.non-interactive {
+	pointer-events: none;
+	cursor: default;
+}
 
-/* 行内元素与同行文字垂直对齐（y 轴方向居中），否则会偏上 */
-.y-middle {vertical-align: middle;}
-
-/* 块级元素在容器内水平居中（x 轴） */
-.x-middle {margin-left: auto; margin-right: auto;}
-
-/* 在 flex/grid 子项上水平+垂直居中（xy 两轴） */
-.xy-middle {align-self: center; justify-self: center;}
+/* 最高层级（盖在所有元素之上） */
+.top-layer { z-index: var(--top-z); }
 
 .position-fixed {
 	position: fixed;
-	
-	&.in-center { /* 固定于视口并居中 */
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-	}
 }
 
 .sticky {
@@ -141,7 +142,10 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 .scrollable {overflow: auto; min-height: 0; min-width: 0;}
 
 /* 铺满视口（position: fixed），用于弹层内全屏遮罩、撒花等 */
-.fullscreen {position: fixed; inset: 0;}
+.fullscreen {
+	position: fixed;
+	inset: 0;
+}
 
 /* 禁止该元素内部滚动（overflow: hidden）；加在 body 上可避免整页出现滚动条 */
 .no-scroll {overflow: hidden;}
@@ -195,9 +199,30 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 	--modal-overlay-color: rgba(0,0,0,0.5);
 	position: absolute;
 	inset: 0;
-	z-index: 1000;
+	z-index: var(--modal-z);
 	background: var(--modal-overlay-color);
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
+
+/* ============ 列表容器 ============ */
+:where(:not(ol, ul)).list {/* 本身用ol/ul的，随它去 */
+	display: flex;
+	flex-direction: column;
+	list-style: none;
+	padding: 0.5rem;
+	margin: 0;
+
+	> header {
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+}
+
+li.one:nth-child(odd) {
+	background: #f5f7fa;
+}
+
+/* ============ 杂项 ============ */
