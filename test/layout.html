@@ -512,26 +512,19 @@
 				document.getElementById('cases').appendChild(div);
 				caseId++;
 			}
-			function makeChineseLabel(cls, containerType, goClass, fromClass, defaultDir) {
-				const isY = goClass && goClass.includes('items-go-y');
-				const isGoX = goClass && goClass.includes('items-go-x');
-
-				// 容器
+			function makeChineseLabel(cls, containerType, goClass, fromClass) {
 				const ct = containerType || '';
-
-				// 方向词
-				const dirWord = defaultDir ? '横竖默认（=横排）' : (isY ? '竖排' : '横排');
-
-				// 箭头信息
-				const arrowMap = {
-					'items-from-left': '从左到右',
-					'items-from-right': '从右到左',
-					'items-from-top': '从上到下',
-					'items-from-bottom': '从下到上',
-			};
-				const arrow = defaultDir ? '方向默认（=从左到右）' :
-					(arrowMap[fromClass] || (isGoX ? '从左到右' : '') || (isY ? '从上到下' : ''));
-
+				let axisWord;
+				if (goClass === 'items-go-y') axisWord = '竖向';
+				else if (goClass === 'items-go-x') axisWord = '横向';
+				else axisWord = '横竖默认';
+				let arrow;
+				if (fromClass === 'items-from-left') arrow = '从左到右';
+				else if (fromClass === 'items-from-right') arrow = '从右到左';
+				else if (fromClass === 'items-from-top') arrow = '从上到下';
+				else if (fromClass === 'items-from-bottom') arrow = '从下到上';
+				else if (goClass === 'items-go-y') arrow = '方向默认（=从上到下）';
+				else arrow = '方向默认（=从左到右）';
 				// 分布词
 				const parts = [];
 				for (const w of cls.split(' ')) {
@@ -550,10 +543,9 @@
 						'items-space-around': '双向不熟',
 					};
 					if (map[w]) { parts.push(map[w]); }
-			}
+				}
 				const dist = parts[0] || '';
-
-				return ct + ' ' + dirWord + ' ' + arrow + ' ' + dist;
+				return ct + ' ' + axisWord + ' ' + arrow + ' ' + dist;
 			}
 			// ========== 分布期望（语义位置） ==========
 			function distExpect(goClass, dist, isGrid) {
@@ -565,7 +557,7 @@
 					};
 					return gridMap[dist] || '';
 			}
-				const y = goClass.includes('items-go-y');
+				const y = goClass && goClass.includes('items-go-y');
 				// 边缘位置：语义验证
 				const edgeSemantics = {
 					'items-near-left': 'semantic:left',
@@ -634,7 +626,7 @@
 			}
 				return expect;
 			}
-			const allDists = ['items-near-left', 'items-near-right', 'items-near-top', 'items-near-bottom', 'items-x-near-center', 'items-y-near-center', 'items-near-center', 'items-x-space-between', 'items-y-space-between', 'items-space-between', 'items-x-space-evenly', 'items-y-space-evenly', 'items-space-evenly', 'items-x-space-around', 'items-y-space-around', 'items-space-around', 'items-x-stretch', 'items-y-stretch', 'items-stretch', ];
+			const allDists = ['items-near-left', 'items-near-right', 'items-near-top', 'items-near-bottom', 'items-x-near-center', 'items-y-near-center', 'items-near-center', 'items-x-space-evenly', 'items-y-space-evenly', 'items-space-evenly', 'items-x-space-around', 'items-y-space-around', 'items-space-around', 'items-x-space-between', 'items-y-space-between', 'items-space-between', 'items-x-stretch', 'items-y-stretch', 'items-stretch', ];
 
 			function attachReference(sectionId, refContent) {
 				const section = document.getElementById(sectionId);
@@ -655,136 +647,60 @@
 				innerWrapper.appendChild(refDiv);
 				casesArea.appendChild(section);
 			}
-			// ========== Flex 用例 ==========
-			(function() {
-				document.write('<h2>Flex</h2><div id="flex-cases" class="section"></div>');
-				// 1. Flex 无 go（默认 row）
-				allDists.forEach(dist => {
-					if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
-						const br = document.createElement('div');
-						br.style.cssText = 'flex-basis:100%;height:0';
-						document.getElementById('flex-cases').appendChild(br);
-					}
-					const cls = 'flex ' + dist;
-					const casesEl = document.getElementById('flex-cases');
-					const div = document.createElement('div');
-					div.className = 'case';
-					div.dataset.id = caseId;
-					div.dataset.expect = 'flex-direction:row ' + distExpect('items-go-x', dist, false);
-					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
-					const dotCls = '.' + cls.replace(/\s+/g, '.');
-					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', null, null, true) + '</div>'
-						+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
-						+ '<div class="container ' + cls + '" style="flex-wrap:wrap;width:130px;min-height:200px">' + makeItemsVariant(6) + '</div><div class="actual"></div>';
-					casesEl.appendChild(div);
-					caseId++;
-			});
-							// 2-6. Flex 组合 (go-x, go-x+from-left, go-x+from-right, go-y, go-y+from-bottom)
-				const flexCombos = [
-					['items-go-x', null],
-					['items-go-x', 'items-from-left'],
-					['items-go-x', 'items-from-right'],
-					['items-go-y', null],
-					['items-go-y', 'items-from-bottom'],
-				];
-				// go-x
-				flexCombos.slice(0, 3).forEach(([go, from]) => {
-					allDists.forEach(dist => {
-						if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
-							const br = document.createElement('div');
-							br.style.cssText = 'flex-basis:100%;height:0';
-							document.getElementById('flex-cases').appendChild(br);
-						}
-						const parts = ['flex', go];
-						if (from) parts.push(from);
-						parts.push(dist);
-						const cls = parts.join(' ');
-						let dir;
-						if (from === 'items-from-right') dir = 'flex-direction:row-reverse';
-						else if (from === 'items-from-bottom') dir = 'flex-direction:column-reverse';
-						else if (go === 'items-go-y') dir = 'flex-direction:column';
-						else dir = 'flex-direction:row';
-						const casesEl = document.getElementById('flex-cases');
-						const div = document.createElement('div');
-						div.className = 'case';
-						div.dataset.id = caseId;
-						let distE = distExpect(go, dist, false);
-						if (from) distE = flipExpectForFrom(distE, from);
-						// from-* 不交换语义，near-left 永远=视觉靠左
-						// flex-direction 属性由 dir 变量直接检查
-						div.dataset.expect = dir + ' ' + distE;
-						const count = 6;
-						const extraStyle = ' style="' + (go === 'items-go-y' ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px') + '"';
-						const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
-						const dotCls = '.' + cls.replace(/\s+/g, '.');
-						div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
-						+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
-						+ '<div class="container ' + cls + '"' + extraStyle + '>' + makeItemsVariant(count) + '</div><div class="actual"></div>';
-						casesEl.appendChild(div);
-						caseId++;
-					});
+							// ========== Flex 用例 ==========
+				(function() {
+					document.write('<h2>Flex</h2><div id="flex-cases" class="section"></div>');
+					const flexCombos = [
+						[null, null],
+						[null, 'items-from-left'],
+						[null, 'items-from-right'],
+						[null, 'items-from-top'],
+						[null, 'items-from-bottom'],
+						['items-go-x', null],
+						['items-go-x', 'items-from-left'],
+						['items-go-x', 'items-from-right'],
+						['items-go-x', 'items-from-top'],
+						['items-go-x', 'items-from-bottom'],
+						['items-go-y', null],
+						['items-go-y', 'items-from-left'],
+						['items-go-y', 'items-from-right'],
+						['items-go-y', 'items-from-top'],
+						['items-go-y', 'items-from-bottom'],
+					];					flexCombos.forEach(([go, from]) => {
+						allDists.forEach(dist => {
+							if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
+								const br = document.createElement('div');
+								br.style.cssText = 'flex-basis:100%;height:0';
+								document.getElementById('flex-cases').appendChild(br);
+							}
+							const parts = ['flex']; if (go) parts.push(go);
+							if (from) parts.push(from);
+							parts.push(dist);
+							const cls = parts.join(' ');
+							const effDir = from === 'items-from-bottom' ? 'column-reverse' : from === 'items-from-top' ? 'column' : from === 'items-from-right' ? 'row-reverse' : go === 'items-go-y' ? 'column' : 'row';
+							const dir = 'flex-direction:' + effDir;
+							const effGo = (go === 'items-go-y' || from === 'items-from-top') ? 'items-go-y' : null;
+							const casesEl = document.getElementById('flex-cases');
+							const div = document.createElement('div');
+							div.className = 'case';
+							div.dataset.id = caseId;
+							let distE = distExpect(effGo, dist, false);
+							if (from) distE = flipExpectForFrom(distE, from);
+							div.dataset.expect = dir + ' ' + distE;
+							const count = 6;
+							const isCol = effDir === 'column' || effDir === 'column-reverse';
+							const extraStyle = isCol ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px';
+														const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
+							const dotCls = '.' + cls.replace(/\s+/g, '.');
+							div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
+							+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
+							+ '<div class="container ' + cls + '" style="' + extraStyle + '">' + makeItemsVariant(count) + '</div><div class="actual"></div>';
+							casesEl.appendChild(div);
+							caseId++;
 						});
-				// Flex items-from-top（默认竖排，与go-y对照）
-				allDists.forEach(dist => {
-					if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
-						const br = document.createElement('div');
-						br.style.cssText = 'flex-basis:100%;height:0';
-						document.getElementById('flex-cases').appendChild(br);
-					}
-					const cls = 'flex items-from-top ' + dist;
-					const casesEl = document.getElementById('flex-cases');
-					const div = document.createElement('div');
-					div.className = 'case';
-					div.dataset.id = caseId;
-					const distE = distExpect('items-go-y', dist, false);
-					div.dataset.expect = 'flex-direction:column ' + distE;
-					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
-					const dotCls = '.' + cls.replace(/\s+/g, '.');
-					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', null, null) + '</div>'
-						+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
-						+ '<div class="container ' + cls + '" style="flex-wrap:wrap;height:130px">' + makeItemsVariant(6) + '</div><div class="actual"></div>';
-					casesEl.appendChild(div);
-					caseId++;
-				});
-				// go-y
-				flexCombos.slice(3, 5).forEach(([go, from]) => {
-					allDists.forEach(dist => {
-						if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
-							const br = document.createElement('div');
-							br.style.cssText = 'flex-basis:100%;height:0';
-							document.getElementById('flex-cases').appendChild(br);
-						}
-						const parts = ['flex', go];
-						if (from) parts.push(from);
-						parts.push(dist);
-						const cls = parts.join(' ');
-						let dir;
-						if (from === 'items-from-right') dir = 'flex-direction:row-reverse';
-						else if (from === 'items-from-bottom') dir = 'flex-direction:column-reverse';
-						else if (go === 'items-go-y') dir = 'flex-direction:column';
-						else dir = 'flex-direction:row';
-						const casesEl = document.getElementById('flex-cases');
-						const div = document.createElement('div');
-						div.className = 'case';
-						div.dataset.id = caseId;
-						let distE = distExpect(go, dist, false);
-						if (from) distE = flipExpectForFrom(distE, from);
-						// from-* 不交换语义，near-left 永远=视觉靠左
-						// flex-direction 属性由 dir 变量直接检查
-						div.dataset.expect = dir + ' ' + distE;
-						const count = 6;
-						const extraStyle = ' style="' + (go === 'items-go-y' ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px') + '"';
-						const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
-						const dotCls = '.' + cls.replace(/\s+/g, '.');
-						div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
-						+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
-						+ '<div class="container ' + cls + '"' + extraStyle + '>' + makeItemsVariant(count) + '</div><div class="actual"></div>';
-						casesEl.appendChild(div);
-						caseId++;
 					});
-						});
-		attachReference('flex-cases', '<div class="container flex" style="width:130px;min-height:200px;gap:0">' + makeItemsVariant(6) + '</div>');
-			})();
+					attachReference('flex-cases', '<div class="container flex" style="width:130px;min-height:200px;gap:0">' + makeItemsVariant(6) + '</div>');
+				})();
 			// ========== Grid 用例 ==========
 			document.write('<h2>Grid</h2><div id="cases" class="section"></div>');
 			// 1. Grid 无 go（默认 row）
@@ -793,9 +709,9 @@
 					const br = document.createElement('div');
 					br.style.cssText = 'flex-basis:100%;height:0';
 					document.getElementById('cases').appendChild(br);
-			}
+				}
 				const cls = 'grid ' + dist;
-				makeCase(cls, 4, 'grid-auto-flow:row ' + distExpect('items-go-x', dist, true), makeChineseLabel(cls, 'grid', 'items-go-x', null), true);
+				makeCase(cls, 4, 'grid-auto-flow:row ' + distExpect('items-go-x', dist, true), makeChineseLabel(cls, 'grid', 'items-go-x', null));
 			});
 			// 2-3. Grid 组合 (go-x, go-y)
 			['items-go-x', 'items-go-y'].forEach(go => {

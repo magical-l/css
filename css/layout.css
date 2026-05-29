@@ -112,6 +112,8 @@
 		&.items-space-around, &.items-unfamiliar { place-content: space-around; }
 	}
 	&.items-from-bottom {
+		&.items-near-left	{ justify-content: flex-start; justify-items: flex-start; align-content: flex-start; align-items: flex-start; }
+		&.items-near-right	{ justify-content: flex-start; justify-items: flex-start; align-content: flex-end; align-items: flex-end; }
 		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; justify-items: end; }
 		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; justify-items: start; }
 	}
