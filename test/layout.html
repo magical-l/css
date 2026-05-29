@@ -571,10 +571,10 @@
 				// stretch/center/space-*：CSS 属性值检查（当前屏幕尺寸下剩余空间不足以展现分布效果）
 				if (!y) {
 					const map = {
-						'items-x-stretch': 'justify-content:stretch justify-items:stretch',
+						'items-x-stretch': 'justify-content:stretch',
 						'items-y-stretch': 'align-content:stretch align-items:stretch',
 						'items-stretch': 'place-content:stretch place-items:stretch',
-						'items-x-near-center': 'justify-content:center justify-items:center',
+						'items-x-near-center': 'justify-content:center',
 						'items-y-near-center': 'align-content:center align-items:center',
 						'items-near-center': 'place-content:center place-items:center',
 						'items-x-space-between': 'justify-content:space-between',
@@ -592,7 +592,7 @@
 				// flex go-y: 轴交换后的属性值
 				const map = {
 					'items-x-stretch': 'align-content:stretch align-items:stretch',
-					'items-y-stretch': 'justify-content:stretch justify-items:stretch',
+					'items-y-stretch': 'justify-content:stretch',
 					'items-stretch': 'place-content:stretch place-items:stretch',
 					'items-x-near-center': 'align-content:center',
 					'items-y-near-center': 'justify-content:center',
@@ -795,16 +795,16 @@
 					expect,
 					label
 			}) => {
-					const el = document.getElementById('edge-cases');
-					const div = document.createElement('div');
-					div.className = 'case';
-					div.dataset.id = caseId;
-					div.dataset.expect = expect;
-					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
-					const dotCls = '.' + cls.replace(/\s+/g, '.');
-				div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>' + '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' + '<div class="container ' + cls + '" style="' + (cls.includes('items-go-y') ? 'flex-wrap:wrap;height:150px' : 'flex-wrap:wrap;width:130px;min-height:60px') + '">' + makeItemsVariant(4) + '</div><div class="actual"></div>';
-					el.appendChild(div);
-					caseId++;
+				const el = document.getElementById('edge-cases');
+				const div = document.createElement('div');
+				div.className = 'case';
+				div.dataset.id = caseId;
+				div.dataset.expect = expect;
+				const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
+				const dotCls = '.' + cls.replace(/\s+/g, '.');
+			div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>' + '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' + '<div class="container ' + cls + '" style="' + (cls.includes('items-go-y') ? 'flex-wrap:wrap;height:150px' : 'flex-wrap:wrap;width:130px;min-height:60px') + '">' + makeItemsVariant(4) + '</div><div class="actual"></div>';
+				el.appendChild(div);
+				caseId++;
 			});
 				verify();
 			}, 50);
