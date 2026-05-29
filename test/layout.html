@@ -512,7 +512,7 @@
 				document.getElementById('cases').appendChild(div);
 				caseId++;
 			}
-			function makeChineseLabel(cls, containerType, goClass, fromClass) {
+			function makeChineseLabel(cls, containerType, goClass, fromClass, defaultDir) {
 				const isY = goClass && goClass.includes('items-go-y');
 				const isGoX = goClass && goClass.includes('items-go-x');
 
@@ -520,7 +520,7 @@
 				const ct = containerType || '';
 
 				// 方向词
-				const dirWord = isY ? '竖排' : '横排';
+				const dirWord = defaultDir ? '横竖默认（=横排）' : (isY ? '竖排' : '横排');
 
 				// 箭头信息
 				const arrowMap = {
@@ -529,9 +529,8 @@
 					'items-from-top': '从上到下',
 					'items-from-bottom': '从下到上',
 			};
-				const arrow = arrowMap[fromClass] ||
-					(isGoX ? '从左到右' : '') ||
-					(isY ? '从上到下' : '');
+				const arrow = defaultDir ? '方向默认（=从左到右）' :
+					(arrowMap[fromClass] || (isGoX ? '从左到右' : '') || (isY ? '从上到下' : ''));
 
 				// 分布词
 				const parts = [];
@@ -635,7 +634,7 @@
 			}
 				return expect;
 			}
-			const allDists = ['items-near-left', 'items-near-right', 'items-near-top', 'items-near-bottom', 'items-x-stretch', 'items-y-stretch', 'items-stretch', 'items-x-near-center', 'items-y-near-center', 'items-near-center', 'items-x-space-between', 'items-y-space-between', 'items-space-between', 'items-x-space-evenly', 'items-y-space-evenly', 'items-space-evenly', 'items-x-space-around', 'items-y-space-around', 'items-space-around', ];
+			const allDists = ['items-near-left', 'items-near-right', 'items-near-top', 'items-near-bottom', 'items-x-near-center', 'items-y-near-center', 'items-near-center', 'items-x-space-between', 'items-y-space-between', 'items-space-between', 'items-x-space-evenly', 'items-y-space-evenly', 'items-space-evenly', 'items-x-space-around', 'items-y-space-around', 'items-space-around', 'items-x-stretch', 'items-y-stretch', 'items-stretch', ];
 
 			function attachReference(sectionId, refContent) {
 				const section = document.getElementById(sectionId);
@@ -674,21 +673,22 @@
 					div.dataset.expect = 'flex-direction:row ' + distExpect('items-go-x', dist, false);
 					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 					const dotCls = '.' + cls.replace(/\s+/g, '.');
-					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', 'items-go-x', null) + '</div>'
+					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', null, null, true) + '</div>'
 						+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 						+ '<div class="container ' + cls + '" style="flex-wrap:wrap;width:130px;min-height:200px">' + makeItemsVariant(6) + '</div><div class="actual"></div>';
 					casesEl.appendChild(div);
 					caseId++;
 			});
-							// 2-5. Flex 组合 (go-x, go-x+from-right, go-y, go-y+from-bottom)
+							// 2-6. Flex 组合 (go-x, go-x+from-left, go-x+from-right, go-y, go-y+from-bottom)
 				const flexCombos = [
 					['items-go-x', null],
+					['items-go-x', 'items-from-left'],
 					['items-go-x', 'items-from-right'],
 					['items-go-y', null],
 					['items-go-y', 'items-from-bottom'],
 				];
 				// go-x
-				flexCombos.slice(0, 2).forEach(([go, from]) => {
+				flexCombos.slice(0, 3).forEach(([go, from]) => {
 					allDists.forEach(dist => {
 						if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
 							const br = document.createElement('div');
@@ -747,7 +747,7 @@
 					caseId++;
 				});
 				// go-y
-				flexCombos.slice(2, 4).forEach(([go, from]) => {
+				flexCombos.slice(3, 5).forEach(([go, from]) => {
 					allDists.forEach(dist => {
 						if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
 							const br = document.createElement('div');
@@ -783,7 +783,7 @@
 						caseId++;
 					});
 						});
-		attachReference('flex-cases', '<div class="container" style="width:130px;min-height:200px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;place-items:start">' + makeItemsVariant(6) + '</div>');
+		attachReference('flex-cases', '<div class="container flex" style="width:130px;min-height:200px;gap:0">' + makeItemsVariant(6) + '</div>');
 			})();
 			// ========== Grid 用例 ==========
 			document.write('<h2>Grid</h2><div id="cases" class="section"></div>');
