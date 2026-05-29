@@ -136,9 +136,11 @@
 
 
 		.container.flex {
-			width: 280px;
-			min-height: 200px;
 			gap: 0;
+		}
+		.container.flex.test-container {
+			width: 200px;
+			height: 200px;
 		}
 
 		.container.flex .item {
@@ -666,7 +668,7 @@
 						['items-go-y', 'items-from-right'],
 						['items-go-y', 'items-from-top'],
 						['items-go-y', 'items-from-bottom'],
-					];					flexCombos.forEach(([go, from]) => {
+					];				flexCombos.forEach(([go, from]) => {
 						allDists.forEach(dist => {
 							if (dist === 'items-near-left' || dist === 'items-x-stretch' || dist === 'items-x-near-center' || dist === 'items-x-space-between' || dist === 'items-x-space-evenly' || dist === 'items-x-space-around') {
 								const br = document.createElement('div');
@@ -677,7 +679,7 @@
 							if (from) parts.push(from);
 							parts.push(dist);
 							const cls = parts.join(' ');
-							const effDir = from === 'items-from-bottom' ? 'column-reverse' : from === 'items-from-top' ? 'column' : from === 'items-from-right' ? 'row-reverse' : go === 'items-go-y' ? 'column' : 'row';
+							const effDir = from === 'items-from-bottom' ? 'column-reverse' : from === 'items-from-top' ? 'column' : from === 'items-from-right' ? 'row-reverse' : from === 'items-from-left' ? 'row' : go === 'items-go-y' ? 'column' : 'row';
 							const dir = 'flex-direction:' + effDir;
 							const effGo = (go === 'items-go-y' || from === 'items-from-top') ? 'items-go-y' : null;
 							const casesEl = document.getElementById('flex-cases');
@@ -688,18 +690,16 @@
 							if (from) distE = flipExpectForFrom(distE, from);
 							div.dataset.expect = dir + ' ' + distE;
 							const count = 6;
-							const isCol = effDir === 'column' || effDir === 'column-reverse';
-							const extraStyle = isCol ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px';
-														const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
+							const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 							const dotCls = '.' + cls.replace(/\s+/g, '.');
 							div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
 							+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
-							+ '<div class="container ' + cls + '" style="' + extraStyle + '">' + makeItemsVariant(count) + '</div><div class="actual"></div>';
+							+ '<div class="container test-container ' + cls + '">' + makeItemsVariant(count) + '</div><div class="actual"></div>';
 							casesEl.appendChild(div);
 							caseId++;
 						});
 					});
-					attachReference('flex-cases', '<div class="container flex" style="width:130px;min-height:200px;gap:0">' + makeItemsVariant(6) + '</div>');
+					attachReference('flex-cases', '<div class="container flex test-container">' + makeItemsVariant(6) + '</div>');
 				})();
 			// ========== Grid 用例 ==========
 			document.write('<h2>Grid</h2><div id="cases" class="section"></div>');

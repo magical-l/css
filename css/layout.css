@@ -117,6 +117,15 @@
 		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; justify-items: end; }
 		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; justify-items: start; }
 	}
+	/* go-y + from-left/from-right：修正轴映射（from 方向覆盖了 go-y 的 column） */
+	&.items-go-y.items-from-left {
+		&.items-near-right	{ justify-content: flex-end; justify-items: end; }
+		&.items-near-bottom	{ align-content: flex-end; align-items: flex-end; }
+	}
+	&.items-go-y.items-from-right {
+		&.items-near-left	{ justify-content: flex-end; justify-items: end; }
+		&.items-near-bottom	{ align-content: flex-end; align-items: flex-end; }
+	}
 
 	/* ------ 贪婪：要求占满一行 ------ */
 	> .monopoly-x, &:is(.items-go-y, .items-from-top) > .monopoly-y { flex-basis: 100%; }
@@ -389,7 +398,7 @@
 	.near-y-center	{ align-self: flex-start;	 justify-self: center; }
 
 	.table.items-from-right {
-		writing-mode: vertical-rl; direction: ltr;
+		writing-mode: vertical-lr; direction: ltr;
 		& td, & th { writing-mode: vertical-lr; direction: ltr; }
 	}
 }
