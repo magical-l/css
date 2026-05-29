@@ -83,37 +83,37 @@
 	/* ------------ 竖排：需覆盖一些规则 ------------ */
 	&.items-go-y, &.items-from-top {
 		/* ------ 确保子元素靠向上/下/左/右/中 ------ */
-		/* unset的是为了避免困惑 */
-		&.items-near-left	{ justify-content: unset; justify-items: unset; align-content: flex-start; align-items: flex-start; }
-		&.items-near-right	{ justify-content: unset; justify-items: unset; align-content: flex-end; align-items: flex-end; }
-		&.items-near-top	{ align-content: unset; align-items: unset; justify-content: flex-start; justify-items: start; }
-		&.items-near-bottom	{ align-content: unset; align-items: unset; justify-content: flex-end; justify-items: end; }
-		&.items-x-near-center { justify-content: unset; justify-items: unset; align-content: center; }
-		&.items-y-near-center { align-content: unset; align-items: unset; justify-content: center; }
+		/* flex-start的是为了避免困惑 */
+		&.items-near-left	{ justify-content: flex-start; justify-items: flex-start; align-content: flex-start; align-items: flex-start; }
+		&.items-near-right	{ justify-content: flex-start; justify-items: flex-start; align-content: flex-end; align-items: flex-end; }
+		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; justify-items: start; }
+		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; justify-items: end; }
+		&.items-x-near-center { justify-content: flex-start; justify-items: flex-start; align-content: center; }
+		&.items-y-near-center { align-content: flex-start; align-items: flex-start; justify-content: center; }
 		&.items-near-center	 { place-content: center; place-items: center; }
 		/* ------ 确保子元素组都靠向左/右 ------ */
 		&.groups-near-left	{ align-content: flex-start; }
 		&.groups-near-right	{ align-content: flex-end; }
 		/* ------ 确保在横向/竖向上子元素拉伸 ------ */
-		&.items-x-stretch { justify-content: unset; justify-items: unset; align-content: stretch; align-items: stretch; }
-		&.items-y-stretch { align-content: unset; align-items: unset; justify-content: stretch; justify-items: stretch; }
+		&.items-x-stretch { justify-content: flex-start; justify-items: flex-start; align-content: stretch; align-items: stretch; }
+		&.items-y-stretch { align-content: flex-start; align-items: flex-start; justify-content: stretch; justify-items: stretch; }
 		&.items-stretch	 { place-content: stretch; place-items: stretch; }
 		/* ------ 确保在横向/竖向上子元素离得远远的（空隙居中/元素互斥/元素社恐） ------ */
-		&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia { justify-content: unset; justify-items: unset; align-content: space-between; }
-		&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia { align-content: unset; align-items: unset; justify-content: space-between; }
+		&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia { justify-content: flex-start; justify-items: flex-start; align-content: space-between; }
+		&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia { align-content: flex-start; align-items: flex-start; justify-content: space-between; }
 		&.items-space-between, &.items-mutex, &.items-social-phobia { place-content: space-between; }
 		/* ------ 确保在横向/竖向上子元素离得比较近（空隙均分/元素友好：元素外侧、元素之间均分空隙） ------ */
-		&.items-x-space-evenly, &.items-x-friendly { justify-content: unset; justify-items: unset; align-content: space-evenly; }
-		&.items-y-space-evenly, &.items-y-friendly { align-content: unset; align-items: unset; justify-content: space-evenly; }
+		&.items-x-space-evenly, &.items-x-friendly { justify-content: flex-start; justify-items: flex-start; align-content: space-evenly; }
+		&.items-y-space-evenly, &.items-y-friendly { align-content: flex-start; align-items: flex-start; justify-content: space-evenly; }
 		&.items-space-evenly, &.items-friendly { place-content: space-evenly; }
 		/* ------ 确保在横向/竖向上子元素离得稍远（空隙环绕/元素不熟：均分空隙，元素两侧各带一份，所以元素之间占双份） ------ */
-		&.items-x-space-around, &.items-x-unfamiliar { justify-content: unset; justify-items: unset; align-content: space-around; }
-		&.items-y-space-around, &.items-y-unfamiliar { align-content: unset; align-items: unset; justify-content: space-around; }
+		&.items-x-space-around, &.items-x-unfamiliar { justify-content: flex-start; justify-items: flex-start; align-content: space-around; }
+		&.items-y-space-around, &.items-y-unfamiliar { align-content: flex-start; align-items: flex-start; justify-content: space-around; }
 		&.items-space-around, &.items-unfamiliar { place-content: space-around; }
 	}
 	&.items-from-bottom {
-		&.items-near-top	{ align-content: unset; align-items: unset; justify-content: flex-end; justify-items: end; }
-		&.items-near-bottom	{ align-content: unset; align-items: unset; justify-content: flex-start; justify-items: start; }
+		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; justify-items: end; }
+		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; justify-items: start; }
 	}
 
 	/* ------ 贪婪：要求占满一行 ------ */
@@ -146,12 +146,12 @@
 .near-center { margin: auto; place-self: center; vertical-align: middle; inset: 0; }
 
 .items-go-y {
-	> .near-left	{ justify-self: unset; align-self: start; }
-	> .near-right	{ justify-self: unset; align-self: end; }
-	> .near-top		{ align-self: unset; justify-self: start; }
-	> .near-bottom	{ align-self: unset; justify-self: end; }
-	> .near-x-center	{ justify-self: unset; align-self: center; }
-	> .near-y-center	{ align-self: unset; justify-self: center; }
+	> .near-left	{ justify-self: flex-start; align-self: start; }
+	> .near-right	{ justify-self: flex-start; align-self: end; }
+	> .near-top		{ align-self: flex-start; justify-self: start; }
+	> .near-bottom	{ align-self: flex-start; justify-self: end; }
+	> .near-x-center	{ justify-self: flex-start; align-self: center; }
+	> .near-y-center	{ align-self: flex-start; justify-self: center; }
 }
 
 /* ======================== Grid 修饰 ======================== */
@@ -210,12 +210,12 @@
 		&.items-y-space-around, &.items-y-unfamiliar { align-content: space-around; }
 		&.items-space-around, &.items-unfamiliar { place-content: space-around; }
 
-		> .near-left			{ justify-self: unset; align-self: end; }
-		> .near-right		 { justify-self: unset; align-self: start; }
-		> .near-top			 { align-self: unset;	 justify-self: start; }
-		> .near-bottom		{ align-self: unset;	 justify-self: end; }
-		> .near-x-center	{ justify-self: unset; align-self: center; }
-		> .near-y-center	{ align-self: unset;	 justify-self: center; }
+		> .near-left			{ justify-self: flex-start; align-self: end; }
+		> .near-right		 { justify-self: flex-start; align-self: start; }
+		> .near-top			 { align-self: flex-start;	 justify-self: start; }
+		> .near-bottom		{ align-self: flex-start;	 justify-self: end; }
+		> .near-x-center	{ justify-self: flex-start; align-self: center; }
+		> .near-y-center	{ align-self: flex-start;	 justify-self: center; }
 	}
 
 	&.items-go-x.items-from-right {
@@ -326,12 +326,12 @@
 		}
 	}
 
-	.near-left			{ justify-self: unset; align-self: end; }
-	.near-right		 { justify-self: unset; align-self: start; }
-	.near-top			 { align-self: unset;	 justify-self: start; }
-	.near-bottom		{ align-self: unset;	 justify-self: end; }
-	.near-x-center	{ justify-self: unset; align-self: center; }
-	.near-y-center	{ align-self: unset;	 justify-self: center; }
+	.near-left			{ justify-self: flex-start; align-self: end; }
+	.near-right		 { justify-self: flex-start; align-self: start; }
+	.near-top			 { align-self: flex-start;	 justify-self: start; }
+	.near-bottom		{ align-self: flex-start;	 justify-self: end; }
+	.near-x-center	{ justify-self: flex-start; align-self: center; }
+	.near-y-center	{ align-self: flex-start;	 justify-self: center; }
 
 	.table.items-from-right {
 		& td, & th { writing-mode: vertical-rl; direction: ltr; }
@@ -379,12 +379,12 @@
 		}
 	}
 
-	.near-left			{ justify-self: unset; align-self: start; }
-	.near-right		 { justify-self: unset; align-self: end; }
-	.near-top			 { align-self: unset;	 justify-self: start; }
-	.near-bottom		{ align-self: unset;	 justify-self: end; }
-	.near-x-center	{ justify-self: unset; align-self: center; }
-	.near-y-center	{ align-self: unset;	 justify-self: center; }
+	.near-left			{ justify-self: flex-start; align-self: start; }
+	.near-right		 { justify-self: flex-start; align-self: end; }
+	.near-top			 { align-self: flex-start;	 justify-self: start; }
+	.near-bottom		{ align-self: flex-start;	 justify-self: end; }
+	.near-x-center	{ justify-self: flex-start; align-self: center; }
+	.near-y-center	{ align-self: flex-start;	 justify-self: center; }
 
 	.table.items-from-right {
 		writing-mode: vertical-rl; direction: ltr;
