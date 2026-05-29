@@ -88,7 +88,7 @@
 		&.items-near-right	{ justify-content: flex-start; justify-items: flex-start; align-content: flex-end; align-items: flex-end; }
 		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; justify-items: start; }
 		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; justify-items: end; }
-		&.items-x-near-center { justify-content: flex-start; justify-items: flex-start; align-content: center; }
+		&.items-x-near-center { justify-content: flex-start; justify-items: flex-start; align-content: center; align-items: center; }
 		&.items-y-near-center { align-content: flex-start; align-items: flex-start; justify-content: center; }
 		&.items-near-center	 { place-content: center; place-items: center; }
 		/* ------ 确保子元素组都靠向左/右 ------ */

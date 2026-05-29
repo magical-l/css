@@ -132,6 +132,8 @@
 
 		}
 
+		:where(.container.grid) { place-items: start; }
+
 
 		.container.flex {
 			width: 280px;
@@ -505,8 +507,8 @@
 			div.dataset.expect = expect;
 			const clsSplit = containerClass.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 			const dotCls = '.' + containerClass.replace(/\s+/g, '.');
-			div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>' 
-					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + containerClass + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' 
+			div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + containerClass + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 					+ '<div class="container ' + containerClass + '">' + (gridItems ? makeItemsGrid(itemCount) : makeItemsVariant(itemCount)) + '</div><div class="actual"></div>';
 			document.getElementById('cases').appendChild(div);
 			caseId++;
@@ -673,8 +675,8 @@
 				div.dataset.expect = 'flex-direction:row ' + distExpect('items-go-x', dist, false);
 				const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 				const dotCls = '.' + cls.replace(/\s+/g, '.');
-				div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', 'items-go-x', null) + '</div>' 
-					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' 
+				div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', 'items-go-x', null) + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 					+ '<div class="container ' + cls + '" style="flex-wrap:wrap;width:130px;min-height:200px">' + makeItemsVariant(6) + '</div><div class="actual"></div>';
 				casesEl.appendChild(div);
 				caseId++;
@@ -716,8 +718,8 @@
 					const extraStyle = ' style="' + (go === 'items-go-y' ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px') + '"';
 					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 					const dotCls = '.' + cls.replace(/\s+/g, '.');
-					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>' 
-					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' 
+					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 					+ '<div class="container ' + cls + '"' + extraStyle + '>' + makeItemsVariant(count) + '</div><div class="actual"></div>';
 					casesEl.appendChild(div);
 					caseId++;
@@ -739,8 +741,8 @@
 				div.dataset.expect = 'flex-direction:column ' + distE;
 				const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 				const dotCls = '.' + cls.replace(/\s+/g, '.');
-				div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', null, null) + '</div>' 
-					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' 
+				div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', null, null) + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 					+ '<div class="container ' + cls + '" style="flex-wrap:wrap;height:130px">' + makeItemsVariant(6) + '</div><div class="actual"></div>';
 				casesEl.appendChild(div);
 				caseId++;
@@ -775,14 +777,14 @@
 					const extraStyle = ' style="' + (go === 'items-go-y' ? 'flex-wrap:wrap;height:130px' : 'flex-wrap:wrap;width:130px;min-height:200px') + '"';
 					const clsSplit = cls.split(' ').map(c => '<span class="cls-line">' + c + '</span>').join('');
 					const dotCls = '.' + cls.replace(/\s+/g, '.');
-					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>' 
-					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>' 
+					div.innerHTML = '<div class="label">' + caseId + '. ' + makeChineseLabel(cls, 'flex', go, from) + '</div>'
+					+ '<div class="classes"><span class="cls-names">' + clsSplit + '</span><span class="cls-btns"><button class="copy-btn" data-copy="' + cls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制DOM类名</button><button class="copy-btn" data-copy="' + dotCls + '" onclick="navigator.clipboard.writeText(this.dataset.copy)">复制CSS选择器</button></span></div>'
 					+ '<div class="container ' + cls + '"' + extraStyle + '>' + makeItemsVariant(count) + '</div><div class="actual"></div>';
 					casesEl.appendChild(div);
 					caseId++;
 				});
 					});
-attachReference('flex-cases', '<div class="container" style="width:280px;min-height:200px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;padding:4px;place-items:start">' + makeItemsVariant(6) + '</div>');
+	attachReference('flex-cases', '<div class="container" style="width:280px;min-height:200px;display:flex;flex-wrap:wrap;align-items:flex-start;gap:0;padding:4px;place-items:start">' + makeItemsVariant(6) + '</div>');
 		})();
 		// ========== Grid 用例 ==========
 		document.write('<h2>Grid</h2><div id="cases" class="section"></div>');
