@@ -681,7 +681,7 @@
 							const cls = parts.join(' ');
 							const effDir = from === 'items-from-bottom' ? 'column-reverse' : from === 'items-from-top' ? 'column' : from === 'items-from-right' ? 'row-reverse' : from === 'items-from-left' ? 'row' : go === 'items-go-y' ? 'column' : 'row';
 							const dir = 'flex-direction:' + effDir;
-							const effGo = (go === 'items-go-y' || from === 'items-from-top') ? 'items-go-y' : null;
+							const effGo = (go === 'items-go-y' || from === 'items-from-top' || from === 'items-from-bottom') ? 'items-go-y' : null;
 							const casesEl = document.getElementById('flex-cases');
 							const div = document.createElement('div');
 							div.className = 'case';

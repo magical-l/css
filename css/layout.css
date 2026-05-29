@@ -26,13 +26,14 @@
 .grid.inline { display: inline-grid; }
 
 .items-single-line { flex-wrap: nowrap; }
-.items-no-gap			{ gap: 0; }
+
+.items-no-gap { gap: 0; }
 
 /* ================== flex大组 ================== */
 .flex {
 	/* ------ 确保横排/竖排 ------ */
 	&.items-go-x { flex-direction: row; }
-	&.items-go-y { flex-direction: column; }
+	&.items-go-y, .items-from-top { flex-direction: column; }
 	/* ------ 确保子元素从上/下/左/右开始排布 ------ */
 	&.items-from-left	{ flex-direction: row; }
 	&.items-from-right	{ flex-direction: row-reverse; }
@@ -47,28 +48,28 @@
 	&.items-y-near-center	{ align-content: center; align-items: center; }
 	&.items-near-center		{ place-content: center; place-items: center; }
 	/* ------ 确保子元素组都靠向上/下 ------ */
-	&.groups-near-top	{ align-content: flex-start; }
-	&.groups-near-bottom { align-content: flex-end; }
+	&.groups-near-top		{ align-content: flex-start; }
+	&.groups-near-bottom 	{ align-content: flex-end; }
 	/* ------ 确保在横向/竖向上子元素拉伸 ------ */
-	&.items-x-stretch { justify-content: stretch; }
-	&.items-y-stretch { align-content: stretch; align-items: stretch; }
-	&.items-stretch	 { place-content: stretch; place-items: stretch; }
+	&.items-x-stretch	{ justify-content: stretch; }
+	&.items-y-stretch	{ align-content: stretch; align-items: stretch; }
+	&.items-stretch		{ place-content: stretch; place-items: stretch; }
 	/* 配套：flex容器在主轴方向不能拉伸，需要靠子元素自己拉伸 */
-	&:not(.items-go-y, .items-from-top).items-x-stretch > *,
-	&.items-go-y.items-y-stretch > *, &.items-from-top.items-y-stretch > *,
+	&:not(.items-go-y, .items-from-top, .items-from-bottom).items-x-stretch > *,
+	&.items-go-y.items-y-stretch > *, &.items-from-top.items-y-stretch > *, &.items-from-bottom.items-y-stretch > *,
 	&.items-stretch > * { flex: 1; }
 	/* ------ 确保在横向/竖向上子元素离得远远的（空隙居中/元素互斥/元素社恐） ------ */
-	&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia { justify-content: space-between; }
-	&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia { align-content: space-between; }
-	&.items-space-between, &.items-mutex, &.items-social-phobia { place-content: space-between; }
+	&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia	{ justify-content: space-between; }
+	&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia	{ align-content: space-between; }
+	&.items-space-between, &.items-mutex, &.items-social-phobia			{ place-content: space-between; }
 	/* ------ 确保在横向/竖向上子元素离得比较近（空隙均分/元素友好：元素外侧、元素之间均分空隙） ------ */
-	&.items-x-space-evenly, &.items-x-friendly { justify-content: space-evenly; }
-	&.items-y-space-evenly, &.items-y-friendly { align-content: space-evenly; }
-	&.items-space-evenly, &.items-friendly { place-content: space-evenly; }
+	&.items-x-space-evenly, &.items-x-friendly	{ justify-content: space-evenly; }
+	&.items-y-space-evenly, &.items-y-friendly	{ align-content: space-evenly; }
+	&.items-space-evenly, &.items-friendly		{ place-content: space-evenly; }
 	/* ------ 确保在横向/竖向上子元素离得稍远（空隙环绕/元素不熟：均分空隙，元素两侧各带一份，所以元素之间占双份） ------ */
-	&.items-x-space-around, &.items-x-unfamiliar { justify-content: space-around; }
-	&.items-y-space-around, &.items-y-unfamiliar { align-content: space-around; }
-	&.items-space-around, &.items-unfamiliar { place-content: space-around; }
+	&.items-x-space-around, &.items-x-unfamiliar	{ justify-content: space-around; }
+	&.items-y-space-around, &.items-y-unfamiliar	{ align-content: space-around; }
+	&.items-space-around, &.items-unfamiliar		{ place-content: space-around; }
 
 	/* from-right 语义修复：row-reverse 下 justify-content 反向 */
 	&.items-from-right {
@@ -77,35 +78,35 @@
 	}
 
 	/* ------------ 竖排：需覆盖一些规则 ------------ */
-	&.items-go-y, &.items-from-top {
+	&.items-go-y, &.items-from-top, &.items-from-bottom {
 		/* ------ 确保子元素靠向上/下/左/右/中 ------ */
 		/* flex-start的是为了避免困惑 */
 		&.items-near-left	{ justify-content: flex-start; align-content: flex-start; align-items: flex-start; }
 		&.items-near-right	{ justify-content: flex-start; align-content: flex-end; align-items: flex-end; }
 		&.items-near-top	{ align-content: flex-start; align-items: flex-start; justify-content: flex-start; }
 		&.items-near-bottom	{ align-content: flex-start; align-items: flex-start; justify-content: flex-end; }
-		&.items-x-near-center { justify-content: flex-start; align-content: center; align-items: center; }
-		&.items-y-near-center { align-content: flex-start; align-items: flex-start; justify-content: center; }
-		&.items-near-center	 { place-content: center; place-items: center; }
+		&.items-x-near-center	{ justify-content: flex-start; align-content: center; align-items: center; }
+		&.items-y-near-center	{ align-content: flex-start; align-items: flex-start; justify-content: center; }
+		&.items-near-center		{ place-content: center; place-items: center; }
 		/* ------ 确保子元素组都靠向左/右 ------ */
 		&.groups-near-left	{ align-content: flex-start; }
 		&.groups-near-right	{ align-content: flex-end; }
 		/* ------ 确保在横向/竖向上子元素拉伸 ------ */
-		&.items-x-stretch { justify-content: flex-start; align-content: stretch; align-items: stretch; }
-		&.items-y-stretch { align-content: flex-start; align-items: flex-start; justify-content: stretch; }
-		&.items-stretch	 { place-content: stretch; place-items: stretch; }
+		&.items-x-stretch	{ justify-content: flex-start; align-content: stretch; align-items: stretch; }
+		&.items-y-stretch	{ align-content: flex-start; align-items: flex-start; justify-content: stretch; }
+		&.items-stretch		{ place-content: stretch; place-items: stretch; }
 		/* ------ 确保在横向/竖向上子元素离得远远的（空隙居中/元素互斥/元素社恐） ------ */
 		&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia { justify-content: flex-start; align-content: space-between; }
 		&.items-y-space-between, &.items-y-mutex, &.items-y-social-phobia { align-content: flex-start; align-items: flex-start; justify-content: space-between; }
 		&.items-space-between, &.items-mutex, &.items-social-phobia { place-content: space-between; }
 		/* ------ 确保在横向/竖向上子元素离得比较近（空隙均分/元素友好：元素外侧、元素之间均分空隙） ------ */
-		&.items-x-space-evenly, &.items-x-friendly { justify-content: flex-start; align-content: space-evenly; }
-		&.items-y-space-evenly, &.items-y-friendly { align-content: flex-start; align-items: flex-start; justify-content: space-evenly; }
-		&.items-space-evenly, &.items-friendly { place-content: space-evenly; }
+		&.items-x-space-evenly, &.items-x-friendly	{ justify-content: flex-start; align-content: space-evenly; }
+		&.items-y-space-evenly, &.items-y-friendly	{ align-content: flex-start; align-items: flex-start; justify-content: space-evenly; }
+		&.items-space-evenly, &.items-friendly		{ place-content: space-evenly; }
 		/* ------ 确保在横向/竖向上子元素离得稍远（空隙环绕/元素不熟：均分空隙，元素两侧各带一份，所以元素之间占双份） ------ */
-		&.items-x-space-around, &.items-x-unfamiliar { justify-content: flex-start; align-content: space-around; }
-		&.items-y-space-around, &.items-y-unfamiliar { align-content: flex-start; align-items: flex-start; justify-content: space-around; }
-		&.items-space-around, &.items-unfamiliar { place-content: space-around; }
+		&.items-x-space-around, &.items-x-unfamiliar	{ justify-content: flex-start; align-content: space-around; }
+		&.items-y-space-around, &.items-y-unfamiliar	{ align-content: flex-start; align-items: flex-start; justify-content: space-around; }
+		&.items-space-around, &.items-unfamiliar		{ place-content: space-around; }
 	}
 	&.items-from-bottom {
 		&.items-near-left	{ justify-content: flex-start; align-content: flex-start; align-items: flex-start; }
@@ -124,7 +125,7 @@
 	}
 
 	/* ------ 贪婪：要求占满一行 ------ */
-	> .monopoly-x, &:is(.items-go-y, .items-from-top) > .monopoly-y { flex-basis: 100%; }
+	> .monopoly-x, &:is(.items-go-y, .items-from-top, .items-from-bottom) > .monopoly-y { flex-basis: 100%; }
 
 	/* ------ 吝啬：不压缩 ------ */
 	& .no-shrink { flex-shrink: 0; }
@@ -152,7 +153,7 @@
 .near-y-center { margin-top: auto; margin-bottom: auto; align-self: center; vertical-align: middle; top: 0; bottom: 0; }
 .near-center { margin: auto; place-self: center; vertical-align: middle; inset: 0; }
 
-.items-go-y {
+.items-go-y, .items-from-top, .items-from-bottom {
 	> .near-left	{ justify-self: flex-start; align-self: start; }
 	> .near-right	{ justify-self: flex-start; align-self: end; }
 	> .near-top		{ align-self: flex-start; justify-self: start; }
@@ -164,7 +165,7 @@
 /* ======================== Grid 修饰 ======================== */
 .grid {
 	&.items-go-x { grid-auto-flow: row; }
-	&.items-go-y { grid-auto-flow: column; }
+	&.items-go-y, &.items-from-top { grid-auto-flow: column; }
 
 	&.items-near-left	{ justify-content: flex-start; justify-items: start; }
 	&.items-near-right	{ justify-content: flex-end;	 justify-items: end; }
@@ -262,7 +263,7 @@
 		&.items-near-right { justify-content: flex-start; }
 		> .near-left	{ justify-self: end; }
 		> .near-right { justify-self: start; }
-		&.items-go-y {
+		&.items-go-y, &.items-from-top, &.items-from-bottom {
 			&.items-near-left	{ align-content: flex-end; align-items: flex-end; }
 			&.items-near-right { align-content: flex-start; align-items: flex-start; }
 			> .near-left	{ align-self: end; }
