@@ -182,8 +182,8 @@
 	&.items-y-space-around, &.items-y-unfamiliar { align-content: space-around; }
 	&.items-space-around, &.items-unfamiliar { place-content: space-around; }
 
-	.one-row		{ grid-column: 1 / -1; }
-	.one-column { grid-row: 1 / -1; }
+	& .one-row		{ grid-column: 1 / -1; }
+	& .one-column { grid-row: 1 / -1; }
 
 	/* 反向流（默认 Z 模式） */
 	&.items-go-y.items-from-bottom {
@@ -229,14 +229,14 @@
 
 /* ======================== Table 修饰 ======================== */
 .table {
-	&.items-near-left	{ td, th { text-align: left; } }
-	&.items-near-right { td, th { text-align: right; } }
-	&.items-near-top	 { td, th { vertical-align: top; } }
-	&.items-near-bottom{ td, th { vertical-align: bottom; } }
+	&.items-near-left	{ & td, & th { text-align: left; } }
+	&.items-near-right { & td, & th { text-align: right; } }
+	&.items-near-top	 { & td, & th { vertical-align: top; } }
+	&.items-near-bottom{ & td, & th { vertical-align: bottom; } }
 
 	&.items-from-right {
 		direction: rtl;
-		td, th { direction: ltr; }
+		& td, & th { direction: ltr; }
 	}
 }
 
@@ -247,8 +247,8 @@
 .content-И { writing-mode: vertical-lr;	 direction: ltr; }
 
 /* RTL（S 模式 / 系统 RTL） */
-:dir(rtl) {
-	.flex {
+:dir(rtl), .content-S {
+	&.flex {
 		&.items-from-left	{ flex-direction: row-reverse; }
 		&.items-from-right { flex-direction: row; }
 		&.items-near-left	{ justify-content: flex-end; justify-items: end; }
@@ -256,12 +256,14 @@
 		> .near-left	{ justify-self: end; }
 		> .near-right { justify-self: start; }
 		&.items-go-y {
+			&.items-near-left	{ align-content: flex-end; align-items: flex-end; }
+			&.items-near-right { align-content: flex-start; align-items: flex-start; }
 			> .near-left	{ align-self: end; }
 			> .near-right { align-self: start; }
 		}
 	}
 
-	.grid {
+	&.grid {
 		&.items-near-left	{ justify-content: flex-end; justify-items: end; }
 		&.items-near-right { justify-content: flex-start; justify-items: start; }
 		> .near-left	{ justify-self: end; }
@@ -275,18 +277,18 @@
 		}
 	}
 
-	.table {
-		&.items-near-left	{ td, th { text-align: right; } }
-		&.items-near-right { td, th { text-align: left; } }
+	&.table {
+		&.items-near-left	{ & td, & th { text-align: right; } }
+		&.items-near-right { & td, & th { text-align: left; } }
 		&.items-from-right {
-			td, th { direction: rtl; }
+			& td, & th { direction: rtl; }
 		}
 	}
 }
 
 /* N 模式（竖排 vertical-rl） */
 .content-N {
-	.flex {
+	&.flex {
 		&.items-go-x {
 			&.items-from-left	{ flex-direction: column-reverse; }
 			&.items-from-right { flex-direction: column; }
@@ -297,7 +299,7 @@
 		}
 	}
 
-	.grid {
+	&.grid {
 		&.items-near-top		{ justify-content: flex-start; justify-items: start; }
 		&.items-near-bottom { justify-content: flex-end;	 justify-items: end; }
 		&.items-near-left	 { align-content: flex-end;	 align-items: flex-end; }
@@ -332,13 +334,13 @@
 	.near-y-center	{ align-self: unset;	 justify-self: center; }
 
 	.table.items-from-right {
-		td, th { writing-mode: vertical-rl; direction: ltr; }
+		& td, & th { writing-mode: vertical-rl; direction: ltr; }
 	}
 }
 
 /* И 模式（竖排 vertical-lr） */
 .content-И {
-	.flex {
+	&.flex {
 		&.items-go-x {
 			&.items-from-left	{ flex-direction: column; }
 			&.items-from-right { flex-direction: column-reverse; }
@@ -349,7 +351,7 @@
 		}
 	}
 
-	.grid {
+	&.grid {
 		&.items-near-top		{ justify-content: flex-start; justify-items: start; }
 		&.items-near-bottom { justify-content: flex-end;	 justify-items: end; }
 		&.items-near-left	 { align-content: flex-start; align-items: flex-start; }
@@ -386,7 +388,7 @@
 
 	.table.items-from-right {
 		writing-mode: vertical-rl; direction: ltr;
-		td, th { writing-mode: vertical-lr; direction: ltr; }
+		& td, & th { writing-mode: vertical-lr; direction: ltr; }
 	}
 }
 
@@ -528,5 +530,4 @@
 	> footer, > .footer, > .near-bottom {
 		grid-area: footer;
 	}
-	> main, > .main, > .body { grid-area: main; }
 }

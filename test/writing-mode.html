@@ -108,8 +108,8 @@
 		}
 
 		.container.flex {
-			width: 200px;
-			min-height: 90px;
+			width: 260px;
+			min-height: 200px;
 			gap: 0;
 		}
 
@@ -181,85 +181,88 @@
 		];
 		// ========== 期望值映射 ==========
 		// content-Z: 同 layout.html
-		function baseDistExpect(go, dist) {
+		function baseDistExpect(go, dist, isGrid) {
+			if (isGrid) go = 'items-go-x';
 			const y = go === 'items-go-y';
 			const map = {
-				'items-near-left': y ? 'align-content:start align-items:start' : 'justify-content:start justify-items:start',
-				'items-near-right': y ? 'align-content:end align-items:end' : 'justify-content:end justify-items:end',
-				'items-near-top': y ? 'justify-content:start justify-items:start' : 'align-content:start align-items:start',
-				'items-near-bottom': y ? 'justify-content:end justify-items:end' : 'align-content:end align-items:end',
+				'items-near-left': y ? 'align-content:flex-start align-items:flex-start' : 'justify-content:flex-start justify-items:start',
+				'items-near-right': y ? 'align-content:flex-end align-items:flex-end' : 'justify-content:flex-end justify-items:end',
+				'items-near-top': y ? 'justify-content:flex-start justify-items:start' : 'align-content:flex-start align-items:flex-start',
+				'items-near-bottom': y ? 'justify-content:flex-end justify-items:end' : 'align-content:flex-end align-items:flex-end',
 				'items-x-stretch': y ? 'align-content:stretch align-items:stretch' : 'justify-content:stretch justify-items:stretch',
 				'items-y-stretch': y ? 'justify-content:stretch justify-items:stretch' : 'align-content:stretch align-items:stretch',
-				'items-stretch': 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
+				'items-stretch': y ? 'place-content:stretch place-items:stretch' : 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
 				'items-x-near-center': y ? 'align-content:center' : 'justify-content:center justify-items:center',
 				'items-y-near-center': y ? 'justify-content:center' : 'align-content:center align-items:center',
-				'items-near-center': 'justify-content:center align-content:center justify-items:center align-items:center',
+				'items-near-center': y ? 'place-content:center place-items:center' : 'justify-content:center align-content:center justify-items:center align-items:center',
 				'items-x-space-between': y ? 'align-content:space-between' : 'justify-content:space-between',
 				'items-y-space-between': y ? 'justify-content:space-between' : 'align-content:space-between',
-				'items-space-between': 'justify-content:space-between align-content:space-between',
+				'items-space-between': y ? 'place-content:space-between' : 'justify-content:space-between align-content:space-between',
 				'items-x-space-evenly': y ? 'align-content:space-evenly' : 'justify-content:space-evenly',
 				'items-y-space-evenly': y ? 'justify-content:space-evenly' : 'align-content:space-evenly',
-				'items-space-evenly': 'justify-content:space-evenly align-content:space-evenly',
+				'items-space-evenly': y ? 'place-content:space-evenly' : 'justify-content:space-evenly align-content:space-evenly',
 				'items-x-space-around': y ? 'align-content:space-around' : 'justify-content:space-around',
 				'items-y-space-around': y ? 'justify-content:space-around' : 'align-content:space-around',
-				'items-space-around': 'justify-content:space-around align-content:space-around',
+				'items-space-around': y ? 'place-content:space-around' : 'justify-content:space-around align-content:space-around',
 			};
 			return map[dist] || '';
 		}
-		// content-S 的 near-left/right 翻转仅对 grid 生效（&.grid, & .grid 内），且不翻转 go-y 下的 align-*
-		// 对于 grid 容器，在调用处单独处理
-		function sDistExpect(go, dist) {
-			return baseDistExpect(go, dist);
+		// content-S: near-left/right 翻转（RTL，与 grid/flex 无关）
+		function sDistExpect(go, dist, isGrid) {
+			const rtlDist = dist === 'items-near-left' ? 'items-near-right' : dist === 'items-near-right' ? 'items-near-left' : dist;
+			return baseDistExpect(go, rtlDist, isGrid);
 		}
 		// content-N (vertical-rl): 竖排轴交换
-		function nDistExpect(go, dist) {
+		function nDistExpect(go, dist, isGrid) {
+			if (isGrid) go = 'items-go-x';
 			const y = go === 'items-go-y';
 			const map = {
-				'items-near-left': 'align-content:end align-items:end',
-				'items-near-right': 'align-content:start align-items:start',
-				'items-near-top': y ? 'align-content:start align-items:start' : 'justify-content:start justify-items:start',
-				'items-near-bottom': y ? 'align-content:end align-items:end' : 'justify-content:end justify-items:end',
-				'items-x-stretch': y ? 'justify-content:stretch justify-items:stretch' : 'align-content:stretch align-items:stretch',
-				'items-y-stretch': y ? 'align-content:stretch align-items:stretch' : 'justify-content:stretch justify-items:stretch',
-				'items-stretch': 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
-				'items-x-near-center': y ? 'justify-content:center' : 'align-content:center',
-				'items-y-near-center': y ? 'align-content:center' : 'justify-content:center',
-				'items-near-center': 'justify-content:center align-content:center justify-items:center align-items:center',
-				'items-x-space-between': y ? 'justify-content:space-between' : 'align-content:space-between',
-				'items-y-space-between': y ? 'align-content:space-between' : 'justify-content:space-between',
-				'items-space-between': 'justify-content:space-between align-content:space-between',
-				'items-x-space-evenly': y ? 'justify-content:space-evenly' : 'align-content:space-evenly',
-				'items-y-space-evenly': y ? 'align-content:space-evenly' : 'justify-content:space-evenly',
-				'items-space-evenly': 'justify-content:space-evenly align-content:space-evenly',
-				'items-x-space-around': y ? 'justify-content:space-around' : 'align-content:space-around',
-				'items-y-space-around': y ? 'align-content:space-around' : 'justify-content:space-around',
-				'items-space-around': 'justify-content:space-around align-content:space-around',
+				'items-near-left': 'align-content:flex-end align-items:flex-end',
+				'items-near-right': 'align-content:flex-start align-items:flex-start',
+				'items-near-top': y ? 'justify-content:flex-start justify-items:start' : 'justify-content:flex-start justify-items:start',
+				'items-near-bottom': y ? 'justify-content:flex-end justify-items:end' : 'justify-content:flex-end justify-items:end',
+				'items-x-stretch': y ? 'align-content:stretch align-items:stretch' : 'align-content:stretch align-items:stretch',
+				'items-y-stretch': y ? 'justify-content:stretch justify-items:stretch' : 'justify-content:stretch justify-items:stretch',
+				'items-stretch': y ? 'place-content:stretch place-items:stretch' : 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
+				'items-x-near-center': y ? 'align-content:center' : 'align-content:center',
+				'items-y-near-center': y ? 'justify-content:center' : 'justify-content:center',
+				'items-near-center': y ? 'place-content:center place-items:center' : 'justify-content:center align-content:center justify-items:center align-items:center',
+				'items-x-space-between': y ? 'align-content:space-between' : 'align-content:space-between',
+				'items-y-space-between': y ? 'justify-content:space-between' : 'justify-content:space-between',
+				'items-space-between': y ? 'place-content:space-between' : 'justify-content:space-between align-content:space-between',
+				'items-x-space-evenly': y ? 'align-content:space-evenly' : 'align-content:space-evenly',
+				'items-y-space-evenly': y ? 'justify-content:space-evenly' : 'justify-content:space-evenly',
+				'items-space-evenly': y ? 'place-content:space-evenly' : 'justify-content:space-evenly align-content:space-evenly',
+				'items-x-space-around': y ? 'align-content:space-around' : 'align-content:space-around',
+				'items-y-space-around': y ? 'justify-content:space-around' : 'justify-content:space-around',
+				'items-space-around': y ? 'place-content:space-around' : 'justify-content:space-around align-content:space-around',
 			};
 			return map[dist] || '';
 		}
 		// content-И (vertical-lr): 同 N 但 left/right 方向相反
-		function iDistExpect(go, dist) {
+		function iDistExpect(go, dist, isGrid) {
+			if (isGrid) go = 'items-go-x';
 			const y = go === 'items-go-y';
 			const map = {
-				'items-near-left': y ? 'justify-content:start justify-items:start' : 'align-content:start align-items:start',
-				'items-near-right': y ? 'justify-content:end justify-items:end' : 'align-content:end align-items:end',
-				'items-near-top': y ? 'align-content:start align-items:start' : 'justify-content:start justify-items:start',
-				'items-near-bottom': y ? 'align-content:end align-items:end' : 'justify-content:end justify-items:end',
-				'items-x-stretch': y ? 'justify-content:stretch justify-items:stretch' : 'align-content:stretch align-items:stretch',
-				'items-y-stretch': y ? 'align-content:stretch align-items:stretch' : 'justify-content:stretch justify-items:stretch',
-				'items-stretch': 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
-				'items-x-near-center': y ? 'justify-content:center' : 'align-content:center',
-				'items-y-near-center': y ? 'align-content:center' : 'justify-content:center',
-				'items-near-center': 'justify-content:center align-content:center justify-items:center align-items:center',
-				'items-x-space-between': y ? 'justify-content:space-between' : 'align-content:space-between',
-				'items-y-space-between': y ? 'align-content:space-between' : 'justify-content:space-between',
-				'items-space-between': 'justify-content:space-between align-content:space-between',
-				'items-x-space-evenly': y ? 'justify-content:space-evenly' : 'align-content:space-evenly',
-				'items-y-space-evenly': y ? 'align-content:space-evenly' : 'justify-content:space-evenly',
-				'items-space-evenly': 'justify-content:space-evenly align-content:space-evenly',
-				'items-x-space-around': y ? 'justify-content:space-around' : 'align-content:space-around',
-				'items-y-space-around': y ? 'align-content:space-around' : 'justify-content:space-around',
-				'items-space-around': 'justify-content:space-around align-content:space-around',
+				'items-near-left': y ? 'align-content:flex-start align-items:flex-start' : 'align-content:flex-start align-items:flex-start',
+				'items-near-right': y ? 'align-content:flex-end align-items:flex-end' : 'align-content:flex-end align-items:flex-end',
+				'items-near-top': y ? 'justify-content:flex-start justify-items:start' : 'justify-content:flex-start justify-items:start',
+				'items-near-bottom': y ? 'justify-content:flex-end justify-items:end' : 'justify-content:flex-end justify-items:end',
+				'items-x-stretch': y ? 'align-content:stretch align-items:stretch' : 'align-content:stretch align-items:stretch',
+				'items-y-stretch': y ? 'justify-content:stretch justify-items:stretch' : 'justify-content:stretch justify-items:stretch',
+				'items-stretch': y ? 'place-content:stretch place-items:stretch' : 'justify-content:stretch align-content:stretch justify-items:stretch align-items:stretch',
+				'items-x-near-center': y ? 'align-content:center' : 'align-content:center',
+				'items-y-near-center': y ? 'justify-content:center' : 'justify-content:center',
+				'items-near-center': y ? 'place-content:center place-items:center' : 'justify-content:center align-content:center justify-items:center align-items:center',
+				'items-x-space-between': y ? 'align-content:space-between' : 'align-content:space-between',
+				'items-y-space-between': y ? 'justify-content:space-between' : 'justify-content:space-between',
+				'items-space-between': y ? 'place-content:space-between' : 'justify-content:space-between align-content:space-between',
+				'items-x-space-evenly': y ? 'align-content:space-evenly' : 'align-content:space-evenly',
+				'items-y-space-evenly': y ? 'justify-content:space-evenly' : 'justify-content:space-evenly',
+				'items-space-evenly': y ? 'place-content:space-evenly' : 'justify-content:space-evenly align-content:space-evenly',
+				'items-x-space-around': y ? 'align-content:space-around' : 'align-content:space-around',
+				'items-y-space-around': y ? 'justify-content:space-around' : 'justify-content:space-around',
+				'items-space-around': y ? 'place-content:space-around' : 'justify-content:space-around align-content:space-around',
 			};
 			return map[dist] || '';
 		}
@@ -286,15 +289,56 @@
 			return go === 'items-go-y' ? 'flex-direction:column' : 'flex-direction:row';
 		}
 		// ========== 生成函数 ==========
-		function appendCase(container, parentId, cls, itemCount, expect, label) {
+		function makeItemsVariant(n) {
+			const wSizes = [35, 55, 40, 50, 45, 60];
+			const hSizes = [25, 40, 30, 35, 28, 45];
+			let s = '';
+			for (let i = 0; i < n; i++) {
+				const w = wSizes[i % wSizes.length];
+				const h = hSizes[i % hSizes.length];
+				s += '<div class="item" style="min-width:' + w + 'px;min-height:' + h + 'px">' + (i + 1) + '</div>';
+			}
+			return s;
+		}
+
+		function appendCase(container, parentId, cls, itemCount, expect, label, inlineStyle) {
 			const div = document.createElement('div');
 			div.className = 'case';
 			div.dataset.id = caseId;
 			div.dataset.expect = expect;
-			div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>' + '<div class="classes">' + cls + '</div>' + '<div class="container ' + cls + '">' + Array(itemCount).fill('<div class="item">X</div>').join('') + '</div><div class="actual"></div>';
+			const styleAttr = inlineStyle ? ' style="' + inlineStyle + '"' : '';
+			div.innerHTML = '<div class="label">' + caseId + '. ' + label + '</div>' + '<div class="classes">' + cls + '</div>' + '<div class="container ' + cls + '"' + styleAttr + '>' + makeItemsVariant(itemCount) + '</div><div class="actual"></div>';
 			document.getElementById(parentId).appendChild(div);
 			caseId++;
 		}
+		// ========== 中文标签 ==========
+			function makeChineseLabel(cls) {
+				const words = cls.split(' ');
+				const parts = [];
+				for (const w of words) {
+					const map = {
+						'grid': 'grid', 'flex': 'flex',
+						'items-go-x': '横向', 'items-go-y': '纵向',
+						'items-from-left': '从左', 'items-from-right': '从右',
+						'items-from-top': '从上', 'items-from-bottom': '从下',
+						'items-near-left': '靠左', 'items-near-right': '靠右',
+						'items-near-top': '靠上', 'items-near-bottom': '靠下',
+						'items-x-stretch': '横拉伸', 'items-y-stretch': '竖拉伸', 'items-stretch': '双向拉伸',
+						'items-x-near-center': '横居中', 'items-y-near-center': '竖居中', 'items-near-center': '居中',
+						'items-x-space-between': '横互斥', 'items-y-space-between': '竖互斥', 'items-space-between': '互斥',
+						'items-x-mutex': '横互斥', 'items-y-mutex': '竖互斥', 'items-mutex': '互斥',
+						'items-x-social-phobia': '横互斥', 'items-y-social-phobia': '竖互斥', 'items-social-phobia': '互斥',
+						'items-x-space-evenly': '横友好', 'items-y-space-evenly': '竖友好', 'items-space-evenly': '友好',
+						'items-x-friendly': '横友好', 'items-y-friendly': '竖友好', 'items-friendly': '友好',
+						'items-x-space-around': '横不熟', 'items-y-space-around': '竖不熟', 'items-space-around': '不熟',
+						'items-x-unfamiliar': '横不熟', 'items-y-unfamiliar': '竖不熟', 'items-unfamiliar': '不熟',
+						'content-Z': 'Z', 'content-S': 'S', 'content-N': 'N', 'content-И': 'И',
+					};
+					const ch = map[w];
+					if (ch && !parts.includes(ch)) parts.push(ch);
+				}
+				return parts.join(' ');
+			}
 		// ========== 遍历 4 种书写模式 ==========
 		['Z', 'S', 'N', 'И'].forEach(mode => {
 			const modeClass = 'content-' + mode;
@@ -310,19 +354,15 @@
 				allDists.forEach(dist => {
 					const cls = ['grid', modeClass, go, dist].join(' ');
 					const flow = gridFlowStr(go, mode);
-					let distE = getDist(go, dist);
-					if (mode === 'S' && go === 'items-go-x' && dist === 'items-near-left') distE = 'justify-content:end justify-items:end';
-					if (mode === 'S' && go === 'items-go-x' && dist === 'items-near-right') distE = 'justify-content:start justify-items:start';
-					appendCase(null, parentId, cls, 4, flow + ' ' + distE, cls);
+					let distE = getDist(go, dist, true);
+					appendCase(null, parentId, cls, 4, flow + ' ' + distE, makeChineseLabel(cls));
 				});
 			});
 			// Grid 无 go
 			allDists.forEach(dist => {
 				const cls = ['grid', modeClass, dist].join(' ');
-				let distE = getDist('items-go-x', dist);
-				if (mode === 'S' && dist === 'items-near-left') distE = 'justify-content:end justify-items:end';
-				if (mode === 'S' && dist === 'items-near-right') distE = 'justify-content:start justify-items:start';
-				appendCase(null, parentId, cls, 4, 'grid-auto-flow:row ' + distE, cls);
+				let distE = getDist('items-go-x', dist, true);
+				appendCase(null, parentId, cls, 4, 'grid-auto-flow:row ' + distE, makeChineseLabel(cls));
 			});
 			// Flex combos
 			flexCombos.forEach(([go, from]) => {
@@ -332,23 +372,23 @@
 					parts.push(dist);
 					const cls = parts.join(' ');
 					let dir = flexDirStr(go, from, mode);
-					let distE = baseDistExpect(go, dist);
+					let distE = mode === 'S' ? sDistExpect(go, dist, false) : baseDistExpect(go, dist);
 					// from-* 反转：对所有书写模式生效
 					if (from === 'items-from-right') {
-						if (dist === 'items-near-left') distE = 'justify-content:end justify-items:end';
-						if (dist === 'items-near-right') distE = 'justify-content:start justify-items:start';
+						if (dist === 'items-near-left') distE = 'justify-content:flex-end justify-items:end';
+						if (dist === 'items-near-right') distE = 'justify-content:flex-start justify-items:start';
 					}
 					if (from === 'items-from-bottom') {
-						if (dist === 'items-near-top') distE = 'justify-content:end justify-items:end';
-						if (dist === 'items-near-bottom') distE = 'justify-content:start justify-items:start';
+						if (dist === 'items-near-top') distE = 'justify-content:flex-end justify-items:end';
+						if (dist === 'items-near-bottom') distE = 'justify-content:flex-start justify-items:start';
 					}
-					appendCase(null, parentId, cls, 3, dir + ' ' + distE, cls);
+					appendCase(null, parentId, cls, 3, dir + ' ' + distE, makeChineseLabel(cls), go === 'items-go-y' ? 'min-height:220px' : 'min-height:180px');
 				});
 			});
 			// Flex 无 go
 			allDists.forEach(dist => {
 				const cls = ['flex', modeClass, dist].join(' ');
-				appendCase(null, parentId, cls, 3, 'flex-direction:row ' + baseDistExpect('items-go-x', dist), cls);
+				appendCase(null, parentId, cls, 3, 'flex-direction:row ' + (mode === 'S' ? sDistExpect('items-go-x', dist, false) : baseDistExpect('items-go-x', dist)), makeChineseLabel(cls), 'min-height:180px');
 			});
 		});
 		window.addEventListener('DOMContentLoaded', () => setTimeout(verify, 200));
