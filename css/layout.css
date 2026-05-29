@@ -33,7 +33,7 @@
 .flex {
 	/* ------ 确保横排/竖排 ------ */
 	&.items-go-x { flex-direction: row; }
-	&.items-go-y, .items-from-top { flex-direction: column; }
+	&.items-go-y { flex-direction: column; }
 	/* ------ 确保子元素从上/下/左/右开始排布 ------ */
 	&.items-from-left	{ flex-direction: row; }
 	&.items-from-right	{ flex-direction: row-reverse; }
@@ -56,7 +56,7 @@
 	&.items-stretch		{ place-content: stretch; place-items: stretch; }
 	/* 配套：flex容器在主轴方向不能拉伸，需要靠子元素自己拉伸 */
 	&:not(.items-go-y, .items-from-top, .items-from-bottom).items-x-stretch > *,
-	&.items-go-y.items-y-stretch > *, &.items-from-top.items-y-stretch > *, &.items-from-bottom.items-y-stretch > *,
+	&:is(.items-go-y, .items-from-top, .items-from-bottom).items-y-stretch > *,
 	&.items-stretch > * { flex: 1; }
 	/* ------ 确保在横向/竖向上子元素离得远远的（空隙居中/元素互斥/元素社恐） ------ */
 	&.items-x-space-between, &.items-x-mutex, &.items-x-social-phobia	{ justify-content: space-between; }
