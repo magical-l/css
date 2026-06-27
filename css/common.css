@@ -187,26 +187,6 @@ li:nth-child(odd) {
 	cursor: default;
 }
 /* ============ 按钮 ============ */
-.btn-group {
-	/* 横排：首项左圆角，末项右圆角 */
-	&.flex.items-go-x {
-		> :first-child {
-			border-radius: var(--btn-group-radius) 0 0 var(--btn-group-radius);
-		}
-		> :last-child {
-			border-radius: 0 var(--btn-group-radius) var(--btn-group-radius) 0;
-		}
-	}
-	/* 竖排：首项上圆角，末项下圆角 */
-	&.flex.items-go-y {
-		> :first-child {
-			border-radius: var(--btn-group-radius) var(--btn-group-radius) 0 0;
-		}
-		> :last-child {
-			border-radius: 0 0 var(--btn-group-radius) var(--btn-group-radius);
-		}
-	}
-}
 button, .btn {
 	--hover-bg: var(--accent-light);
 	--hover-border: var(--accent-primary);
@@ -276,6 +256,102 @@ button, .btn {
 		--btn-color: var(--danger);
 	}
 }
+
+.btn-group {
+	/* 横排：首项左圆角，末项右圆角 */
+	&.flex.items-go-x {
+		> :first-child {
+			border-radius: var(--btn-group-radius) 0 0 var(--btn-group-radius);
+		}
+		> :last-child {
+			border-radius: 0 var(--btn-group-radius) var(--btn-group-radius) 0;
+		}
+	}
+	/* 竖排：首项上圆角，末项下圆角 */
+	&.flex.items-go-y {
+		> :first-child {
+			border-radius: var(--btn-group-radius) var(--btn-group-radius) 0 0;
+		}
+		> :last-child {
+			border-radius: 0 0 var(--btn-group-radius) var(--btn-group-radius);
+		}
+	}
+}
+/* 分裂式按钮组：主按钮较大，次按钮较小，次按钮弹出一个弹层 */
+.split.btn-group {
+	position: relative;
+
+	& .main.btn {
+		order: 0;
+	}
+
+	&.items-go-x {
+		&.items-from-left {
+			& .secondary.btn {
+				/* 小按钮位置 */
+				&.near-left { order: -1; }
+				&.near-right { order: 1; }
+			}
+		}
+		&.items-from-right {
+			& .secondary.btn {
+				/* 小按钮位置 */
+				&.near-left { order: 1; }
+				&.near-right { order: -1; }
+			}
+		}
+	}
+	&.items-go-y {
+		&.items-from-top {
+			& .secondary.btn {
+				/* 小按钮位置 */
+				&.near-top { order: -1; }
+				&.near-bottom { order: 1; }
+			}
+		}
+		&.items-from-bottom {
+			& .secondary.btn {
+				/* 小按钮位置 */
+				&.near-top { order: 1; }
+				&.near-bottom { order: -1; }
+			}
+		}
+	}
+
+	& .popup {
+		position: absolute;
+		z-index: var(--popup-z);
+	}
+
+	&.open {
+		& .popup {
+			/* 弹层出现位置 */
+			&.at-outside-top {
+				left: 50%; translate: -50% 0;
+			}
+			&.at-outside-bottom {
+				left: 50%; translate: -50% 0;
+			}
+			&.at-outside-left {
+				top: 50%; translate: 0 -50%;
+			}
+			&.at-outside-right {
+				top: 50%; translate: 0 -50%;
+			}
+			&.at-outside-top.near-left      { left: auto; right: 0; translate: none; }
+			&.at-outside-top.near-right     { left: 0; right: auto; translate: none; }
+			&.at-outside-bottom.near-left   { left: auto; right: 0; translate: none; }
+			&.at-outside-bottom.near-right  { left: 0; right: auto; translate: none; }
+		}
+	}
+	&:not(.open) {
+		& .popup {
+			/* 非.open状态隐藏弹层 */
+			display: none !important;/* important防止.popup可能有其他display，比如flex之类 */
+		}
+	}
+}
+
 /* ============ 表单 ============ */
 /* 有必填项未填的表单加红框 */
 form:has(input:invalid:not(:placeholder-shown)) {
@@ -477,4 +553,5 @@ dialog {
 	--btn-group-radius: 6px;
 	--divider-size: 6px;
 	--divider-z: 15;
+	--popup-z: 100;
 }
