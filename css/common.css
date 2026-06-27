@@ -324,6 +324,24 @@ textarea {
 		&::before{content:'⋮⋮'}
 	}
 }
+/* 可拖拽分割条 */
+.divider {
+	background: var(--border-subtle);
+	flex-shrink: 0;
+	position: relative;
+	z-index: var(--divider-z);
+
+	&:hover { background: var(--accent-primary); }
+
+	&.row {
+		height: var(--divider-size);
+		cursor: row-resize;
+	}
+	&.col {
+		width: var(--divider-size);
+		cursor: col-resize;
+	}
+}
 
 /* ================== 内容：子元素、文本、图像…… ================== */
 /* ============ 文本 ============ */
@@ -457,4 +475,6 @@ dialog {
 	--side-len: 24px;
 	--dialog-close-size: 28px;
 	--btn-group-radius: 6px;
+	--divider-size: 6px;
+	--divider-z: 15;
 }
