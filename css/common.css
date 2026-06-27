@@ -2,6 +2,8 @@
 
 *, *::before, *::after {
 	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 html {
@@ -145,7 +147,44 @@ template, .template, .hidden, [v-cloak], .js.container {display: none !important
 	&.y {resize: vertical;}
 }
 
-.scrollable {overflow: auto; min-height: 0; min-width: 0;}
+/* 滚动容器 */
+.scrollable {
+	/* 针对Y轴 */
+	&.on-y {
+		/* 针对y轴无条件滚动：一直显示滚动条 */
+		overflow-y: scroll;
+		min-height: 0;
+		/* 当内容长时才滚动：滚动条自动隐藏/显现 */
+		&.when-content-long {
+			overflow-y: auto;
+			scrollbar-gutter: stable;/* 滚动条空间：预留 */
+			/* 空间对称：滚动条空间默认只在滚动条一侧，会导致页面一边有预留空隙一边没有。对称则把两侧都留出空隙（无滚动条的一侧的空隙不会出现滚动条） */
+			&.space-symmetrical {
+				scrollbar-gutter: stable both-edges;
+			}
+		}
+	}
+	/* 针对X轴 */
+	&.on-x {
+		/* 针对x轴无条件滚动：一直显示滚动条 */
+		overflow-x: scroll;
+		min-width: 0;
+		/* 当内容长时才滚动：滚动条自动隐藏/显现 */
+		&.when-content-long {
+			overflow-x: auto;
+		}
+	}
+	/* 未指定针对x/y轴：逻辑=双轴都要滚动条 */
+	&:not(.on-x, .on-y) {
+		overflow: scroll;
+		min-height: 0;
+		min-width: 0;
+		/* 当内容长时才滚动：滚动条自动隐藏/显现 */
+		&.when-content-long {
+			overflow: auto;
+		}
+	}
+}
 
 /* 铺满视口（position: fixed），用于弹层内全屏遮罩、撒花等 */
 .fullscreen {
