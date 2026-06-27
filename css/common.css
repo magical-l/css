@@ -68,6 +68,7 @@ textarea {
 	border: 1px solid #DDD;
 	border-radius: 4px;
 	resize: vertical;
+	flex: 1;
 }
 
 button {
@@ -84,9 +85,14 @@ svg {
 	stroke-linecap: round;
 	stroke-linejoin: round;
 }
+
 /* 有必填项未填的表单加红框 */
 form:has(input:invalid:not(:placeholder-shown)) {
 	border: 2px solid #f56c6c;
+}
+
+dialog[open] {
+	margin: auto;/* 默认居中。覆盖*{margin:0} */
 }
 
 /* ======================== 一些工具类 ======================== */
