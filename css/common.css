@@ -23,6 +23,20 @@ html {
 	/* ------ 解决macOS上字体的锯齿感 ------ */
 	-webkit-font-smoothing: antialiased;/* 不同浏览器字体渲染差异 */
 	-moz-osx-font-smoothing: grayscale;/* 不同浏览器字体渲染差异 */
+
+	/* 薄滚动条：加在<html>上启用，改薄页内所有滚动条 */
+	&.thin-scrollbar {
+		&::-webkit-scrollbar, & ::-webkit-scrollbar {
+			width: var(--scrollbar-width);
+		}
+		&::-webkit-scrollbar-thumb, & ::-webkit-scrollbar-thumb {
+			background: var(--border-default);
+			border-radius: var(--scrollbar-radius);
+		}
+		&::-webkit-scrollbar-thumb:hover, & ::-webkit-scrollbar-thumb:hover {
+			background: var(--border-strong);
+		}
+	}
 }
 body {
 	max-inline-size: 100%;/* 最大宽/高（取决于书写模式）不超过容器宽/高 */
@@ -40,6 +54,17 @@ body {
 	image-rendering: optimize-contrast; /*高清图片渲染*/
 	touch-action: manipulation; /*移动端点击延迟问题：立即响应触摸事件*/
 }
+
+/* 旋转动画，表示等待中 */
+.spin {
+	animation: spin 1s linear infinite;
+	display: inline-block;
+}
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
 /* ================== 对外：元素在页面/容器中的位置和可见性，影响和其他元素的关系
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
@@ -397,6 +422,10 @@ i.icon {
 	--odd-row-bg: #f5f7fa;
 	--border-color: #DDD;
 	--border-radius-sm: 4px;
+	--border-default: #D1D5DB;
+	--border-strong: #9CA3AF;
+	--scrollbar-width: 5px;
+	--scrollbar-radius: 3px;
 	/* 交互 */
 	--transition-duration: 0.3s;
 	--error-border: #f56c6c;
