@@ -90,9 +90,8 @@ template, .template, .hidden, [v-cloak], .js.container{display:none !important}
 /* ============ 形状 ============ */
 /* 方形 */
 .square {
-	--side: 24px;
-	width: var(--side);
-	height: var(--side);
+	width: var(--side-len);
+	height: var(--side-len);
 	/* aspect-ratio兜底，避免w/h中的一个被意外变为unset从而破坏方形 */
 	aspect-ratio: 1;
 }
@@ -116,13 +115,6 @@ li:nth-child(odd) {
 	display: flex;
 	flex-direction: column;
 	list-style: none;
-	padding: 0.5rem;
-	margin: 0;
-
-	> header {
-		font-weight: 600;
-		margin-bottom: 0.5rem;
-	}
 }
 
 /* ====== 滚动 ====== */
@@ -178,19 +170,19 @@ li:nth-child(odd) {
 	/* 横排：首项左圆角，末项右圆角 */
 	&.flex.items-go-x {
 		> :first-child {
-			border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+			border-radius: var(--btn-group-radius) 0 0 var(--btn-group-radius);
 		}
 		> :last-child {
-			border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+			border-radius: 0 var(--btn-group-radius) var(--btn-group-radius) 0;
 		}
 	} 
 	/* 竖排：首项上圆角，末项下圆角 */
 	&.flex.items-go-y {
 		> :first-child {
-			border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+			border-radius: var(--btn-group-radius) var(--btn-group-radius) 0 0;
 		}
 		> :last-child {
-			border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+			border-radius: 0 0 var(--btn-group-radius) var(--btn-group-radius);
 		}
 	}
 }
@@ -240,9 +232,11 @@ textarea {
 /* 拖拽把手，通常是⋮⋮ */
 .drag.handle {
 	cursor: grab;
-	align-items: center;
-	flex-shrink: 0;
 	&:active { cursor: grabbing; }
+	/* 若元素里没有安排文本，就用::before给一个默认的 */
+	&:empty {
+		&::before { content: '⋮⋮'; }
+	}
 }
 
 /* ================== 内容：子元素、文本、图像…… ================== */
@@ -303,7 +297,7 @@ i.icon {
 	display: none;/* 默认隐藏，成功时才显现 */
 	color: var(--success);
 	font-weight: 600;
-	/* 若元素里没有安排文本，就用::before给一个默认的✓ */
+	/* 若元素里没有安排文本，就用::before给一个默认的 */
 	&:empty {
 		&::before { content: '✓'; }
 	}
@@ -326,7 +320,6 @@ i.icon {
 }
 
 /* ============================== 选择 ============================== */
-
 :root {
 	--top-z: 9999;
 	--modal-z: 1010;
@@ -349,8 +342,9 @@ i.icon {
 	/* 强调 */
 	--strong-color: red;
 	--success: #059669;
-	--radius-sm: 6px;
 	--bg-active: #E5E7EB;
 	--text-primary: #111827;
 	--textarea-padding: 10px;
+	--side-len: 24px;
+	--btn-group-radius: 6px;
 }
