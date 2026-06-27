@@ -393,6 +393,15 @@ i.icon {
 }
 
 /* ======================== 复合组件 ======================== */
+dialog {
+	&::backdrop {
+		background: var(--modal-overlay-color);
+	}
+	/* 如果有header且header有方形关闭按钮 */
+	> header .close.btn.square {
+		--side-len: var(--dialog-close-size);
+	}
+}
 /* ================== 模态遮罩 ================== */
 .modal {
 	--modal-overlay-color: rgba(0,0,0,0.5);
@@ -446,5 +455,6 @@ i.icon {
 	--danger: #DC2626;
 	--danger-light: rgba(220, 38, 38, 0.15);
 	--side-len: 24px;
+	--dialog-close-size: 28px;
 	--btn-group-radius: 6px;
 }
