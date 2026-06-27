@@ -44,7 +44,7 @@ body {
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
 /* ============ 显隐 ============ */
-template, .template, .hidden, [v-cloak], .js.container{display:none !important}
+template, .template, .hidden, [v-cloak], .js.container, .no-see{display:none !important}
 
 /* 视觉隐藏（仍可被读屏访问，用于无障碍时隐藏控件） */
 .invisible {
@@ -58,6 +58,8 @@ template, .template, .hidden, [v-cloak], .js.container{display:none !important}
 	border: 0;
 	opacity: 0 !important;
 	pointer-events: none;
+	outline: none;
+	box-shadow: none;
 }
 /* ============ 位置 ============ */
 /* 最高层级（盖在所有元素之上） */
@@ -111,7 +113,7 @@ li:nth-child(odd) {
  */
 /* ============ 布局 ============ */
 /* 列表容器 */
-:where(:not(ol, ul)).list {/* 本身用ol/ul的，随它去 */
+.list:where(:not(ol, ul)) {/* 本身用ol/ul的，随它去 */
 	display: flex;
 	flex-direction: column;
 	list-style: none;
@@ -130,9 +132,7 @@ li:nth-child(odd) {
 			overflow-y: auto;
 			scrollbar-gutter: stable;/* 滚动条空间：预留 */
 			/* 空间对称：滚动条空间默认只在滚动条一侧，会导致页面一边有预留空隙一边没有。对称则把两侧都留出空隙（无滚动条的一侧的空隙不会出现滚动条） */
-			&.space-symmetrical {
-				scrollbar-gutter: stable both-edges;
-			}
+			&.space-symmetrical{scrollbar-gutter: stable both-edges}
 		}
 	}
 	/* 针对X轴 */
@@ -141,9 +141,7 @@ li:nth-child(odd) {
 		overflow-x: scroll;
 		min-width: 0;
 		/* 当内容长时才滚动：滚动条自动隐藏/显现 */
-		&.when-content-long {
-			overflow-x: auto;
-		}
+		&.when-content-long{overflow-x: auto}
 	}
 	/* 未指定针对x/y轴：逻辑=双轴都要滚动条 */
 	&:not(.on-x, .on-y) {
@@ -151,13 +149,11 @@ li:nth-child(odd) {
 		min-height: 0;
 		min-width: 0;
 		/* 当内容长时才滚动：滚动条自动隐藏/显现 */
-		&.when-content-long {
-			overflow: auto;
-		}
+		&.when-content-long{overflow: auto}
 	}
 }
 /* 禁止该元素内部滚动（overflow: hidden）；加在 body 上可避免整页出现滚动条 */
-.no-scroll { overflow: hidden; }
+.no-scroll{overflow: hidden}
 
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
@@ -175,7 +171,7 @@ li:nth-child(odd) {
 		> :last-child {
 			border-radius: 0 var(--btn-group-radius) var(--btn-group-radius) 0;
 		}
-	} 
+	}
 	/* 竖排：首项上圆角，末项下圆角 */
 	&.flex.items-go-y {
 		> :first-child {
@@ -232,10 +228,10 @@ textarea {
 /* 拖拽把手，通常是⋮⋮ */
 .drag.handle {
 	cursor: grab;
-	&:active { cursor: grabbing; }
+	&:active{cursor:grabbing}
 	/* 若元素里没有安排文本，就用::before给一个默认的 */
 	&:empty {
-		&::before { content: '⋮⋮'; }
+		&::before{content:'⋮⋮'}
 	}
 }
 
