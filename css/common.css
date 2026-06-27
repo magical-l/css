@@ -6,7 +6,6 @@
 	/* 默认计算元素尺寸是以内容为盒模型边界。但以边框（border-box）作为盒模型边界更贴合人类直觉。 */
 	box-sizing: border-box;
 }
-
 html {
 	--pi: 3.14159265359;
 	--sqrt2: 1.41421356237;
@@ -15,51 +14,37 @@ html {
 
 	margin: 0;
 	padding: 0;
-	/*跳转至锚点时平滑滚动，而非突然跳走*/
+	/* 跳转至锚点时平滑滚动，而非突然跳走 */
 	scroll-behavior: smooth;
-	/*iOS 横屏字体放大问题：保持字体尺寸稳定*/
-	text-size-adjust: 100%;
+	/* 解决iOS横屏字体放大问题 */
+	text-size-adjust: 100%;/* 保持字体尺寸稳定 */
 	/* ------ 安全策略 ------ */
 	block-size: unset; /* 防止某些浏览器怪异模式 */
-
-	/* macOS 上字体锯齿感
-		不同浏览器字体渲染差异
-	*/
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+	/* ------ 解决macOS上字体的锯齿感 ------ */
+	-webkit-font-smoothing: antialiased;/* 不同浏览器字体渲染差异 */
+	-moz-osx-font-smoothing: grayscale;/* 不同浏览器字体渲染差异 */
 }
-
-:root {
-	--top-z: 9999;
-	--modal-z: 1010;
-	--dangerous-color: #D32F2F;
-	--correct-color: #4CAF50;
-	--incorrect-color: #F05C6A;
-	--half-correct-color: #FF9800;
-}
-
 body {
-	max-inline-size: 100%;
+	max-inline-size: 100%;/* 最大宽/高（取决于书写模式）不超过容器宽/高 */
 	min-height: 100vh; /* 确保布局撑满视口高度 */
 	margin: 0;
 	padding: 0;
 
-	background-color: #F5F5F5;
+	background-color: var(--body-bg);
 
-	line-height: 1.6; /*1.6是可读性最佳行高*/
-	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	line-height: var(--body-line-height); /*1.6是可读性最佳行高*/
+	font-family: var(--body-font);
 	text-rendering: optimizeLegibility; /*精细字体细节*/
 	overflow-wrap: break-word; /*允许在单词内换行（避免溢出）*/
 	hyphens: auto; /*自动添加连字符（西文）*/
 	image-rendering: optimize-contrast; /*高清图片渲染*/
-
 	touch-action: manipulation; /*移动端点击延迟问题：立即响应触摸事件*/
 }
 /* ================== 对外：元素在页面/容器中的位置和可见性，影响和其他元素的关系
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
 /* ============ 显隐 ============ */
-template, .template, .hidden, [v-cloak], .js.container { display: none !important; }
+template, .template, .hidden, [v-cloak], .js.container{display:none !important}
 
 /* 视觉隐藏（仍可被读屏访问，用于无障碍时隐藏控件） */
 .invisible {
@@ -76,15 +61,14 @@ template, .template, .hidden, [v-cloak], .js.container { display: none !importan
 }
 /* ============ 位置 ============ */
 /* 最高层级（盖在所有元素之上） */
-.top-layer { z-index: var(--top-z); }
+.top-layer{z-index:var(--top-z)}
 
-.position-fixed { position: fixed; }
+.position-fixed{position:fixed}
 
-.sticky {
+.sticky {/* todo：改为.stick，结合.near-left/right/top/bottom */
 	position: sticky;
-
-	&:is(nav) {top: 0;}
-	&:is(footer) {bottom: 0;}
+	&:is(header){top:0}
+	&:is(footer){bottom:0}
 }
 /* ============ 尺寸 ============ */
 /* 铺满视口 */
@@ -92,7 +76,6 @@ template, .template, .hidden, [v-cloak], .js.container { display: none !importan
 	position: fixed;
 	inset: 0;
 }
-
 /* 可拖放调整大小的元素 */
 .resizable {
 	display: block; /* 确保是块级元素 */
@@ -108,9 +91,9 @@ template, .template, .hidden, [v-cloak], .js.container { display: none !importan
 /* 方形 */
 .square {
 	--side: 24px;
-	/* width、height、aspect-ratio互相兜底，避免被意外覆盖其中一个 */
 	width: var(--side);
 	height: var(--side);
+	/* aspect-ratio兜底，避免w/h中的一个被意外变为unset从而破坏方形 */
 	aspect-ratio: 1;
 }
 /* ============ 背景 ============ */
@@ -121,7 +104,7 @@ template, .template, .hidden, [v-cloak], .js.container { display: none !importan
 	&.dangerous {background-color: var(--dangerous-color);}
 }
 li:nth-child(odd) {
-	background: #f5f7fa;
+	background: var(--odd-row-bg);
 }
 
 /* ================== 对内约束：元素内部内容的排列和约束
@@ -181,9 +164,8 @@ li:nth-child(odd) {
 		}
 	}
 }
-
 /* 禁止该元素内部滚动（overflow: hidden）；加在 body 上可避免整页出现滚动条 */
-.no-scroll {overflow: hidden;}
+.no-scroll { overflow: hidden; }
 
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
@@ -214,19 +196,19 @@ li:nth-child(odd) {
 }
 button {
 	cursor: pointer;
-	transition: background-color 0.3s;
+	transition: background-color var(--transition-duration);
 }
 /* ============ 表单 ============ */
 /* 有必填项未填的表单加红框 */
 form:has(input:invalid:not(:placeholder-shown)) {
-	border: 2px solid #f56c6c;
+	border: 2px solid var(--error-border);
 }
 /* ============ 编辑控件 ============ */
 textarea {
 	width: 100%;
-	padding: 10px;
-	border: 1px solid #DDD;
-	border-radius: 4px;
+	padding: var(--textarea-padding);
+	border: 1px solid var(--border-color);
+	border-radius: var(--border-radius-sm);
 	resize: vertical;
 	flex: 1;/* 输入框别那么小气，默认拉伸 */
 }
@@ -255,7 +237,6 @@ textarea {
         }
     }
 }
-
 /* 拖拽把手，通常是⋮⋮ */
 .drag.handle {
 	cursor: grab;
@@ -268,7 +249,7 @@ textarea {
 /* ============ 文本 ============ */
 h1, h2, h3 {
 	text-wrap: balance;/* 保证换行时每行字数相当，避免头重脚轻 */
-	color: #333;
+	color: var(--heading-color);
 }
 .text {
 	&.correct {color: var(--correct-color);}
@@ -298,7 +279,7 @@ h1, h2, h3 {
 		&.ellipsis {text-overflow: ellipsis;}
 	}
 
-	& strong {color: red;/* 纯红的字是不是太扎眼了？也许用其他强调方式更好？ */}
+	& strong {color: var(--strong-color);/* 纯红的字是不是太扎眼了？也许用其他强调方式更好？ */}
 }
 .em-as-10x-px {
 	font-size: 62.5%; /* 浏览器默认字号16px，62.5%即10px，这样可令1em=10px，方便换算 */
@@ -322,13 +303,9 @@ i.icon {
 	display: none;/* 默认隐藏，成功时才显现 */
 	color: var(--success);
 	font-weight: 600;
-
+	/* 若元素里没有安排文本，就用::before给一个默认的✓ */
 	&:empty {
-		&::before {
-			content: '✓';
-			color: var(--success);
-			font-weight: 600;
-		}
+		&::before { content: '✓'; }
 	}
 }
 .⧉.icon {
@@ -348,3 +325,32 @@ i.icon {
 	justify-content: center;
 }
 
+/* ============================== 选择 ============================== */
+
+:root {
+	--top-z: 9999;
+	--modal-z: 1010;
+	--dangerous-color: #D32F2F;
+	--correct-color: #4CAF50;
+	--incorrect-color: #F05C6A;
+	--half-correct-color: #FF9800;
+	/* 正文默认值 */
+	--body-bg: #F5F5F5;
+	--body-font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--body-line-height: 1.6;
+	/* 界面元素 */
+	--heading-color: #333;
+	--odd-row-bg: #f5f7fa;
+	--border-color: #DDD;
+	--border-radius-sm: 4px;
+	/* 交互 */
+	--transition-duration: 0.3s;
+	--error-border: #f56c6c;
+	/* 强调 */
+	--strong-color: red;
+	--success: #059669;
+	--radius-sm: 6px;
+	--bg-active: #E5E7EB;
+	--text-primary: #111827;
+	--textarea-padding: 10px;
+}
