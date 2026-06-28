@@ -578,24 +578,41 @@ dialog {
 	--error-border: #f56c6c;
 	/* 强调 */
 	--strong-color: red;
-	--success: #059669;
-	--bg-active: #E5E7EB;
-	--text-primary: #111827;
 	--textarea-padding: 10px;
 	/* 按钮 */
-	--btn-h: 24px;
-	--btn-p: 4px;
-	--space-1: 4px;
-	--accent-primary: #5B8DEF;
-	--accent-light: rgba(91, 141, 239, 0.08);
-	--text-muted: #6B7280;
-	--border-subtle: #E5E7EB;
-	--danger: #DC2626;
-	--danger-light: rgba(220, 38, 38, 0.1);
 	--side-len: 24px;
 	--dialog-close-size: 28px;
-	--btn-group-radius: 6px;
 	--divider-size: 6px;
 	--divider-z: 15;
 	--popup-z: 100;
+
+	/* 背景 */
+	--bg-muted: #f3f4f6;
+	--bg-active: #e5e7eb;
+	--bg-subtle: #f9fafb;
+	--bg-base: #ffffff;
+	--border-subtle: #e5e7eb;
+	/* 文字 */
+	--text-primary: #111827;
+	--text-secondary: #374151;
+	--text-muted: #6b7280;
+	/* 强调色 */
+	--accent-primary: #5b8def;
+	--accent-primary-hover: #4a7bde;
+	--accent-light: rgba(91, 141, 239, 0.12);
+	/* 功能色 */
+	--danger: #dc2626;
+	--danger-light: rgba(220, 38, 38, 0.12);
+	--success: #059669;
+	--success-light: rgba(5, 150, 105, 0.12);
+	--warning: #d97706;
+	/* 按钮尺寸 */
+	--radius-sm: 4px;
+	--radius-md: 6px;
+	--radius-lg: 8px;
+	--radius-xl: 12px;
+	--space-1: 4px;
+	--btn-h: 32px;
+	--btn-p: 4px;
+	--transition-fast: 120ms ease;
 }
