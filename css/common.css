@@ -188,15 +188,20 @@ li:nth-child(odd) {
 }
 /* ============ 按钮 ============ */
 button, .btn {
-	--hover-bg: var(--accent-light);
-	--hover-border: var(--accent-primary);
-	--hover-color: var(--accent-primary);
-	--btn-bg: transparent;
-	--btn-color: var(--text-muted);
-	--btn-border: 1px solid var(--border-subtle);
+	/* 基类：浅灰实心 — 表达"这是个可交互控件"，不抢眼 */
+	--btn-bg: var(--bg-muted);
+	--btn-color: var(--text-primary);
+	--btn-border: none;
+	--btn-radius: var(--radius-md);
+	--btn-shadow: none;
 	--btn-font-size: inherit;
-	--btn-font-weight: inherit;
-	--btn-radius: var(--radius-sm);
+	--btn-font-weight: 500;
+
+	/* hover: 灰色加深 */
+	--hover-bg: var(--bg-active);
+	--hover-border: none;
+	--hover-color: var(--text-primary);
+
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -207,6 +212,7 @@ button, .btn {
 	color: var(--btn-color);
 	background: var(--btn-bg);
 	border: var(--btn-border);
+	box-shadow: var(--btn-shadow);
 	font-size: var(--btn-font-size);
 	font-weight: var(--btn-font-weight);
 	padding: var(--btn-p);
@@ -240,6 +246,8 @@ button, .btn {
 	&.icon-only {
 		--btn-border: 1px solid transparent;
 		--btn-p: var(--space-1);
+		--hover-bg: var(--accent-light);
+		--hover-color: var(--accent-primary);
 		& svg {
 			width: 100%;
 			height: 100%;
@@ -249,11 +257,38 @@ button, .btn {
 			min-height: 12px;
 		}
 	}
+	/* 主要操作：蓝色实心 — 表达"这是最重要的操作" */
+	&.primary {
+		--btn-bg: var(--accent-primary);
+		--btn-color: #FFFFFF;
+		--hover-bg: var(--accent-primary-hover);
+		--hover-color: #FFFFFF;
+	}
+	/* 危险操作：淡红底 + hover 加深 */
 	&.danger {
-		--hover-bg: var(--danger-light);
-		--hover-border: var(--danger);
-		--hover-color: var(--danger);
+		--btn-bg: var(--danger-light);
 		--btn-color: var(--danger);
+		--btn-border: none;
+		--hover-bg: rgba(220, 38, 38, 0.20);
+		--hover-border: none;
+		--hover-color: var(--danger);
+	}
+	/* 实心成功钮 */
+	&.success {
+		--btn-bg: var(--success);
+		--btn-color: #FFFFFF;
+		--hover-bg: #047857;
+		--hover-color: #FFFFFF;
+	}
+	/* 边框钮（透明的 + 灰边框 + hover 加蓝色 tint） */
+	&.outline {
+		--btn-bg: transparent;
+		--btn-color: var(--text-muted);
+		--btn-border: 1px solid var(--border-subtle);
+		--btn-radius: var(--radius-sm);
+		--hover-bg: var(--accent-light);
+		--hover-border: var(--accent-primary);
+		--hover-color: var(--accent-primary);
 	}
 }
 
@@ -547,7 +582,7 @@ dialog {
 	--text-muted: #6B7280;
 	--border-subtle: #E5E7EB;
 	--danger: #DC2626;
-	--danger-light: rgba(220, 38, 38, 0.15);
+	--danger-light: rgba(220, 38, 38, 0.1);
 	--side-len: 24px;
 	--dialog-close-size: 28px;
 	--btn-group-radius: 6px;
