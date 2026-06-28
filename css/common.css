@@ -188,17 +188,17 @@ li:nth-child(odd) {
 }
 /* ============ 按钮 ============ */
 button, .btn {
-	/* shared variable defaults */
+	--btn-bg: var(--bg-muted);
+	--btn-border: 1px solid var(--border-default);
 	--btn-color: var(--text-primary);
 	--btn-radius: var(--radius-md);
 	--btn-font-size: inherit;
 	--btn-font-weight: 500;
 
-	/* hover: 灰色加深 */
-	--hover-bg: var(--bg-active);
-	--hover-border: none;
+	/* hover: 边加深，active: 底加深 */
+	--hover-bg: var(--bg-muted);
+	--hover-border: var(--border-strong);
 	--hover-color: var(--text-primary);
-	--btn-shadow: none;
 
 	display: inline-flex;
 	align-items: center;
@@ -207,6 +207,9 @@ button, .btn {
 	user-select: none;
 	-webkit-user-select: none;
 	border-radius: var(--btn-radius);
+	background: var(--btn-bg);
+	border: var(--btn-border);
+	color: var(--btn-color);
 	font-size: var(--btn-font-size);
 	font-weight: var(--btn-font-weight);
 	padding: var(--btn-p);
@@ -228,6 +231,7 @@ button, .btn {
 			outline-offset: 2px;
 		}
 		&:active {
+			background: var(--bg-active);
 			transform: scale(0.97);
 		}
 	}
@@ -250,75 +254,33 @@ button, .btn {
 		}
 	}
 
-	/* 3 Style 分支：直接设结构属性 */
-	&:not(.outline-style, .text-style) {
-		background: var(--btn-bg, var(--bg-muted));
-		border: 1px solid var(--btn-border-color, var(--border-subtle));
-		color: var(--btn-color);
-		box-shadow: var(--btn-shadow, none);
-	}
-	&.outline-style {
-		background: transparent;
-		border: 1px solid var(--btn-border-color, var(--border-subtle));
-		color: var(--btn-color, var(--text-muted));
-		--hover-bg: var(--accent-light);
-		--hover-border: var(--btn-border-color, var(--accent-primary));
-		--hover-color: var(--accent-primary);
-	}
-	&.text-style {
-		background: transparent;
-		border: none;
-		color: var(--btn-color, var(--text-muted));
-		--hover-bg: var(--bg-muted);
-		--hover-color: var(--text-primary);
-	}
-
-	/* Theme 类：只设变量值 */
+	/* Theme 类 */
 	&.primary {
 		--btn-bg: var(--accent-primary);
+		--btn-border: 1px solid var(--accent-primary-hover);
 		--btn-color: #FFFFFF;
 		--hover-bg: var(--accent-primary-hover);
+		--hover-border: #3A6BCC;
 		--hover-color: #FFFFFF;
-		--btn-border-color: var(--accent-primary);
 	}
 	&.danger {
 		--btn-bg: var(--danger-light);
+		--btn-border: 1px solid rgba(220, 38, 38, 0.25);
 		--btn-color: var(--danger);
-		--hover-bg: rgba(220, 38, 38, 0.20);
-		--hover-color: var(--danger);
-		--btn-border-color: var(--danger);
+		--hover-bg: var(--danger);
+		--hover-border: var(--danger);
+		--hover-color: #FFFFFF;
 	}
 	&.success {
 		--btn-bg: var(--success);
+		--btn-border: 1px solid #047857;
 		--btn-color: #FFFFFF;
 		--hover-bg: #047857;
+		--hover-border: #036344;
 		--hover-color: #FFFFFF;
-		--btn-border-color: var(--success);
 	}
 }
-
 .btn-group {
-	/* 横排：首项左圆角，末项右圆角 */
-	&.flex.items-go-x {
-		> :first-child {
-			border-radius: var(--btn-group-radius) 0 0 var(--btn-group-radius);
-		}
-		> :last-child {
-			border-radius: 0 var(--btn-group-radius) var(--btn-group-radius) 0;
-		}
-	}
-	/* 竖排：首项上圆角，末项下圆角 */
-	&.flex.items-go-y {
-		> :first-child {
-			border-radius: var(--btn-group-radius) var(--btn-group-radius) 0 0;
-		}
-		> :last-child {
-			border-radius: 0 0 var(--btn-group-radius) var(--btn-group-radius);
-		}
-	}
-}
-/* 分裂式按钮组：主按钮较大，次按钮较小，次按钮弹出一个弹层 */
-.split.btn-group {
 	position: relative;
 
 	& .main.btn {
