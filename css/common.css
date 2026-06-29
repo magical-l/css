@@ -204,9 +204,8 @@ button, .btn {
 	--btn-font-size: inherit;
 	--btn-font-weight: 500;
 
-	/* hover: 边加深，active: 底加深 */
 	--hover-bg: var(--bg-muted);
-	--hover-border: var(--border-strong);
+	--hover-border: currentColor;
 	--hover-text-color: var(--text-primary);
 
 	display: inline-flex;
@@ -263,9 +262,9 @@ button, .btn {
 		}
 		&.bare {
 			--btn-bg: transparent;
-			--btn-border: none;
-			--hover-bg: var(--bg-muted);
-			--hover-border: none;
+			--btn-border: 1px solid transparent;
+			--hover-bg: transparent;
+			--hover-border: currentColor;
 			&.primary {
 				--btn-text-color: var(--accent-primary);
 				--hover-bg: var(--accent-primary);
