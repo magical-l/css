@@ -190,7 +190,7 @@ li:nth-child(odd) {
 button, .btn {
 	--btn-bg: var(--bg-muted);
 	--btn-border: 1px solid var(--border-default);
-	--btn-color: var(--text-primary);
+	--btn-text-color: var(--text-primary);
 	--btn-radius: var(--radius-md);
 	--btn-font-size: inherit;
 	--btn-font-weight: 500;
@@ -198,7 +198,7 @@ button, .btn {
 	/* hover: 边加深，active: 底加深 */
 	--hover-bg: var(--bg-muted);
 	--hover-border: var(--border-strong);
-	--hover-color: var(--text-primary);
+	--hover-text-color: var(--text-primary);
 
 	display: inline-flex;
 	align-items: center;
@@ -209,7 +209,7 @@ button, .btn {
 	border-radius: var(--btn-radius);
 	background: var(--btn-bg);
 	border: var(--btn-border);
-	color: var(--btn-color);
+	color: var(--btn-text-color);
 	font-size: var(--btn-font-size);
 	font-weight: var(--btn-font-weight);
 	padding: var(--btn-p);
@@ -224,7 +224,7 @@ button, .btn {
 		&:hover {
 			background: var(--hover-bg);
 			border-color: var(--hover-border);
-			color: var(--hover-color);
+			color: var(--hover-text-color);
 		}
 		&:focus-visible {
 			outline: 2px solid var(--accent-primary);
@@ -252,32 +252,53 @@ button, .btn {
 			min-width: var(--icon-min-width);
 			min-height: var(--icon-min-height);
 		}
+		&.bare {
+			--btn-bg: transparent;
+			--btn-border: none;
+			--hover-bg: var(--bg-muted);
+			--hover-border: none;
+			&.primary {
+				--btn-text-color: var(--accent-primary);
+				--hover-bg: var(--accent-primary);
+				--hover-text-color: #FFFFFF;
+			}
+			&.danger {
+				--btn-text-color: var(--danger);
+				--hover-bg: var(--danger);
+				--hover-text-color: #FFFFFF;
+			}
+			&.success {
+				--btn-text-color: var(--success);
+				--hover-bg: var(--success);
+				--hover-text-color: #FFFFFF;
+			}
+		}
 	}
 
 	/* Theme 类 */
 	&.primary {
 		--btn-bg: var(--accent-primary);
 		--btn-border: 1px solid var(--accent-primary-hover);
-		--btn-color: #FFFFFF;
+		--btn-text-color: #FFFFFF;
 		--hover-bg: var(--accent-primary-hover);
 		--hover-border: #3A6BCC;
-		--hover-color: #FFFFFF;
+		--hover-text-color: #FFFFFF;
 	}
 	&.danger {
 		--btn-bg: var(--danger-light);
 		--btn-border: 1px solid rgba(220, 38, 38, 0.25);
-		--btn-color: var(--danger);
+		--btn-text-color: var(--danger);
 		--hover-bg: var(--danger);
 		--hover-border: var(--danger);
-		--hover-color: #FFFFFF;
+		--hover-text-color: #FFFFFF;
 	}
 	&.success {
 		--btn-bg: var(--success);
 		--btn-border: 1px solid #047857;
-		--btn-color: #FFFFFF;
+		--btn-text-color: #FFFFFF;
 		--hover-bg: #047857;
 		--hover-border: #036344;
-		--hover-color: #FFFFFF;
+		--hover-text-color: #FFFFFF;
 	}
 }
 .btn-group {
@@ -415,11 +436,11 @@ textarea {
         &:has(input:checked) {
             /* 选中态适配：映射到按钮变量 */
             --btn-bg: var(--selector-bg, var(--bg-active));
-            --btn-color: var(--selector-color, var(--text-primary));
+            --btn-text-color: var(--selector-color, var(--text-primary));
             --btn-font-weight: var(--selector-font-weight, 500);
             /* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
             --hover-bg: var(--btn-bg);
-            --hover-color: var(--btn-color);
+            --hover-text-color: var(--btn-text-color);
             --hover-border: transparent;
         }
     }
