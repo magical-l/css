@@ -121,6 +121,15 @@ template, .template, .hidden, [v-cloak], .js.container, .no-see{display:none !im
 	height: var(--side-len);
 	/* aspect-ratio兜底，避免w/h中的一个被意外变为unset从而破坏方形 */
 	aspect-ratio: 1;
+	/* 使用min/max-w/h兜底：
+	- Flex item 的 min-width: auto — 如果 .square 元素本身是某个 flex 容器的子项，flex 默认的 min-width: auto 会让它不小于内容的 min-content size。虽然 width: --side-len 通常赢，但某些容器布局组合下内容可以撑开它。
+	- aspect-ratio 与 auto 的交互 — 如果某个上下文里 --side-len 的解析值之一是 auto（比如变量被意外覆盖或回退），aspect-ratio: 1 会取另一个有效的宽/高来推导——但那个有效值可能是内容尺寸，不是预期的方形。
+	- 字符字形宽高不一致 — 字形不等高不等宽，在 inline-flex 居中时可能轻微偏移视觉重心。
+	*/
+	min-width: var(--side-len);
+    min-height: var(--side-len);
+    max-width: var(--side-len);
+    max-height: var(--side-len);
 }
 /* ============ 背景 ============ */
 .background {
