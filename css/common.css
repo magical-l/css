@@ -119,12 +119,13 @@ template, .template, .hidden, [v-cloak], .js.container, .no-see{display:none !im
 .square {
 	width: var(--side-len);
 	height: var(--side-len);
-	/* aspect-ratio兜底，避免w/h中的一个被意外变为unset从而破坏方形 */
-	aspect-ratio: 1;
-	/* 使用min/max-w/h兜底：
-	- Flex item 的 min-width: auto — 如果 .square 元素本身是某个 flex 容器的子项，flex 默认的 min-width: auto 会让它不小于内容的 min-content size。虽然 width: --side-len 通常赢，但某些容器布局组合下内容可以撑开它。
-	- aspect-ratio 与 auto 的交互 — 如果某个上下文里 --side-len 的解析值之一是 auto（比如变量被意外覆盖或回退），aspect-ratio: 1 会取另一个有效的宽/高来推导——但那个有效值可能是内容尺寸，不是预期的方形。
-	- 字符字形宽高不一致 — 字形不等高不等宽，在 inline-flex 居中时可能轻微偏移视觉重心。
+	/* 避免 w/h 之一被意外覆盖破坏方形 */
+    aspect-ratio: 1;
+	/*
+	* min/max-w/h 兜底：
+	* - flex 子项 min-width:auto 可能被内容撑开；
+	* - var() 回退 auto 时 aspect-ratio 取错误参考值；
+	* - 字形宽高不一致偏移视觉重心。
 	*/
 	min-width: var(--side-len);
     min-height: var(--side-len);
@@ -314,6 +315,7 @@ button, .btn {
 	/* 所有按钮先清零圆角 */
 	> button, > .btn {
 		border-radius: 0;
+		&.main { order: 0; }
 	}
 	/* 横排：首项左圆角，末项右圆角 */
 	&.flex.items-go-x {
@@ -341,10 +343,6 @@ button, .btn {
 		> .btn:not(:has(~ .btn, ~ button)) {
 			border-radius: 0 0 var(--btn-radius) var(--btn-radius);
 		}
-	}
-
-	& .main.btn {
-		order: 0;
 	}
 
 	&.items-go-x {
