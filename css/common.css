@@ -69,7 +69,7 @@ body {
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
 /* ============ 显隐 ============ */
-template, .template, .hidden, [v-cloak], .js.container, .no-see{display:none !important}
+template, .template, .hidden, [v-cloak], .js.container, .no-see, [hidden] { display: none !important; }
 
 /* 视觉隐藏（仍可被读屏访问，用于无障碍时隐藏控件） */
 .invisible {
@@ -656,12 +656,24 @@ dialog {
 	--success: #059669;
 	--success-light: rgba(5, 150, 105, 0.12);
 	--warning: #d97706;
+	/* 阴影 */
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+	--shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+	--shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
 	/* 按钮尺寸 */
 	--radius-sm: 4px;
 	--radius-md: 6px;
 	--radius-lg: 8px;
 	--radius-xl: 12px;
 	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-5: 20px;
+	--space-6: 24px;
+	--space-7: 28px;
+	--space-8: 32px;
 	--btn-h: 32px;
 	--btn-p: 4px;
 	--transition-fast: 120ms ease;
