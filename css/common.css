@@ -553,8 +553,8 @@ i.icon {
 .icon {
 	user-select: none;
 	-webkit-user-select: none;
-	width: var(--icon-max-width);
-	height: var(--icon-max-height);
+	width: var(--icon-width);
+	height: var(--icon-height);
 	min-width: var(--icon-min-width);
 	min-height: var(--icon-min-height);
 	max-width: var(--icon-max-width);
@@ -610,11 +610,12 @@ dialog {
 	--body-line-height: 1.6;
 	/* 界面元素 */
 	--heading-color: #333;
-		/* icon size constraints */
-		--icon-min-width: 12px;
-		--icon-min-height: 12px;
-		--icon-max-width: 16px;
-		--icon-max-height: 16px;
+	--icon-min-width: 12px;
+	--icon-min-height: 12px;
+	--icon-max-width: 36px;
+	--icon-max-height: 36px;
+	--icon-width: var(--icon-max-width);
+	--icon-height: var(--icon-max-height);
 	--odd-row-bg: #f5f7fa;
 	--border-color: #DDD;
 	--border-radius-sm: 4px;
