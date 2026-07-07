@@ -417,39 +417,6 @@ button, .btn {
             --hover-border: transparent;
         }
     }
-
-	& .popup {
-		position: absolute;
-		z-index: var(--popup-z);
-	}
-
-	&.open {
-		& .popup {
-			/* 弹层出现位置 */
-			&.at-outside-top {
-				left: 50%; translate: -50% 0;
-			}
-			&.at-outside-bottom {
-				left: 50%; translate: -50% 0;
-			}
-			&.at-outside-left {
-				top: 50%; translate: 0 -50%;
-			}
-			&.at-outside-right {
-				top: 50%; translate: 0 -50%;
-			}
-			&.at-outside-top.near-left      { left: auto; right: 0; translate: none; }
-			&.at-outside-top.near-right     { left: 0; right: auto; translate: none; }
-			&.at-outside-bottom.near-left   { left: auto; right: 0; translate: none; }
-			&.at-outside-bottom.near-right  { left: 0; right: auto; translate: none; }
-		}
-	}
-	&:not(.open) {
-		& .popup {
-			/* 非.open状态隐藏弹层 */
-			display: none !important;/* important防止.popup可能有其他display，比如flex之类 */
-		}
-	}
 }
 
 /* ============ 表单 ============ */
@@ -585,7 +552,39 @@ dialog {
 		--side-len: var(--dialog-close-size);
 	}
 }
-/* ================== 模态遮罩 ================== */
+/* ============ 弹出层定位 ============ */
+[popover] {
+	position-anchor: --trigger;/* 隐式锚点名：popover触发按钮 */
+	/* 取消浏览器默认居中（inset:0 + margin:auto） */
+	margin: 0;
+	inset: unset;
+
+	/* 上下弹出：水平居中 */
+	&.at-top, &.at-bottom {
+		left: anchor(--trigger center);
+		translate: -50% 0;
+
+		&.left  { left: auto; translate: none; right: anchor(--trigger right); }
+		&.right { left: anchor(--trigger left); translate: none; }
+	}
+	&.at-top    { bottom: anchor(--trigger top); }
+	&.at-bottom { top: anchor(--trigger bottom); }
+	/* 左右弹出：垂直居中 */
+	&.at-left, &.at-right {
+		top: anchor(--trigger center);
+		translate: 0 -50%;
+
+		&.top    { top: auto; translate: none; bottom: anchor(--trigger top); }
+		&.bottom { top: anchor(--trigger bottom); translate: none; }
+	}
+	&.at-left  { right: anchor(--trigger left); }
+	&.at-right { left: anchor(--trigger right); }
+	/* 四角定位：双向锚定，取消居中偏移 */
+	&.at-top.at-left     { top: auto;    bottom: anchor(--trigger top);  right: auto;  left: anchor(--trigger left);  translate: none; }
+	&.at-top.at-right    { top: auto;    bottom: anchor(--trigger top);  left: auto;   right: anchor(--trigger right); translate: none; }
+	&.at-bottom.at-left  { bottom: auto; top: anchor(--trigger bottom);  right: auto;  left: anchor(--trigger left);  translate: none; }
+	&.at-bottom.at-right { bottom: auto; top: anchor(--trigger bottom);  left: auto;   right: anchor(--trigger right); translate: none; }
+}
 .modal {
 	--modal-overlay-color: rgba(0,0,0,0.5);
 	position: absolute;
