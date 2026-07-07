@@ -527,6 +527,25 @@ i.icon {
 	min-height: var(--icon-min-height);
 	max-width: var(--icon-max-width);
 	max-height: var(--icon-max-height);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	vertical-align: middle;
+	line-height: 1;
+
+	> svg {
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: var(--icon-stroke-width, 1.5);
+	}
+	> img { width: 100%; height: 100%; object-fit: contain; }
+
+	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
+	&.char-style { font-size: var(--icon-font-size, 1.2em); }
+	/* 描边风格图标 */
+	&.outline-style > svg { fill: none; }
 }
 /* 通用的"完成"图标，可用于任何地方，不限于按钮 */
 .done.icon {
@@ -544,9 +563,6 @@ i.icon {
 
 /* ======================== 复合组件 ======================== */
 dialog {
-	&::backdrop {
-		background: var(--modal-overlay-color);
-	}
 	/* 如果有header且header有方形关闭按钮 */
 	> header .close.btn.square {
 		--side-len: var(--dialog-close-size);
