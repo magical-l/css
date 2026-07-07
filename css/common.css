@@ -400,6 +400,24 @@ button, .btn {
 		}
 	}
 
+	/* 如果是给单选组/多选组使用按钮组样式，
+	 * 则选项.option应该用label.btn包装input[type=radio|checkbox]
+	 */
+    & label.option.btn {
+        > input { display: none; }
+
+        &:has(> input:checked) {
+            /* 选中态适配：映射到按钮变量 */
+            --btn-bg: var(--selector-bg, var(--bg-active));
+            --btn-text-color: var(--selector-color, var(--text-primary));
+            --btn-font-weight: var(--selector-font-weight, 500);
+            /* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
+            --hover-bg: var(--btn-bg);
+            --hover-text-color: var(--btn-text-color);
+            --hover-border: transparent;
+        }
+    }
+
 	& .popup {
 		position: absolute;
 		z-index: var(--popup-z);
@@ -455,23 +473,6 @@ textarea {
 }
 /* 选择器：从多个备选项中选择一个或多个项的控件 */
 .selector {
-    /* 如果使用radio/checkbox，选项.option应该用<label> */
-    & label.option {
-        & input { display: none; }
-    }
-    /* 选项用按钮时的样式 */
-    & label.option.btn {
-        &:has(input:checked) {
-            /* 选中态适配：映射到按钮变量 */
-            --btn-bg: var(--selector-bg, var(--bg-active));
-            --btn-text-color: var(--selector-color, var(--text-primary));
-            --btn-font-weight: var(--selector-font-weight, 500);
-            /* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
-            --hover-bg: var(--btn-bg);
-            --hover-text-color: var(--btn-text-color);
-            --hover-border: transparent;
-        }
-    }
 }
 /* 拖拽把手，通常是⋮⋮ */
 .drag.handle {
