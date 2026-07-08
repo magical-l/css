@@ -562,7 +562,7 @@ i.icon {
 }
 
 /* ======================== 复合组件 ======================== */
-dialog {
+dialog[open] {
 	/* 如果有header且header有方形关闭按钮 */
 	> header .close.btn.square {
 		--side-len: var(--dialog-close-size);
