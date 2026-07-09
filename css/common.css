@@ -572,6 +572,12 @@ i.icon {
 	}
 
 	&.copy, &.⧉ {
+		/* 若元素里没有安排文本，就用::before给一个默认的 */
+		&:empty {
+			&::before { content: "⧉"; }
+		}
+	}
+	&.⧉ {
 		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
 	}
 
