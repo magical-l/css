@@ -570,18 +570,24 @@ i.icon {
 		}
 	}
 	/* 通用的“复制”图标，常用于复制到剪贴板 */
-	&.⧉, &.copy {
+	&.⧉ {
 		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
 		/* 若元素里没有安排文本，就用::before给一个默认的 */
 		&:empty {
 			&::before { content: "⧉"; }
 		}
 	}
+	&.copy:empty {
+		&::before {
+			content: "⧉";
+			translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
+		}
+	}
 	/* 通用的“复刻”图标，从已有节点创建副本 */
 	&.duplicate:empty {
 		&::before {
-			content: "⊞";
-			font-size: 0.9em;
+			content: "⧉";
+			translate: 0.05em 0.2em;
 		}
 	}
 
