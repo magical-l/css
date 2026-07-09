@@ -542,31 +542,40 @@ i.icon {
 	&.char-style { font-size: var(--icon-font-size, 1.2em); }
 	/* 描边风格图标 */
 	&.outline-style > svg { fill: none; }
-}
-/* 当 .icon 直接作为按钮样式时，取消图标尺寸约束，由按钮自身的 padding 决定大小 */
-.btn.icon {
-	width: auto;
-	height: auto;
-	max-width: none;
-	max-height: none;
-	min-width: 0;
-	min-height: 0;
-}
-/* 通用的"完成"图标，可用于任何地方，不限于按钮 */
-.done.icon {
-	/* 若元素里没有安排文本，就用::before给一个默认的 */
-	&:empty {
-		&::before { content: '✓'; }
+
+	/* 当 .icon 直接作为按钮样式时，取消图标尺寸约束，由按钮自身的 padding 决定大小 */
+	&.btn {
+		width: auto;
+		height: auto;
+		max-width: none;
+		max-height: none;
+		min-width: 0;
+		min-height: 0;
 	}
 }
-/* 在状态指示场景中作为状态图标时默认隐藏，由外部（如按钮.copied状态）控制显示 */
-.done.status.icon {
-	display: none;
-	color: var(--success);
-	font-weight: 600;
-}
-.⧉.icon {
-	translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
+
+.icon {
+	/* 通用的"完成"图标，可用于任何地方，不限于按钮 */
+	&.done, &.✓ {
+		/* 若元素里没有安排文本，就用::before给一个默认的 */
+		&:empty {
+			&::before { content: '✓'; }
+		}
+	}
+
+	&.copy, &.⧉ {
+		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
+	}
+
+	/* 状态图标 */
+	&.status {
+		/* “‘完成’状态图标”在状态指示场景中作为状态图标时默认隐藏，由外部（如按钮.copied状态）控制显示 */
+		&.done, &.✓ {
+			display: none;
+			color: var(--success);
+			font-weight: 600;
+		}
+	}
 }
 
 /* ======================== 复合组件 ======================== */
