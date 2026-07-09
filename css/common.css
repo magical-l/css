@@ -310,6 +310,24 @@ button, .btn {
 		--hover-text-color: #FFFFFF;
 	}
 }
+
+/* 把label包装成按钮样式 */
+label.btn {
+	/* 隐藏原生的input */
+	> input { display: none; }
+
+	&:has(> input:checked) {
+		/* 选中态适配：映射到按钮变量 */
+		--btn-bg: var(--selector-bg, var(--bg-active));
+		--btn-text-color: var(--selector-color, var(--text-primary));
+		--btn-font-weight: var(--selector-font-weight, 500);
+		/* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
+		--hover-bg: var(--btn-bg);
+		--hover-text-color: var(--btn-text-color);
+		--hover-border: transparent;
+	}
+}
+
 .btn-group {
 	position: relative;
 	/* 所有按钮先清零圆角 */
@@ -395,24 +413,6 @@ button, .btn {
 			}
 		}
 	}
-
-	/* 如果是给单选组/多选组使用按钮组样式，
-	 * 则选项.option应该用label.btn包装input[type=radio|checkbox]
-	 */
-    & label.option.btn {
-        > input { display: none; }
-
-        &:has(> input:checked) {
-            /* 选中态适配：映射到按钮变量 */
-            --btn-bg: var(--selector-bg, var(--bg-active));
-            --btn-text-color: var(--selector-color, var(--text-primary));
-            --btn-font-weight: var(--selector-font-weight, 500);
-            /* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
-            --hover-bg: var(--btn-bg);
-            --hover-text-color: var(--btn-text-color);
-            --hover-border: transparent;
-        }
-    }
 }
 
 /* ============ 表单 ============ */
