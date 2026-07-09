@@ -549,13 +549,16 @@ i.icon {
 }
 /* 通用的"完成"图标，可用于任何地方，不限于按钮 */
 .done.icon {
-	display: none;/* 默认隐藏，成功时才显现 */
-	color: var(--success);
-	font-weight: 600;
 	/* 若元素里没有安排文本，就用::before给一个默认的 */
 	&:empty {
 		&::before { content: '✓'; }
 	}
+}
+/* 在状态指示场景中作为状态图标时默认隐藏，由外部（如按钮.copied状态）控制显示 */
+.done.status.icon {
+	display: none;
+	color: var(--success);
+	font-weight: 600;
 }
 .⧉.icon {
 	translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
