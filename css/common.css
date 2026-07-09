@@ -556,7 +556,7 @@ i.icon {
 
 .icon {
 	/* 通用的"完成"图标，可用于任何地方，不限于按钮 */
-	&.done, &.✓ {
+	&.✓, &.done, &.correct, &.success {
 		/* 若元素里没有安排文本，就用::before给一个默认的 */
 		&:empty {
 			&::before { content: '✓'; }
@@ -564,7 +564,7 @@ i.icon {
 	}
 
 	/* 通用的"取消"图标，可用于任何地方，不限于按钮 */
-	&.cancel, &.✗ {
+	&.✗, &.cancel, &.wrong, &.fail {
 		/* 若元素里没有安排文本，就用::before给一个默认的 */
 		&:empty {
 			&::before { content: '✗'; }
@@ -577,11 +577,16 @@ i.icon {
 
 	/* 状态图标 */
 	&.status {
-		/* “‘完成’状态图标”在状态指示场景中作为状态图标时默认隐藏，由外部（如按钮.copied状态）控制显示 */
-		&.done, &.✓ {
+		font-weight: 600;
+		/* "完成"状态图标 */
+		&.✓, &.done, &.correct, &.success {
 			display: none;
 			color: var(--success);
-			font-weight: 600;
+		}
+		/* "失败"状态图标 */
+		&.✗, &.fail, &.wrong, &.error {
+			display: none;
+			color: var(--danger);
 		}
 	}
 }
