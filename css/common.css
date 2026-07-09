@@ -562,7 +562,6 @@ i.icon {
 			&::before { content: '✓'; }
 		}
 	}
-
 	/* 通用的"取消"图标，可用于任何地方，不限于按钮 */
 	&.✗, &.cancel, &.wrong, &.fail {
 		/* 若元素里没有安排文本，就用::before给一个默认的 */
@@ -570,15 +569,19 @@ i.icon {
 			&::before { content: '✗'; }
 		}
 	}
-
-	&.copy, &.⧉ {
+	/* 通用的“重复/复刻”图标，可用于任何地方，不限于按钮（比如表示是一个副本） */
+	&.⧉ {
+		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
 		/* 若元素里没有安排文本，就用::before给一个默认的 */
 		&:empty {
 			&::before { content: "⧉"; }
 		}
 	}
-	&.⧉ {
-		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
+	&.duplicate:empty {
+		&::before {
+			content: "⧉";
+			translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
+		}
 	}
 
 	/* 状态图标 */
