@@ -601,7 +601,7 @@ i.icon {
 	&.delete { --icon-char: var(--icon-delete, '✕'); }
 	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
 	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-	&.loading { --icon-char: var(--icon-loading, '◐'); }
+	&.loading { --icon-char: var(--icon-loading, '◴'); }
 	/* ⧉ 字符本身偏左上，用translate调整回来 */
 	&.copy, &.duplicate {
 		&:not(.emoji, .emoji *):empty::before {
