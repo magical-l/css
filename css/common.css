@@ -562,38 +562,49 @@ i.icon {
 }
 
 .icon {
-	/* 通用的"完成"图标，可用于任何地方，不限于按钮 */
-	&.✓, &.done, &.correct, &.success {
-		/* 若元素里没有安排文本，就用::before给一个默认的 */
-		&:empty {
-			&::before { content: '✓'; }
-		}
+	/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
+	&:empty::before {
+		content: var(--icon-char);
+		font-size: var(--icon-font-size, 1.2em);
 	}
-	/* 通用的"取消"图标，可用于任何地方，不限于按钮 */
-	&.✗, &.cancel, &.wrong, &.fail {
-		/* 若元素里没有安排文本，就用::before给一个默认的 */
-		&:empty {
-			&::before { content: '✗'; }
-		}
-	}
-	/* 通用的“复制”图标，常用于复制到剪贴板 */
-	&.⧉ {
-		translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
-		/* 若元素里没有安排文本，就用::before给一个默认的 */
-		&:empty {
-			&::before { content: "⧉"; }
-		}
-	}
-	&.copy:empty {
-		&::before {
-			content: "⧉";
-			translate: 0.05em 0.2em;/* 字符“⧉”偏左上，用translate调整到中间 */
-		}
-	}
-	/* 通用的“复刻”图标，从已有节点创建副本 */
-	&.duplicate:empty {
-		&::before {
-			content: "⧉";
+
+	&.ok { --icon-char: var(--icon-ok, '✓'); }
+	&.checked { --icon-char: var(--icon-checked, '✓'); }
+	&.done { --icon-char: var(--icon-done, '✓'); }
+	&.correct { --icon-char: var(--icon-correct, '✓'); }
+	&.success { --icon-char: var(--icon-success, '✓'); }
+	&.cancel { --icon-char: var(--icon-cancel, '✗'); }
+	&.wrong { --icon-char: var(--icon-wrong, '✗'); }
+	&.fail { --icon-char: var(--icon-fail, '✗'); }
+	&.error { --icon-char: var(--icon-error, '✗'); }
+	&.help { --icon-char: var(--icon-help, '?'); }
+	&.question { --icon-char: var(--icon-question, '?'); }
+	&.warning { --icon-char: var(--icon-warning, '⚠'); }
+	&.alert { --icon-char: var(--icon-alert, '⚠'); }
+	&.caution { --icon-char: var(--icon-caution, '⚠'); }
+	&.info { --icon-char: var(--icon-info, 'ⓘ'); }
+	&.close { --icon-char: var(--icon-close, '⌧'); }
+	&.edit { --icon-char: var(--icon-edit, '✎'); }
+	&.modify { --icon-char: var(--icon-modify, '✎'); }
+	&.star { --icon-char: var(--icon-star, '★'); }
+	&.favorite { --icon-char: var(--icon-favorite, '★'); }
+	&.menu { --icon-char: var(--icon-menu, '☰'); }
+	&.refresh { --icon-char: var(--icon-refresh, '↻'); }
+	&.reload { --icon-char: var(--icon-reload, '↻'); }
+	&.settings { --icon-char: var(--icon-settings, '⚙'); }
+	&.copy { --icon-char: var(--icon-copy, '⧉'); }
+	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
+	&.add { --icon-char: var(--icon-add, '+'); }
+	&.minus { --icon-char: var(--icon-minus, '-'); }
+	&.up { --icon-char: var(--icon-up, '↑'); }
+	&.down { --icon-char: var(--icon-down, '↓'); }
+	&.delete { --icon-char: var(--icon-delete, '✕'); }
+	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
+	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
+	&.loading { --icon-char: var(--icon-loading, '◐'); }
+	/* ⧉ 字符本身偏左上，用translate调整回来 */
+	&.copy, &.duplicate {
+		&:not(.emoji, .emoji *):empty::before {
 			translate: 0.05em 0.2em;
 		}
 	}
@@ -602,18 +613,54 @@ i.icon {
 	&.status {
 		font-weight: 600;
 		/* "完成"状态图标 */
-		&.✓, &.done, &.correct, &.success {
+		&.ok, &.checked, &.done, &.correct, &.success {
 			display: none;
 			color: var(--success);
 		}
 		/* "失败"状态图标 */
-		&.✗, &.fail, &.wrong, &.error {
+		&.cancel, &.wrong, &.fail, &.error {
 			display: none;
 			color: var(--danger);
 		}
 	}
 }
 
+/* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
+.emoji {
+	--icon-ok: '✅';
+	--icon-checked: '✅';
+	--icon-done: '✅';
+	--icon-correct: '✅';
+	--icon-success: '✅';
+	--icon-cancel: '❌';
+	--icon-wrong: '❌';
+	--icon-fail: '❌';
+	--icon-error: '❌';
+	--icon-copy: '📋';
+	--icon-duplicate: '📋';
+	--icon-help: '❓';
+	--icon-question: '❓';
+	--icon-warning: '🚨';
+	--icon-alert: '🚨';
+	--icon-caution: '🚨';
+	--icon-info: '💡';
+	--icon-close: '❎';/* “关闭”是正常操作，用一个正常点的叉子图标，不用大红叉吓人 */
+	--icon-edit: '✏️';
+	--icon-modify: '✏️';
+	--icon-star: '⭐';
+	--icon-favorite: '⭐';
+	--icon-refresh: '🔄';
+	--icon-reload: '🔄';
+	--icon-settings: '🔧';
+	--icon-add: '➕';
+	--icon-minus: '➖';
+	--icon-up: '⬆';
+	--icon-down: '⬇';
+	--icon-delete: '✖';
+	--icon-go-top: '⏫';
+	--icon-go-bottom: '⏬';
+	--icon-loading: '⏳';
+}
 /* ======================== 复合组件 ======================== */
 dialog[open] {
 	/* 如果有header且header有方形关闭按钮 */
