@@ -326,6 +326,13 @@ label.btn {
 		--hover-text-color: var(--btn-text-color);
 		--hover-border: transparent;
 	}
+
+	/* ------ 切换型（toggle）按钮 ------ */
+	&.toggle {
+		/* 若内部有表示两个状态的图标（.on.icon、.off.icon），通过 :checked 状态驱动图标显隐。不假设input和图标的位置关系 */
+		&:has(> input:checked) > .on.icon,
+		&:has(> input:not(:checked)) > .off.icon { display: none; }
+	}
 }
 
 .btn-group {
