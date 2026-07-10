@@ -55,10 +55,12 @@ body {
 	touch-action: manipulation; /*移动端点击延迟问题：立即响应触摸事件*/
 }
 
-/* 旋转动画，表示等待中 */
-.spin {
-	animation: spin 1s linear infinite;
-	display: inline-block;
+/* 动画 */
+.animation {
+	/* 旋转 */
+	&.spin {
+		animation: spin 1s linear infinite;
+	}
 }
 @keyframes spin {
 	from { transform: rotate(0deg); }
@@ -566,6 +568,8 @@ i.icon {
 	&:empty::before {
 		content: var(--icon-char);
 		font-size: var(--icon-font-size, 1.2em);
+		/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
+		translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
 	}
 
 	&.ok { --icon-char: var(--icon-ok, '✓'); }
@@ -601,13 +605,12 @@ i.icon {
 	&.delete { --icon-char: var(--icon-delete, '✕'); }
 	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
 	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-	&.loading { --icon-char: var(--icon-loading, '◴'); }
-	/* ⧉ 字符本身偏左上，用translate调整回来 */
-	&.copy, &.duplicate {
-		&:not(.emoji, .emoji *):empty::before {
-			translate: 0.05em 0.2em;
-		}
+	&.loading {
+		--icon-char: var(--icon-loading, '⧖');
+		--icon-font-size: 2em;
+		--icon-offset-y: -2px;
 	}
+	&.copy, &.duplicate { --icon-offset-x: 0.05em; --icon-offset-y: 0.2em; }
 
 	/* 状态图标 */
 	&.status {
