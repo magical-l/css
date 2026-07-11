@@ -116,9 +116,9 @@ template, .template, .hidden, [hidden], [v-cloak], .js.container, .no-see { disp
 /* ============ 形状 ============ */
 /* 方形 */
 .square {
-	width: var(--side-len);
-	height: var(--side-len);
-	/* 避免 w/h 之一被意外覆盖破坏方形 */
+	width: var(--square-size);
+	height: var(--square-size);
+	/* 阻止 w/h 之一被意外覆盖破坏形状 */
     aspect-ratio: 1;
 	/*
 	* min/max-w/h 兜底：
@@ -126,10 +126,29 @@ template, .template, .hidden, [hidden], [v-cloak], .js.container, .no-see { disp
 	* - var() 回退 auto 时 aspect-ratio 取错误参考值；
 	* - 字形宽高不一致偏移视觉重心。
 	*/
-	min-width: var(--side-len);
-    min-height: var(--side-len);
-    max-width: var(--side-len);
-    max-height: var(--side-len);
+	min-width: var(--square-size);
+    min-height: var(--square-size);
+    max-width: var(--square-size);
+    max-height: var(--square-size);
+}
+/* 圆形 */
+.circle {
+	/* 实现方式：通过宽高相等设置为正方形，然后通过50%圆角把四角削成1/4扇形，组成圆形 */
+    border-radius: 50%;
+    width: var(--circle-size);
+    height: var(--circle-size);
+	/* 阻止 w/h 之一被意外覆盖破坏形状 */
+    aspect-ratio: 1;
+	/*
+	* min/max-w/h 兜底：
+	* - flex 子项 min-width:auto 可能被内容撑开；
+	* - var() 回退 auto 时 aspect-ratio 取错误参考值；
+	* - 字形宽高不一致偏移视觉重心。
+	*/
+    min-width: var(--circle-size);
+    min-height: var(--circle-size);
+    max-width: var(--circle-size);
+    max-height: var(--circle-size);
 }
 /* ============ 背景 ============ */
 .background {
@@ -248,7 +267,7 @@ button, .btn {
 		text-decoration: none;
 	}
 	&.square {
-		--side-len: var(--btn-h);
+		--square-size: var(--btn-h);
 	}
 	&.icon-only {
 		--btn-p: var(--space-1);
@@ -665,7 +684,7 @@ i.icon {
 dialog[open] {
 	/* 如果有header且header有方形关闭按钮 */
 	> header .close.btn.square {
-		--side-len: var(--dialog-close-size);
+		--square-size: var(--dialog-close-size);
 	}
 }
 /* ============ 弹出层定位 ============ */
@@ -746,7 +765,9 @@ dialog[open] {
 	--strong-color: red;
 	--textarea-padding: 10px;
 	/* 按钮 */
-	--side-len: 24px;
+	--circle-size: 24px;
+	--square-size: 24px;
+	--side-len: var(--square-size);
 	--dialog-close-size: 28px;
 	--divider-size: 6px;
 	--divider-z: 15;
