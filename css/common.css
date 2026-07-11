@@ -625,8 +625,18 @@ i.icon {
 	&.up { --icon-char: var(--icon-up, '↑'); }
 	&.down { --icon-char: var(--icon-down, '↓'); }
 	&.delete { --icon-char: var(--icon-delete, '✕'); }
+	&.remove { --icon-char: var(--icon-remove, '✕'); }
 	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
 	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
+	&.link { --icon-char: var(--icon-link, '🔗'); }
+	&.drag { --icon-char: var(--icon-drag, '⋮'); }
+	&.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
+	&.expanded { --icon-char: var(--icon-expanded, '▼'); }
+	&.inherit { --icon-char: var(--icon-inherit, '↑'); }
+	&.file { --icon-char: var(--icon-file, '📄'); }
+	&.completed { --icon-char: var(--icon-completed, '✓'); }
+	&.failed { --icon-char: var(--icon-failed, '✗'); }
+	&.stop { --icon-char: var(--icon-stop, '■'); }
 	&.loading {
 		--icon-char: var(--icon-loading, '⧖');
 		--icon-font-size: 2em;
@@ -682,9 +692,18 @@ i.icon {
 	--icon-up: '⬆';
 	--icon-down: '⬇';
 	--icon-delete: '✖';
+	--icon-remove: '✖';
 	--icon-go-top: '⏫';
 	--icon-go-bottom: '⏬';
 	--icon-loading: '⏳';
+	--icon-link: '🔗';
+	--icon-collapsed: '▶';
+	--icon-expanded: '▼';
+	--icon-inherit: '⬆';
+	--icon-file: '📄';
+	--icon-completed: '✅';
+	--icon-failed: '❌';
+	--icon-stop: '⏹';
 }
 /* ======================== 复合组件 ======================== */
 dialog[open] {
