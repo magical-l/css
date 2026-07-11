@@ -55,7 +55,7 @@ body {
 	touch-action: manipulation; /*移动端点击延迟问题：立即响应触摸事件*/
 }
 
-/* 动画 */
+/* 通用、常见动画（非花活） */
 .animation {
 	/* 旋转 */
 	&.spin {
@@ -71,7 +71,7 @@ body {
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
 /* ============ 显隐 ============ */
-template, .template, .hidden, [v-cloak], .js.container, .no-see, [hidden] { display: none !important; }
+template, .template, .hidden, [hidden], [v-cloak], .js.container, .no-see { display: none !important; }
 
 /* 视觉隐藏（仍可被读屏访问，用于无障碍时隐藏控件） */
 .invisible {
@@ -90,14 +90,14 @@ template, .template, .hidden, [v-cloak], .js.container, .no-see, [hidden] { disp
 }
 /* ============ 位置 ============ */
 /* 最高层级（盖在所有元素之上） */
-.top-layer{z-index:var(--top-z)}
+.top-layer { z-index: var(--top-z); }
 
-.position-fixed{position:fixed}
+.position-fixed { position: fixed; }
 
 .sticky {/* todo：改为.stick，结合.near-left/right/top/bottom */
 	position: sticky;
-	&:is(header){top:0}
-	&:is(footer){bottom:0}
+	&:is(header) { top: 0; }
+	&:is(footer) { bottom: 0; }
 }
 /* ============ 尺寸 ============ */
 /* 铺满视口 */
@@ -107,12 +107,9 @@ template, .template, .hidden, [v-cloak], .js.container, .no-see, [hidden] { disp
 }
 /* 可拖放调整大小的元素 */
 .resizable {
-	display: block; /* 确保是块级元素 */
-	overflow: auto; /* 必须设置且不能是visible */
-	resize: both;
-
-	&.x {resize: horizontal;}
-	&.y {resize: vertical;}
+	&.to-x { overflow-x: auto; resize: horizontal; }
+	&.to-y { overflow-y: auto; resize: vertical; }
+	&:not(.to-x, .to-y) { overflow: auto; resize: both; }
 }
 
 /* ================== 自身呈现：形状、边框、背景…… ================== */
