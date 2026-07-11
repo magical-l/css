@@ -636,7 +636,7 @@ i.icon {
 	&.file { --icon-char: var(--icon-file, '📄'); }
 	&.completed { --icon-char: var(--icon-completed, '✓'); }
 	&.failed { --icon-char: var(--icon-failed, '✗'); }
-	&.stop { --icon-char: var(--icon-stop, '■'); }
+	&.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
 	&.loading {
 		--icon-char: var(--icon-loading, '⧖');
 		--icon-font-size: 2em;
