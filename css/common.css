@@ -94,10 +94,14 @@ template, .template, .hidden, [hidden], [v-cloak], .js.container, .no-see { disp
 
 .position-fixed { position: fixed; }
 
-.sticky {/* todo：改为.stick，结合.near-left/right/top/bottom */
+.sticky {
 	position: sticky;
-	&:is(header) { top: 0; }
-	&:is(footer) { bottom: 0; }
+	&:is(header) { top: var(--stick-top, 0); }
+	&:is(footer) { bottom: var(--stick-bottom, 0); }
+	&.near-top { top: var(--stick-top, 0); }
+	&.near-bottom { bottom: var(--stick-bottom, 0); }
+	&.near-left { left: var(--stick-left, 0); }
+	&.near-right { right: var(--stick-right, 0); }
 }
 /* ============ 尺寸 ============ */
 /* 铺满视口 */
