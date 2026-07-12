@@ -597,8 +597,8 @@ i.icon {
 	&.refresh { --icon-char: var(--icon-refresh, '↻'); }
 	&.reload { --icon-char: var(--icon-reload, '↻'); }
 	&.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
-	&.copy { --icon-char: var(--icon-copy, '⧉'); --icon-font-size: 1.15em; }
-	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); --icon-font-size: 1.15em; }
+	&.copy { --icon-char: var(--icon-copy, '⧉'); }
+	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
 	&.add { --icon-char: var(--icon-add, '+'); }
 	&.minus { --icon-char: var(--icon-minus, '-'); }
 	&.up { --icon-char: var(--icon-up, '↑'); }
@@ -608,6 +608,8 @@ i.icon {
 	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
 	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
 	&.link { --icon-char: var(--icon-link, '⛓'); }
+	&.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
+	&.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
 	&.drag { --icon-char: var(--icon-drag, '⋮'); }
 	&.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
 	&.expanded { --icon-char: var(--icon-expanded, '▼'); }
@@ -621,7 +623,10 @@ i.icon {
 		--icon-font-size: 2em;
 		--icon-offset-y: -2px;
 	}
-	&.copy, &.duplicate { --icon-offset-x: 0.05em; --icon-offset-y: 0.2em; }
+	&.copy, &.duplicate {
+		--icon-offset-y: 0.1em;
+		--icon-font-size: 1.15em;
+	}
 
 	/* 状态图标 */
 	&.status {
@@ -676,6 +681,8 @@ i.icon {
 	--icon-go-bottom: '⏬';
 	--icon-loading: '⏳';
 	--icon-link: '🔗';
+	--icon-folder-open: '📂';
+	--icon-folder-closed: '📁';
 	--icon-collapsed: '▶';
 	--icon-expanded: '▼';
 	--icon-inherit: '⬆';
