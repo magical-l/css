@@ -560,17 +560,15 @@ i.icon {
 	> img { object-fit: contain; }
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
-	&.char-style { font-size: var(--icon-font-size, 1.2em); }
+	&.char-style { font-size: var(--icon-font-size, 1em); }
 	/* 描边风格图标 */
 	&.outline-style > svg { fill: none; }
-
 }
-
 .icon, .btn.icon-only {
 	/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
 	&:empty::before {
 		content: var(--icon-char);
-		font-size: var(--icon-font-size, 1.2em);
+		font-size: var(--icon-font-size, 1em);
 		/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
 		translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
 	}
@@ -589,18 +587,18 @@ i.icon {
 	&.warning { --icon-char: var(--icon-warning, '⚠'); }
 	&.alert { --icon-char: var(--icon-alert, '⚠'); }
 	&.caution { --icon-char: var(--icon-caution, '⚠'); }
-	&.info { --icon-char: var(--icon-info, 'ⓘ'); }
+	&.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
 	&.close { --icon-char: var(--icon-close, '⌧'); }
-	&.edit { --icon-char: var(--icon-edit, '✎'); }
-	&.modify { --icon-char: var(--icon-modify, '✎'); }
-	&.star { --icon-char: var(--icon-star, '★'); }
-	&.favorite { --icon-char: var(--icon-favorite, '★'); }
+	&.edit { --icon-char: var(--icon-edit, '✎'); --icon-font-size: 1.15em; }
+	&.modify { --icon-char: var(--icon-modify, '✎'); --icon-font-size: 1.15em; }
+	&.star { --icon-char: var(--icon-star, '★'); --icon-font-size: 1.2em; }
+	&.favorite { --icon-char: var(--icon-favorite, '★'); --icon-font-size: 1.2em; }
 	&.menu { --icon-char: var(--icon-menu, '☰'); }
 	&.refresh { --icon-char: var(--icon-refresh, '↻'); }
 	&.reload { --icon-char: var(--icon-reload, '↻'); }
-	&.settings { --icon-char: var(--icon-settings, '⚙'); }
-	&.copy { --icon-char: var(--icon-copy, '⧉'); }
-	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
+	&.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
+	&.copy { --icon-char: var(--icon-copy, '⧉'); --icon-font-size: 1.15em; }
+	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); --icon-font-size: 1.15em; }
 	&.add { --icon-char: var(--icon-add, '+'); }
 	&.minus { --icon-char: var(--icon-minus, '-'); }
 	&.up { --icon-char: var(--icon-up, '↑'); }
@@ -609,12 +607,12 @@ i.icon {
 	&.remove { --icon-char: var(--icon-remove, '✕'); }
 	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
 	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-	&.link { --icon-char: var(--icon-link, '🔗'); }
+	&.link { --icon-char: var(--icon-link, '⛓'); }
 	&.drag { --icon-char: var(--icon-drag, '⋮'); }
 	&.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
 	&.expanded { --icon-char: var(--icon-expanded, '▼'); }
 	&.inherit { --icon-char: var(--icon-inherit, '↑'); }
-	&.file { --icon-char: var(--icon-file, '📄'); }
+	&.file { --icon-char: var(--icon-file, '🗋'); }
 	&.completed { --icon-char: var(--icon-completed, '✓'); }
 	&.failed { --icon-char: var(--icon-failed, '✗'); }
 	&.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
