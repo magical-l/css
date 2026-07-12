@@ -275,38 +275,6 @@ button, .btn {
 	&.square {
 		--square-size: var(--btn-h);
 	}
-	&.icon-only {
-		--btn-p: var(--space-1);
-		& svg, & img {
-			width: 100%;
-			height: 100%;
-			max-width: var(--icon-max-width);
-			max-height: var(--icon-max-height);
-			min-width: var(--icon-min-width);
-			min-height: var(--icon-min-height);
-		}
-		&.bare {
-			--btn-bg: transparent;
-			--btn-border: 1px solid transparent;
-			--hover-bg: transparent;
-			--hover-border: currentColor;
-			&.primary {
-				--btn-text-color: var(--accent-primary);
-				--hover-bg: var(--accent-primary);
-				--hover-text-color: #FFFFFF;
-			}
-			&.danger {
-				--btn-text-color: var(--danger);
-				--hover-bg: var(--danger);
-				--hover-text-color: #FFFFFF;
-			}
-			&.success {
-				--btn-text-color: var(--success);
-				--hover-bg: var(--success);
-				--hover-text-color: #FFFFFF;
-			}
-		}
-	}
 
 	/* Theme 类 */
 	&.primary {
@@ -332,6 +300,26 @@ button, .btn {
 		--hover-bg: #047857;
 		--hover-border: #036344;
 		--hover-text-color: #FFFFFF;
+	}
+
+	/* Bare — 去掉颜色类的背景，只保留文字色和 hover 效果 */
+	&.bare {
+		--btn-bg: transparent;
+		--btn-border: 1px solid transparent;
+		--hover-bg: transparent;
+		--hover-border: currentColor;
+		&.primary {
+			--btn-text-color: var(--accent-primary);
+			--hover-bg: var(--accent-primary);
+		}
+		&.danger {
+			--btn-text-color: var(--danger);
+			--hover-bg: var(--danger);
+		}
+		&.success {
+			--btn-text-color: var(--success);
+			--hover-bg: var(--success);
+		}
 	}
 }
 
@@ -561,13 +549,15 @@ i.icon {
 	vertical-align: middle;
 	line-height: 1;
 
-	> svg {
+	> svg, > img {
 		width: 100%;
 		height: 100%;
+	}
+	> svg {
 		stroke: currentColor;
 		stroke-width: var(--icon-stroke-width, 1.5);
 	}
-	> img { width: 100%; height: 100%; object-fit: contain; }
+	> img { object-fit: contain; }
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
 	&.char-style { font-size: var(--icon-font-size, 1.2em); }
