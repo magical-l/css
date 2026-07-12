@@ -278,27 +278,27 @@ button, .btn {
 
 	/* Theme 类 */
 	&.primary {
-		--btn-bg: var(--accent-primary);
-		--btn-border: 1px solid var(--accent-primary-hover);
+		--btn-bg: var(--primary);
+		--btn-border: 1px solid var(--primary-hover);
 		--btn-text-color: #FFFFFF;
-		--hover-bg: var(--accent-primary-hover);
-		--hover-border: #3A6BCC;
+		--hover-bg: var(--primary-hover);
+		--hover-border: var(--primary-hover);
 		--hover-text-color: #FFFFFF;
 	}
 	&.danger {
-		--btn-bg: var(--danger-light);
-		--btn-border: 1px solid rgba(220, 38, 38, 0.25);
-		--btn-text-color: var(--danger);
-		--hover-bg: var(--danger);
-		--hover-border: var(--danger);
+		--btn-bg: var(--danger);
+		--btn-border: 1px solid var(--danger-hover);
+		--btn-text-color: #FFFFFF;
+		--hover-bg: var(--danger-hover);
+		--hover-border: var(--danger-hover);
 		--hover-text-color: #FFFFFF;
 	}
 	&.success {
 		--btn-bg: var(--success);
-		--btn-border: 1px solid #047857;
+		--btn-border: 1px solid var(--success-hover);
 		--btn-text-color: #FFFFFF;
-		--hover-bg: #047857;
-		--hover-border: #036344;
+		--hover-bg: var(--success-hover);
+		--hover-border: var(--success-hover);
 		--hover-text-color: #FFFFFF;
 	}
 
@@ -309,8 +309,8 @@ button, .btn {
 		--hover-bg: transparent;
 		--hover-border: currentColor;
 		&.primary {
-			--btn-text-color: var(--accent-primary);
-			--hover-bg: var(--accent-primary);
+			--btn-text-color: var(--primary);
+			--hover-bg: var(--primary);
 		}
 		&.danger {
 			--btn-text-color: var(--danger);
@@ -802,10 +802,15 @@ dialog[open] {
 	--accent-primary: #5b8def;
 	--accent-primary-hover: #4a7bde;
 	--accent-light: rgba(91, 141, 239, 0.12);
+	/* 语义变量（供按钮等组件引用） */
+	--primary: var(--accent-primary);
+	--primary-hover: var(--accent-primary-hover);
 	/* 功能色 */
 	--danger: #dc2626;
+	--danger-hover: #b91c1c;
 	--danger-light: rgba(220, 38, 38, 0.12);
 	--success: #059669;
+	--success-hover: #047857;
 	--success-light: rgba(5, 150, 105, 0.12);
 	--warning: #d97706;
 	/* 阴影 */
