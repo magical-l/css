@@ -701,12 +701,12 @@ dialog[open] {
 /* ============ 弹出层定位 ============ */
 [popover] {
 	position-anchor: --trigger;/* 隐式锚点名：popover触发按钮 */
+	/* 取消浏览器默认居中（inset:0 + margin:auto） */
+	margin: 0;
+	inset: unset;
 
 	/* 上下弹出：水平居中 */
 	&.at-top, &.at-bottom {
-		/* 取消浏览器默认居中（inset:0 + margin:auto） */
-		margin: 0;
-		inset: unset;
 		left: anchor(--trigger center);
 		translate: -50% 0;
 
@@ -717,8 +717,6 @@ dialog[open] {
 	&.at-bottom { top: anchor(--trigger bottom); }
 	/* 左右弹出：垂直居中 */
 	&.at-left, &.at-right {
-		margin: 0;
-		inset: unset;
 		top: anchor(--trigger center);
 		translate: 0 -50%;
 
