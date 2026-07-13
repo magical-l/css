@@ -55,18 +55,6 @@ body {
 	touch-action: manipulation; /*移动端点击延迟问题：立即响应触摸事件*/
 }
 
-/* 通用、常见动画（非花活） */
-.animation {
-	/* 旋转 */
-	&.spin {
-		animation: spin 1s linear infinite;
-	}
-}
-@keyframes spin {
-	from { transform: rotate(0deg); }
-	to { transform: rotate(360deg); }
-}
-
 /* ================== 对外：元素在页面/容器中的位置和可见性，影响和其他元素的关系
  * 包括：显隐、位置、尺寸、轮廓、边距、阴影……
  */
@@ -214,6 +202,237 @@ li:nth-child(odd) {
 /* 禁止该元素内部滚动（overflow: hidden）；加在 body 上可避免整页出现滚动条 */
 .no-scroll{overflow: hidden}
 
+/* ====== 通用、常见动画（非花活） ====== */
+.animation {
+	/* 旋转 */
+	&.spin {
+		animation: spin 1s linear infinite;
+	}
+}
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}
+
+/* ================== 内容：子元素、文本、图像…… ================== */
+/* ============ 文本 ============ */
+h1, h2, h3 {
+	text-wrap: balance;/* 保证换行时每行字数相当，避免头重脚轻 */
+	color: var(--heading-color);
+}
+.text {
+	&.correct {color: var(--correct-color);}
+	&.incorrect {color: var(--incorrect-color);}
+	&.half-correct {color: var(--half-correct-color);}
+	&.dangerous {color: var(--dangerous-color);}
+
+	/* &.left {text-align: left;}
+	&.center {text-align: center;}
+	&.right {text-align: right;} */
+
+	&.normal {font-weight: 400;}
+	&.medium {font-weight: 500;}
+	&.semi-bold {font-weight: 600;}
+	&.bold {font-weight: 700;}
+
+	/* 长文本隐藏 */
+	&.hide.long {
+		overflow: hidden;
+		white-space: nowrap;
+		/* 鼠标指向时显示 */
+		&:hover {
+			overflow: visible;
+			text-overflow: inherit;
+		}
+		/* 结尾再加个省略号 */
+		&.ellipsis {text-overflow: ellipsis;}
+	}
+
+	& strong {color: var(--strong-color);/* 纯红的字是不是太扎眼了？也许用其他强调方式更好？ */}
+}
+.em-as-10x-px {
+	font-size: 62.5%; /* 浏览器默认字号16px，62.5%即10px，这样可令1em=10px，方便换算 */
+}
+/* ============ 图像 ============ */
+svg {
+	/* svg线段端点改为圆头，更柔和 */
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+/* ====== 图标 ====== */
+i.icon {
+	font-style: unset; /* <i>标签本来是做斜体的，但现在通常被用来做图标，因此要去掉本身的斜体。 */
+}
+.icon, :where(.btn).icon-only {
+	user-select: none;
+	-webkit-user-select: none;
+	width: var(--icon-width);
+	height: var(--icon-height);
+	min-width: var(--icon-min-width);
+	min-height: var(--icon-min-height);
+	max-width: var(--icon-max-width);
+	max-height: var(--icon-max-height);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	vertical-align: middle;
+	line-height: 1;
+
+	> svg, > img {
+		width: 100%;
+		height: 100%;
+	}
+	> svg {
+		stroke: currentColor;
+		stroke-width: var(--icon-stroke-width, 1.5);
+	}
+	> img { object-fit: contain; }
+
+	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
+	&.char-style {
+		font-size: var(--icon-font-size, 1em);
+		/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
+		&:empty::before {
+			content: var(--icon-char);
+			font-size: var(--icon-font-size, 1em);
+			/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
+			translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
+		}
+
+		/* 状态图标颜色 */
+		&.status {
+			background: var(--status-icon-bg, transparent);
+			color: var(--status-icon-text-color, currentColor);
+		}
+
+		/* 沙漏 */
+		&.hourglass {
+			--icon-font-size: 2em;
+			--icon-offset-y: -0.085em;
+			--icon-char: var(--icon-hourglass, '⧖');
+			&.animation { animation: hourglass 3s ease-in-out infinite; }
+		}
+	}
+	/* 描边风格图标 */
+	&.outline-style > svg { fill: none; }
+}
+@keyframes hourglass {
+	0%, 25%   { transform: rotate(0deg); }
+	50%, 75%  { transform: rotate(180deg); }
+	100%      { transform: rotate(360deg); }
+}
+
+/* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上） ------ */
+.ok       { --icon-char: var(--icon-ok, '✓');       --status-icon-text-color: var(--success); }
+.checked  { --icon-char: var(--icon-checked, '✓');   --status-icon-text-color: var(--success); }
+.done     { --icon-char: var(--icon-done, '✓');      --status-icon-text-color: var(--success); }
+.correct  { --icon-char: var(--icon-correct, '✓');   --status-icon-text-color: var(--success); }
+.success  { --icon-char: var(--icon-success, '✓');   --status-icon-text-color: var(--success); }
+.cancel   { --icon-char: var(--icon-cancel, '✗');    --status-icon-text-color: var(--danger); }
+.wrong    { --icon-char: var(--icon-wrong, '✗');     --status-icon-text-color: var(--danger); }
+.fail     { --icon-char: var(--icon-fail, '✗');      --status-icon-text-color: var(--danger); }
+.error    { --icon-char: var(--icon-error, '✗');     --status-icon-text-color: var(--danger); }
+.completed { --icon-char: var(--icon-completed, '✓'); --status-icon-text-color: var(--success); }
+.failed    { --icon-char: var(--icon-failed, '✗'); --status-icon-text-color: var(--danger); }
+.loading { --icon-char: var(--icon-loading, '⧖'); }
+.wait    { --icon-char: var(--icon-wait, '⧖'); }
+.loading, .wait {
+	--icon-font-size: 2em;
+	--icon-offset-y: -0.085em;
+}
+.help { --icon-char: var(--icon-help, '?'); }
+.question { --icon-char: var(--icon-question, '?'); }
+.warning { --icon-char: var(--icon-warning, '⚠'); }
+.alert { --icon-char: var(--icon-alert, '⚠'); }
+.caution { --icon-char: var(--icon-caution, '⚠'); }
+.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
+.close { --icon-char: var(--icon-close, '⌧'); }
+.edit { --icon-char: var(--icon-edit, '✎');}
+.modify { --icon-char: var(--icon-modify, '✎');}
+.edit, .modify { --icon-font-size: 1.15em; }
+.star { --icon-char: var(--icon-star, '★');}
+.favorite { --icon-char: var(--icon-favorite, '★');}
+.star, .favorite { --icon-font-size: 1.2em; }
+.menu { --icon-char: var(--icon-menu, '☰'); }
+.refresh { --icon-char: var(--icon-refresh, '↻'); }
+.reload { --icon-char: var(--icon-reload, '↻'); }
+.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
+.copy { --icon-char: var(--icon-copy, '⧉'); }
+.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
+.copy, .duplicate {
+	--icon-offset-y: 0.1em;
+	--icon-font-size: 1.15em;
+}
+.add { --icon-char: var(--icon-add, '+'); }
+.plus { --icon-char: var(--icon-plus, '+'); }
+.minus { --icon-char: var(--icon-minus, '-'); }
+.delete { --icon-char: var(--icon-delete, '✕'); }
+.remove { --icon-char: var(--icon-remove, '✕'); }
+.up { --icon-char: var(--icon-up, '↑'); }
+.down { --icon-char: var(--icon-down, '↓'); }
+.go-top { --icon-char: var(--icon-go-top, '⤒'); }
+.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
+.link { --icon-char: var(--icon-link, '⛓'); }
+.file { --icon-char: var(--icon-file, '🗋'); }
+.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
+.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
+.drag { --icon-char: var(--icon-drag, '⋮'); }
+.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
+.expanded { --icon-char: var(--icon-expanded, '▼'); }
+.inherit { --icon-char: var(--icon-inherit, '↑'); }
+.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
+
+/* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
+.emoji {
+	--icon-ok: '✅';
+	--icon-checked: '✅';
+	--icon-done: '✅';
+	--icon-correct: '✅';
+	--icon-success: '✅';
+	--icon-cancel: '❌';
+	--icon-wrong: '❌';
+	--icon-fail: '❌';
+	--icon-error: '❌';
+	--icon-copy: '📋';
+	--icon-duplicate: '📋';
+	--icon-help: '❓';
+	--icon-question: '❓';
+	--icon-warning: '🚨';
+	--icon-alert: '🚨';
+	--icon-caution: '🚨';
+	--icon-info: '💡';
+	--icon-close: '❎';/* “关闭”是正常操作，用一个正常点的叉子图标，不用大红叉吓人 */
+	--icon-edit: '✏️';
+	--icon-modify: '✏️';
+	--icon-star: '⭐';
+	--icon-favorite: '⭐';
+	--icon-refresh: '🔄';
+	--icon-reload: '🔄';
+	--icon-settings: '🔧';
+	--icon-add: '➕';
+	--icon-plus: '➕';
+	--icon-minus: '➖';
+	--icon-up: '⬆';
+	--icon-down: '⬇';
+	--icon-delete: '✖';
+	--icon-remove: '✖';
+	--icon-go-top: '⏫';
+	--icon-go-bottom: '⏬';
+	--icon-loading: '⏳';
+	--icon-wait: '⏳';
+	--icon-hourglass: '⏳';
+	--icon-link: '🔗';
+	--icon-folder-open: '📂';
+	--icon-folder-closed: '📁';
+	--icon-collapsed: '▶';
+	--icon-expanded: '▼';
+	--icon-inherit: '⬆';
+	--icon-file: '📄';
+	--icon-completed: '✅';
+	--icon-failed: '❌';
+	--icon-stop: '⏹';
+}
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
 .non-interactive {
@@ -506,224 +725,6 @@ textarea {
 	}
 }
 
-/* ================== 内容：子元素、文本、图像…… ================== */
-/* ============ 文本 ============ */
-h1, h2, h3 {
-	text-wrap: balance;/* 保证换行时每行字数相当，避免头重脚轻 */
-	color: var(--heading-color);
-}
-.text {
-	&.correct {color: var(--correct-color);}
-	&.incorrect {color: var(--incorrect-color);}
-	&.half-correct {color: var(--half-correct-color);}
-	&.dangerous {color: var(--dangerous-color);}
-
-	/* &.left {text-align: left;}
-	&.center {text-align: center;}
-	&.right {text-align: right;} */
-
-	&.normal {font-weight: 400;}
-	&.medium {font-weight: 500;}
-	&.semi-bold {font-weight: 600;}
-	&.bold {font-weight: 700;}
-
-	/* 长文本隐藏 */
-	&.hide.long {
-		overflow: hidden;
-		white-space: nowrap;
-		/* 鼠标指向时显示 */
-		&:hover {
-			overflow: visible;
-			text-overflow: inherit;
-		}
-		/* 结尾再加个省略号 */
-		&.ellipsis {text-overflow: ellipsis;}
-	}
-
-	& strong {color: var(--strong-color);/* 纯红的字是不是太扎眼了？也许用其他强调方式更好？ */}
-}
-.em-as-10x-px {
-	font-size: 62.5%; /* 浏览器默认字号16px，62.5%即10px，这样可令1em=10px，方便换算 */
-}
-/* ============ 图像 ============ */
-svg {
-	/* svg线段端点改为圆头，更柔和 */
-	stroke-linecap: round;
-	stroke-linejoin: round;
-}
-/* ====== 图标 ====== */
-i.icon {
-	font-style: unset; /* <i>标签本来是做斜体的，但现在通常被用来做图标，因此要去掉本身的斜体。 */
-}
-.icon, :where(.btn).icon-only {
-	user-select: none;
-	-webkit-user-select: none;
-	width: var(--icon-width);
-	height: var(--icon-height);
-	min-width: var(--icon-min-width);
-	min-height: var(--icon-min-height);
-	max-width: var(--icon-max-width);
-	max-height: var(--icon-max-height);
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	flex-shrink: 0;
-	vertical-align: middle;
-	line-height: 1;
-
-	> svg, > img {
-		width: 100%;
-		height: 100%;
-	}
-	> svg {
-		stroke: currentColor;
-		stroke-width: var(--icon-stroke-width, 1.5);
-	}
-	> img { object-fit: contain; }
-
-	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
-	&.char-style {
-		font-size: var(--icon-font-size, 1em);
-		/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
-		&:empty::before {
-			content: var(--icon-char);
-			font-size: var(--icon-font-size, 1em);
-			/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
-			translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
-		}
-
-		/* 状态图标颜色 */
-		&.status {
-			color: var(--status-icon-text-color, currentColor);
-		}
-
-		/* 沙漏 */
-		&.hourglass {
-			--icon-font-size: 2em;
-			--icon-offset-y: -0.085em;
-			--icon-char: var(--icon-hourglass, '⧖');
-			&.animation { animation: hourglass 3s ease-in-out infinite; }
-		}
-	}
-	/* 描边风格图标 */
-	&.outline-style > svg { fill: none; }
-}
-@keyframes hourglass {
-	0%, 25%   { transform: rotate(0deg); }
-	50%, 75%  { transform: rotate(180deg); }
-	100%      { transform: rotate(360deg); }
-}
-
-/* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上） ------ */
-.ok       { --icon-char: var(--icon-ok, '✓');       --status-icon-text-color: var(--success); }
-.checked  { --icon-char: var(--icon-checked, '✓');   --status-icon-text-color: var(--success); }
-.done     { --icon-char: var(--icon-done, '✓');      --status-icon-text-color: var(--success); }
-.correct  { --icon-char: var(--icon-correct, '✓');   --status-icon-text-color: var(--success); }
-.success  { --icon-char: var(--icon-success, '✓');   --status-icon-text-color: var(--success); }
-.cancel   { --icon-char: var(--icon-cancel, '✗');    --status-icon-text-color: var(--danger); }
-.wrong    { --icon-char: var(--icon-wrong, '✗');     --status-icon-text-color: var(--danger); }
-.fail     { --icon-char: var(--icon-fail, '✗');      --status-icon-text-color: var(--danger); }
-.error    { --icon-char: var(--icon-error, '✗');     --status-icon-text-color: var(--danger); }
-.completed { --icon-char: var(--icon-completed, '✓'); --status-icon-text-color: var(--success); }
-.failed    { --icon-char: var(--icon-failed, '✗'); --status-icon-text-color: var(--danger); }
-.loading { --icon-char: var(--icon-loading, '⧖'); }
-.wait    { --icon-char: var(--icon-wait, '⧖'); }
-.loading, .wait {
-	--icon-font-size: 2em;
-	--icon-offset-y: -0.085em;
-}
-.help { --icon-char: var(--icon-help, '?'); }
-.question { --icon-char: var(--icon-question, '?'); }
-.warning { --icon-char: var(--icon-warning, '⚠'); }
-.alert { --icon-char: var(--icon-alert, '⚠'); }
-.caution { --icon-char: var(--icon-caution, '⚠'); }
-.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
-.close { --icon-char: var(--icon-close, '⌧'); }
-.edit { --icon-char: var(--icon-edit, '✎');}
-.modify { --icon-char: var(--icon-modify, '✎');}
-.edit, .modify { --icon-font-size: 1.15em; }
-.star { --icon-char: var(--icon-star, '★');}
-.favorite { --icon-char: var(--icon-favorite, '★');}
-.star, .favorite { --icon-font-size: 1.2em; }
-.menu { --icon-char: var(--icon-menu, '☰'); }
-.refresh { --icon-char: var(--icon-refresh, '↻'); }
-.reload { --icon-char: var(--icon-reload, '↻'); }
-.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
-.copy { --icon-char: var(--icon-copy, '⧉'); }
-.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
-.copy, .duplicate {
-	--icon-offset-y: 0.1em;
-	--icon-font-size: 1.15em;
-}
-.add { --icon-char: var(--icon-add, '+'); }
-.plus { --icon-char: var(--icon-plus, '+'); }
-.minus { --icon-char: var(--icon-minus, '-'); }
-.delete { --icon-char: var(--icon-delete, '✕'); }
-.remove { --icon-char: var(--icon-remove, '✕'); }
-.up { --icon-char: var(--icon-up, '↑'); }
-.down { --icon-char: var(--icon-down, '↓'); }
-.go-top { --icon-char: var(--icon-go-top, '⤒'); }
-.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-.link { --icon-char: var(--icon-link, '⛓'); }
-.file { --icon-char: var(--icon-file, '🗋'); }
-.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
-.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
-.drag { --icon-char: var(--icon-drag, '⋮'); }
-.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
-.expanded { --icon-char: var(--icon-expanded, '▼'); }
-.inherit { --icon-char: var(--icon-inherit, '↑'); }
-.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
-
-/* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
-.emoji {
-	--icon-ok: '✅';
-	--icon-checked: '✅';
-	--icon-done: '✅';
-	--icon-correct: '✅';
-	--icon-success: '✅';
-	--icon-cancel: '❌';
-	--icon-wrong: '❌';
-	--icon-fail: '❌';
-	--icon-error: '❌';
-	--icon-copy: '📋';
-	--icon-duplicate: '📋';
-	--icon-help: '❓';
-	--icon-question: '❓';
-	--icon-warning: '🚨';
-	--icon-alert: '🚨';
-	--icon-caution: '🚨';
-	--icon-info: '💡';
-	--icon-close: '❎';/* “关闭”是正常操作，用一个正常点的叉子图标，不用大红叉吓人 */
-	--icon-edit: '✏️';
-	--icon-modify: '✏️';
-	--icon-star: '⭐';
-	--icon-favorite: '⭐';
-	--icon-refresh: '🔄';
-	--icon-reload: '🔄';
-	--icon-settings: '🔧';
-	--icon-add: '➕';
-	--icon-plus: '➕';
-	--icon-minus: '➖';
-	--icon-up: '⬆';
-	--icon-down: '⬇';
-	--icon-delete: '✖';
-	--icon-remove: '✖';
-	--icon-go-top: '⏫';
-	--icon-go-bottom: '⏬';
-	--icon-loading: '⏳';
-	--icon-wait: '⏳';
-	--icon-hourglass: '⏳';
-	--icon-link: '🔗';
-	--icon-folder-open: '📂';
-	--icon-folder-closed: '📁';
-	--icon-collapsed: '▶';
-	--icon-expanded: '▼';
-	--icon-inherit: '⬆';
-	--icon-file: '📄';
-	--icon-completed: '✅';
-	--icon-failed: '❌';
-	--icon-stop: '⏹';
-}
 /* ======================== 复合组件 ======================== */
 dialog[open] {
 	/* 如果有header且header有方形关闭按钮 */
