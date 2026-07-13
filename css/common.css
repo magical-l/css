@@ -592,83 +592,17 @@ i.icon {
 		translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
 	}
 
-	&.ok { --icon-char: var(--icon-ok, '✓'); }
-	&.checked { --icon-char: var(--icon-checked, '✓'); }
-	&.done { --icon-char: var(--icon-done, '✓'); }
-	&.correct { --icon-char: var(--icon-correct, '✓'); }
-	&.success { --icon-char: var(--icon-success, '✓'); }
-	&.cancel { --icon-char: var(--icon-cancel, '✗'); }
-	&.wrong { --icon-char: var(--icon-wrong, '✗'); }
-	&.fail { --icon-char: var(--icon-fail, '✗'); }
-	&.error { --icon-char: var(--icon-error, '✗'); }
-	&.help { --icon-char: var(--icon-help, '?'); }
-	&.question { --icon-char: var(--icon-question, '?'); }
-	&.warning { --icon-char: var(--icon-warning, '⚠'); }
-	&.alert { --icon-char: var(--icon-alert, '⚠'); }
-	&.caution { --icon-char: var(--icon-caution, '⚠'); }
-	&.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
-	&.close { --icon-char: var(--icon-close, '⌧'); }
-	&.edit { --icon-char: var(--icon-edit, '✎'); --icon-font-size: 1.15em; }
-	&.modify { --icon-char: var(--icon-modify, '✎'); --icon-font-size: 1.15em; }
-	&.star { --icon-char: var(--icon-star, '★'); --icon-font-size: 1.2em; }
-	&.favorite { --icon-char: var(--icon-favorite, '★'); --icon-font-size: 1.2em; }
-	&.menu { --icon-char: var(--icon-menu, '☰'); }
-	&.refresh { --icon-char: var(--icon-refresh, '↻'); }
-	&.reload { --icon-char: var(--icon-reload, '↻'); }
-	&.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
-	&.copy { --icon-char: var(--icon-copy, '⧉'); }
-	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
-	&.copy, &.duplicate {
-		--icon-offset-y: 0.1em;
-		--icon-font-size: 1.15em;
-	}
-	&.add { --icon-char: var(--icon-add, '+'); }
-	&.plus { --icon-char: var(--icon-plus, '+'); }
-	&.minus { --icon-char: var(--icon-minus, '-'); }
-	&.up { --icon-char: var(--icon-up, '↑'); }
-	&.down { --icon-char: var(--icon-down, '↓'); }
-	&.delete { --icon-char: var(--icon-delete, '✕'); }
-	&.remove { --icon-char: var(--icon-remove, '✕'); }
-	&.go-top { --icon-char: var(--icon-go-top, '⤒'); }
-	&.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-	&.link { --icon-char: var(--icon-link, '⛓'); }
-	&.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
-	&.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
-	&.drag { --icon-char: var(--icon-drag, '⋮'); }
-	&.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
-	&.expanded { --icon-char: var(--icon-expanded, '▼'); }
-	&.inherit { --icon-char: var(--icon-inherit, '↑'); }
-	&.file { --icon-char: var(--icon-file, '🗋'); }
-	&.completed { --icon-char: var(--icon-completed, '✓'); }
-	&.failed { --icon-char: var(--icon-failed, '✗'); }
-	&.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
-	&.loading, &.wait, &.hourglass {
-		--icon-font-size: 2em;
-		--icon-offset-y: -0.085em;
-	}
-	&.loading { --icon-char: var(--icon-loading, '⧖'); }
-	&.wait { --icon-char: var(--icon-wait, '⧖'); }
-	/* 沙漏图标 */
-	&.hourglass {
-		--icon-char: var(--icon-hourglass, '⧖');
-		&.animation {
-			animation: hourglass 3s ease-in-out infinite;
-		}
+	/* 状态图标颜色 */
+	&.status {
+		color: var(--status-icon-text-color, currentColor);
 	}
 
-	/* 状态图标 */
-	&.status {
-		font-weight: 600;
-		/* "完成"状态图标 */
-		&.ok, &.checked, &.done, &.correct, &.success {
-			display: none;
-			color: var(--success);
-		}
-		/* "失败"状态图标 */
-		&.cancel, &.wrong, &.fail, &.error {
-			display: none;
-			color: var(--danger);
-		}
+	/* 沙漏 */
+	&.hourglass {
+		--icon-font-size: 2em;
+		--icon-offset-y: -0.085em;
+		--icon-char: var(--icon-hourglass, '⧖');
+		&.animation { animation: hourglass 3s ease-in-out infinite; }
 	}
 }
 @keyframes hourglass {
@@ -676,6 +610,66 @@ i.icon {
 	50%, 75%  { transform: rotate(180deg); }
 	100%      { transform: rotate(360deg); }
 }
+
+/* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上） ------ */
+.ok       { --icon-char: var(--icon-ok, '✓');       --status-icon-text-color: var(--success); }
+.checked  { --icon-char: var(--icon-checked, '✓');   --status-icon-text-color: var(--success); }
+.done     { --icon-char: var(--icon-done, '✓');      --status-icon-text-color: var(--success); }
+.correct  { --icon-char: var(--icon-correct, '✓');   --status-icon-text-color: var(--success); }
+.success  { --icon-char: var(--icon-success, '✓');   --status-icon-text-color: var(--success); }
+.cancel   { --icon-char: var(--icon-cancel, '✗');    --status-icon-text-color: var(--danger); }
+.wrong    { --icon-char: var(--icon-wrong, '✗');     --status-icon-text-color: var(--danger); }
+.fail     { --icon-char: var(--icon-fail, '✗');      --status-icon-text-color: var(--danger); }
+.error    { --icon-char: var(--icon-error, '✗');     --status-icon-text-color: var(--danger); }
+.completed { --icon-char: var(--icon-completed, '✓'); --status-icon-text-color: var(--success); }
+.failed    { --icon-char: var(--icon-failed, '✗'); --status-icon-text-color: var(--danger); }
+.loading { --icon-char: var(--icon-loading, '⧖'); }
+.wait    { --icon-char: var(--icon-wait, '⧖'); }
+.loading, .wait {
+	--icon-font-size: 2em;
+	--icon-offset-y: -0.085em;
+}
+.help { --icon-char: var(--icon-help, '?'); }
+.question { --icon-char: var(--icon-question, '?'); }
+.warning { --icon-char: var(--icon-warning, '⚠'); }
+.alert { --icon-char: var(--icon-alert, '⚠'); }
+.caution { --icon-char: var(--icon-caution, '⚠'); }
+.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
+.close { --icon-char: var(--icon-close, '⌧'); }
+.edit { --icon-char: var(--icon-edit, '✎');}
+.modify { --icon-char: var(--icon-modify, '✎');}
+.edit, .modify { --icon-font-size: 1.15em; }
+.star { --icon-char: var(--icon-star, '★');}
+.favorite { --icon-char: var(--icon-favorite, '★');}
+.star, .favorite { --icon-font-size: 1.2em; }
+.menu { --icon-char: var(--icon-menu, '☰'); }
+.refresh { --icon-char: var(--icon-refresh, '↻'); }
+.reload { --icon-char: var(--icon-reload, '↻'); }
+.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
+.copy { --icon-char: var(--icon-copy, '⧉'); }
+.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
+.copy, .duplicate {
+	--icon-offset-y: 0.1em;
+	--icon-font-size: 1.15em;
+}
+.add { --icon-char: var(--icon-add, '+'); }
+.plus { --icon-char: var(--icon-plus, '+'); }
+.minus { --icon-char: var(--icon-minus, '-'); }
+.delete { --icon-char: var(--icon-delete, '✕'); }
+.remove { --icon-char: var(--icon-remove, '✕'); }
+.up { --icon-char: var(--icon-up, '↑'); }
+.down { --icon-char: var(--icon-down, '↓'); }
+.go-top { --icon-char: var(--icon-go-top, '⤒'); }
+.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
+.link { --icon-char: var(--icon-link, '⛓'); }
+.file { --icon-char: var(--icon-file, '🗋'); }
+.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
+.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
+.drag { --icon-char: var(--icon-drag, '⋮'); }
+.collapsed { --icon-char: var(--icon-collapsed, '▶'); }
+.expanded { --icon-char: var(--icon-expanded, '▼'); }
+.inherit { --icon-char: var(--icon-inherit, '↑'); }
+.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
