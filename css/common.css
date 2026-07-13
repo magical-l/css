@@ -621,13 +621,13 @@ i.icon {
 	&.loading, &.wait {
 		--icon-char: var(--icon-loading, '⧖');
 		--icon-font-size: 2em;
-		--icon-offset-y: -2px;
+		--icon-offset-y: -0.085em;
 	}
 	/* 沙漏图标 */
 	&.hourglass {
 		--icon-char: '⧖' !important;
 		--icon-font-size: 2em;
-		--icon-offset-y: -2px;
+		--icon-offset-y: -0.085em;
 		&.animation {
 			animation: hourglass 3s ease-in-out infinite;
 		}
