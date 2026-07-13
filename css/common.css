@@ -618,7 +618,12 @@ i.icon {
 	&.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
 	&.copy { --icon-char: var(--icon-copy, '⧉'); }
 	&.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
+	&.copy, &.duplicate {
+		--icon-offset-y: 0.1em;
+		--icon-font-size: 1.15em;
+	}
 	&.add { --icon-char: var(--icon-add, '+'); }
+	&.plus { --icon-char: var(--icon-plus, '+'); }
 	&.minus { --icon-char: var(--icon-minus, '-'); }
 	&.up { --icon-char: var(--icon-up, '↑'); }
 	&.down { --icon-char: var(--icon-down, '↓'); }
@@ -637,23 +642,18 @@ i.icon {
 	&.completed { --icon-char: var(--icon-completed, '✓'); }
 	&.failed { --icon-char: var(--icon-failed, '✗'); }
 	&.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
-	&.loading, &.wait {
-		--icon-char: var(--icon-loading, '⧖');
+	&.loading, &.wait, &.hourglass {
 		--icon-font-size: 2em;
 		--icon-offset-y: -0.085em;
 	}
+	&.loading { --icon-char: var(--icon-loading, '⧖'); }
+	&.wait { --icon-char: var(--icon-wait, '⧖'); }
 	/* 沙漏图标 */
 	&.hourglass {
-		--icon-char: '⧖' !important;
-		--icon-font-size: 2em;
-		--icon-offset-y: -0.085em;
+		--icon-char: var(--icon-hourglass, '⧖');
 		&.animation {
 			animation: hourglass 3s ease-in-out infinite;
 		}
-	}
-	&.copy, &.duplicate {
-		--icon-offset-y: 0.1em;
-		--icon-font-size: 1.15em;
 	}
 
 	/* 状态图标 */
@@ -705,6 +705,7 @@ i.icon {
 	--icon-reload: '🔄';
 	--icon-settings: '🔧';
 	--icon-add: '➕';
+	--icon-plus: '➕';
 	--icon-minus: '➖';
 	--icon-up: '⬆';
 	--icon-down: '⬇';
@@ -713,6 +714,8 @@ i.icon {
 	--icon-go-top: '⏫';
 	--icon-go-bottom: '⏬';
 	--icon-loading: '⏳';
+	--icon-wait: '⏳';
+	--icon-hourglass: '⏳';
 	--icon-link: '🔗';
 	--icon-folder-open: '📂';
 	--icon-folder-closed: '📁';
