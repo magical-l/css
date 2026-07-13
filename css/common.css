@@ -321,15 +321,11 @@ button, .btn {
 		}
 	}
 
-	/* 按钮繁忙/等待时隐藏自身，由同级的 .status.icon.wait 显示 */
-	&.busy { display: none; }
-	&:not(.busy) + .status.icon.wait { display: none; }
-
 	/* 按钮里的图标：自动匹配按钮尺寸 */
 	> .icon {
 		--icon-font-size: calc(var(--btn-h) * 0.65);
 	}
-	
+
 	/* 按钮后的状态图标：自动匹配按钮尺寸 */
 	+ .status.icon {
 		--icon-font-size: calc(var(--btn-h) * 0.65);
@@ -340,6 +336,13 @@ button, .btn {
 		--icon-max-width: var(--btn-h);
 		--icon-max-height: var(--btn-h);
 	}
+
+	/* 按钮繁忙/等待时隐藏自身，由同级的 .status.icon.wait 显示 */
+	&.busy { display: none; }
+	&:not(.busy) + .status.icon:is(.wait, .loading) { display: none; }
+
+	&.done { display: none; }
+	&:not(.done) + .status.icon:is(.ok, .done, .completed) { display: none; }
 }
 
 /* 把label包装成按钮样式 */
@@ -579,31 +582,31 @@ i.icon {
 	> img { object-fit: contain; }
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
-	&.char-style { font-size: var(--icon-font-size, 1em); }
+	&.char-style {
+		font-size: var(--icon-font-size, 1em);
+		/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
+		&:empty::before {
+			content: var(--icon-char);
+			font-size: var(--icon-font-size, 1em);
+			/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
+			translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
+		}
+
+		/* 状态图标颜色 */
+		&.status {
+			color: var(--status-icon-text-color, currentColor);
+		}
+
+		/* 沙漏 */
+		&.hourglass {
+			--icon-font-size: 2em;
+			--icon-offset-y: -0.085em;
+			--icon-char: var(--icon-hourglass, '⧖');
+			&.animation { animation: hourglass 3s ease-in-out infinite; }
+		}
+	}
 	/* 描边风格图标 */
 	&.outline-style > svg { fill: none; }
-}
-.icon, :where(.btn).icon-only {
-	/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
-	&:empty::before {
-		content: var(--icon-char);
-		font-size: var(--icon-font-size, 1em);
-		/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
-		translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
-	}
-
-	/* 状态图标颜色 */
-	&.status {
-		color: var(--status-icon-text-color, currentColor);
-	}
-
-	/* 沙漏 */
-	&.hourglass {
-		--icon-font-size: 2em;
-		--icon-offset-y: -0.085em;
-		--icon-char: var(--icon-hourglass, '⧖');
-		&.animation { animation: hourglass 3s ease-in-out infinite; }
-	}
 }
 @keyframes hourglass {
 	0%, 25%   { transform: rotate(0deg); }
