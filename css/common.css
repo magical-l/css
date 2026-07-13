@@ -618,10 +618,19 @@ i.icon {
 	&.completed { --icon-char: var(--icon-completed, '✓'); }
 	&.failed { --icon-char: var(--icon-failed, '✗'); }
 	&.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
-	&.loading {
+	&.loading, &.wait {
 		--icon-char: var(--icon-loading, '⧖');
 		--icon-font-size: 2em;
 		--icon-offset-y: -2px;
+	}
+	/* 沙漏图标 */
+	&.hourglass {
+		--icon-char: '⧖' !important;
+		--icon-font-size: 2em;
+		--icon-offset-y: -2px;
+		&.animation {
+			animation: hourglass 3s ease-in-out infinite;
+		}
 	}
 	&.copy, &.duplicate {
 		--icon-offset-y: 0.1em;
@@ -642,6 +651,11 @@ i.icon {
 			color: var(--danger);
 		}
 	}
+}
+@keyframes hourglass {
+	0%, 25%   { transform: rotate(0deg); }
+	50%       { transform: rotate(180deg); }
+	75%, 100% { transform: rotate(360deg); }
 }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
