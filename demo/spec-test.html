@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="../css/common.css">
+<style>
+.btn { --btn-h: 120px; }
+.btn.busy { display: none; }
+.btn + .status.icon { --x: from-btn-override; }
+</style>
+<button class="btn"></button>
+<span class="status icon hourglass" id="test"></span>
+<output id="out"></output>
+<script>
+const span = document.getElementById('test');
+const cs = getComputedStyle(span);
+document.getElementById('out').textContent =
+  '--x: ' + cs.getPropertyValue('--x') +
+  ' | --icon-font-size: ' + cs.getPropertyValue('--icon-font-size') +
+  ' | pseudo font: ' + getComputedStyle(span, '::before').fontSize;
+</script>

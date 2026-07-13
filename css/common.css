@@ -276,7 +276,7 @@ button, .btn {
 		--square-size: var(--btn-h);
 	}
 
-	/* Theme 类 */
+	/* 主题 类 */
 	&.primary {
 		--btn-bg: var(--primary);
 		--btn-border: 1px solid var(--primary-hover);
@@ -301,7 +301,6 @@ button, .btn {
 		--hover-border: var(--success-hover);
 		--hover-text-color: #FFFFFF;
 	}
-
 	/* Bare — 去掉颜色类的背景，只保留文字色和 hover 效果 */
 	&.bare {
 		--btn-bg: transparent;
@@ -320,6 +319,26 @@ button, .btn {
 			--btn-text-color: var(--success);
 			--hover-bg: var(--success);
 		}
+	}
+
+	/* 按钮繁忙/等待时隐藏自身，由同级的 .status.icon.wait 显示 */
+	&.busy { display: none; }
+	&:not(.busy) + .status.icon.wait { display: none; }
+
+	/* 按钮里的图标：自动匹配按钮尺寸 */
+	> .icon {
+		--icon-font-size: calc(var(--btn-h) * 0.65);
+	}
+	
+	/* 按钮后的状态图标：自动匹配按钮尺寸 */
+	+ .status.icon {
+		--icon-font-size: calc(var(--btn-h) * 0.65);
+		--icon-width: var(--btn-h);
+		--icon-height: var(--btn-h);
+		--icon-min-width: var(--btn-h);
+		--icon-min-height: var(--btn-h);
+		--icon-max-width: var(--btn-h);
+		--icon-max-height: var(--btn-h);
 	}
 }
 
@@ -533,7 +552,7 @@ svg {
 i.icon {
 	font-style: unset; /* <i>标签本来是做斜体的，但现在通常被用来做图标，因此要去掉本身的斜体。 */
 }
-.icon, .btn.icon-only {
+.icon, :where(.btn).icon-only {
 	user-select: none;
 	-webkit-user-select: none;
 	width: var(--icon-width);
@@ -564,7 +583,7 @@ i.icon {
 	/* 描边风格图标 */
 	&.outline-style > svg { fill: none; }
 }
-.icon, .btn.icon-only {
+.icon, :where(.btn).icon-only {
 	/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
 	&:empty::before {
 		content: var(--icon-char);
@@ -656,17 +675,6 @@ i.icon {
 	0%, 25%   { transform: rotate(0deg); }
 	50%, 75%  { transform: rotate(180deg); }
 	100%      { transform: rotate(360deg); }
-}
-
-.btn {
-	/* 按钮繁忙/等待时隐藏自身，由同级的 .status.icon.wait 显示 */
-	&.busy {
-		display: none;
-	}
-
-	&:not(.busy) + .status.icon.wait {
-		display: none;
-	}
 }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
