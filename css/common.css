@@ -654,8 +654,19 @@ i.icon {
 }
 @keyframes hourglass {
 	0%, 25%   { transform: rotate(0deg); }
-	50%       { transform: rotate(180deg); }
-	75%, 100% { transform: rotate(360deg); }
+	50%, 75%  { transform: rotate(180deg); }
+	100%      { transform: rotate(360deg); }
+}
+
+.btn {
+	/* 按钮繁忙/等待时隐藏自身，由同级的 .status.icon.wait 显示 */
+	&.busy {
+		display: none;
+	}
+
+	&:not(.busy) + .status.icon.wait {
+		display: none;
+	}
 }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
