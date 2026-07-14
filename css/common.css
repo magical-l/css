@@ -706,6 +706,7 @@ textarea {
 		&::before{content:'⋮⋮'}
 	}
 }
+.dragging { opacity: 0.5; }
 /* 可拖拽分割条 */
 .divider {
 	background: var(--border-subtle);
