@@ -291,6 +291,7 @@ i.icon {
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
 	&.char-style {
+		font-variant-emoji: text;/* 有些字符有字符/emoji两种变体，通常由浏览器按需选择。这里强行指定用字符变体。需要emoji变体的话用.emoji类 */
 		font-size: var(--icon-font-size, 1em);
 		/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
 		&:empty::before {
@@ -309,8 +310,7 @@ i.icon {
 		/* 沙漏 */
 		&.hourglass {
 			--icon-font-size: 2em;
-			--icon-offset-y: -0.085em;
-			--icon-char: var(--icon-hourglass, '⧖');
+			--icon-char: var(--icon-hourglass, '⏳');
 			&.animation { animation: hourglass 3s ease-in-out infinite; }
 		}
 	}
@@ -335,12 +335,9 @@ i.icon {
 .error    { --icon-char: var(--icon-error, '✗');     --status-icon-text-color: var(--danger); }
 .completed { --icon-char: var(--icon-completed, '✓'); --status-icon-text-color: var(--success); }
 .failed    { --icon-char: var(--icon-failed, '✗'); --status-icon-text-color: var(--danger); }
-.loading { --icon-char: var(--icon-loading, '⧖'); }
-.wait    { --icon-char: var(--icon-wait, '⧖'); }
-.loading, .wait {
-	--icon-font-size: 2em;
-	--icon-offset-y: -0.085em;
-}
+.loading { --icon-char: var(--icon-loading, '⏳'); }
+.wait    { --icon-char: var(--icon-wait, '⏳'); }
+.loading, .wait { --icon-font-size: 2em; }
 .help { --icon-char: var(--icon-help, '?'); }
 .question { --icon-char: var(--icon-question, '?'); }
 .warning { --icon-char: var(--icon-warning, '⚠'); }
@@ -348,13 +345,13 @@ i.icon {
 .caution { --icon-char: var(--icon-caution, '⚠'); }
 .info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
 .close { --icon-char: var(--icon-close, '⌧'); }
-.edit { --icon-char: var(--icon-edit, '✎');}
+.edit { --icon-char: var(--icon-edit, '✎');/* ✏同时有text/emoji变体，但text变体是一个横着的铅笔，样子太奇怪，还是用斜着的铅笔好。 */}
 .modify { --icon-char: var(--icon-modify, '✎');}
 .edit, .modify { --icon-font-size: 1.15em; }
 .star { --icon-char: var(--icon-star, '★');}
 .favorite { --icon-char: var(--icon-favorite, '★');}
 .star, .favorite { --icon-font-size: 1.2em; }
-.menu { --icon-char: var(--icon-menu, '☰'); }
+.menu { --icon-char: var(--icon-menu, '☰');/* 八卦之乾卦符号，用来表达菜单 */ }
 .refresh { --icon-char: var(--icon-refresh, '↻'); }
 .reload { --icon-char: var(--icon-reload, '↻'); }
 .settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
@@ -369,8 +366,8 @@ i.icon {
 .minus { --icon-char: var(--icon-minus, '-'); }
 .delete { --icon-char: var(--icon-delete, '✕'); }
 .remove { --icon-char: var(--icon-remove, '✕'); }
-.up { --icon-char: var(--icon-up, '↑'); }
-.down { --icon-char: var(--icon-down, '↓'); }
+.up { --icon-char: var(--icon-up, '⬆'); }
+.down { --icon-char: var(--icon-down, '⬇'); }
 .go-top { --icon-char: var(--icon-go-top, '⤒'); }
 .go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
 .link { --icon-char: var(--icon-link, '⛓'); }
@@ -380,11 +377,12 @@ i.icon {
 .drag { --icon-char: var(--icon-drag, '⋮'); }
 .collapsed { --icon-char: var(--icon-collapsed, '▶'); }
 .expanded { --icon-char: var(--icon-expanded, '▼'); }
-.inherit { --icon-char: var(--icon-inherit, '↑'); }
-.stop { --icon-char: var(--icon-stop, '■'); --icon-offset-y: -0.08em; }
+.inherit { --icon-char: var(--icon-inherit, '🜍');/* 炼金术硫磺符号，用来表达“继承” */ }
+.stop { --icon-char: var(--icon-stop, '⏹'); }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
+	font-variant-emoji: emoji;
 	--icon-ok: '✅';
 	--icon-checked: '✅';
 	--icon-done: '✅';
@@ -398,40 +396,27 @@ i.icon {
 	--icon-duplicate: '📋';
 	--icon-help: '❓';
 	--icon-question: '❓';
-	--icon-warning: '🚨';
-	--icon-alert: '🚨';
-	--icon-caution: '🚨';
 	--icon-info: '💡';
-	--icon-close: '❎';/* “关闭”是正常操作，用一个正常点的叉子图标，不用大红叉吓人 */
 	--icon-edit: '✏️';
 	--icon-modify: '✏️';
+	--icon-close: '❎';/* “关闭”是正常操作，用一个绿底叉子图标，不用大红叉吓人 */
 	--icon-star: '⭐';
 	--icon-favorite: '⭐';
 	--icon-refresh: '🔄';
 	--icon-reload: '🔄';
-	--icon-settings: '🔧';
 	--icon-add: '➕';
 	--icon-plus: '➕';
 	--icon-minus: '➖';
-	--icon-up: '⬆';
-	--icon-down: '⬇';
 	--icon-delete: '✖';
 	--icon-remove: '✖';
 	--icon-go-top: '⏫';
 	--icon-go-bottom: '⏬';
-	--icon-loading: '⏳';
-	--icon-wait: '⏳';
-	--icon-hourglass: '⏳';
-	--icon-link: '🔗';
 	--icon-folder-open: '📂';
 	--icon-folder-closed: '📁';
-	--icon-collapsed: '▶';
-	--icon-expanded: '▼';
 	--icon-inherit: '⬆';
 	--icon-file: '📄';
 	--icon-completed: '✅';
 	--icon-failed: '❌';
-	--icon-stop: '⏹';
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
