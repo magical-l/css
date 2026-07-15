@@ -333,44 +333,44 @@ i.icon {
 
 /* ------ 字符图标变量（供各图标类引用，.emoji 可整体覆盖） ------ */
 :root {
-	--char-check: '✓';
-	--char-cross: '✗';
-	--char-loading: '⏳';
-	--char-question: '?';
-	--char-warning: '⚠';
-	--char-info: 'ⓘ';
-	--char-close: '⌧';
-	--char-edit: '✎';
-	--char-star: '★';
-	--char-menu: '☰';
-	--char-refresh: '↻';
-	--char-settings: '⚙';
-	--char-duplicate: '⧉';
-	--char-plus: '+';
-	--char-minus: '-';
-	--char-delete: '✕';
-	--char-trash: '🗑';
-	--char-attach: '🖇';
-	--char-go-top: '⤒';
-	--char-go-bottom: '⤓';
-	--char-link: '⛓';
-	--char-file: '🗋';
-	--char-folder-open: '🗀';
-	--char-folder-closed: '🗁';
-	--char-drag: '⋮';
-	--char-inherit: '🜍';
-	--char-chat: '🗪';
-	--char-chat-left: '🗩';
-	--char-chat-right: '🗨';
-	--char-stop: '⏹';
-	--char-digits: '🔢';
-	--char-palette: '🎨';
-	--char-chart: '📊';
-	--char-sun: '☀';
-	--char-sun-outline: '☼';
-	--char-moon: '🌙';
-	--char-up: '⬆';
-	--char-down: '⬇';
+	--char-check: '✓';  /* U+2713 &#x2713; */
+	--char-cross: '✗';  /* U+2717 &#x2717; */
+	--char-loading: '⏳';  /* U+23F3 &#x23F3; */
+	--char-question: '?';  /* U+003F &#x3F; */
+	--char-warning: '⚠';  /* U+26A0 &#x26A0; */
+	--char-info: 'ⓘ';  /* U+24D8 &#x24D8; */
+	--char-close: '⌧';  /* U+2327 &#x2327; */
+	--char-edit: '✎';  /* U+270E &#x270E; */
+	--char-star: '★';  /* U+2605 &#x2605; */
+	--char-menu: '☰';  /* U+2630 &#x2630; */
+	--char-refresh: '↻';  /* U+21BB &#x21BB; */
+	--char-settings: '⚙';  /* U+2699 &#x2699; */
+	--char-duplicate: '⧉';  /* U+29C9 &#x29C9; */
+	--char-plus: '+';  /* U+002B &#x2B; */
+	--char-minus: '-';  /* U+002D &#x2D; */
+	--char-delete: '✕';  /* U+2715 &#x2715; */
+	--char-trash: '🗑';  /* U+1F5D1 &#x1F5D1; */
+	--char-attach: '🖇';  /* U+1F587 &#x1F587; */
+	--char-go-top: '⤒';  /* U+2912 &#x2912; */
+	--char-go-bottom: '⤓';  /* U+2913 &#x2913; */
+	--char-link: '⛓';  /* U+26D3 &#x26D3; */
+	--char-file: '🗋';  /* U+1F5CB &#x1F5CB; */
+	--char-folder-open: '🗀';  /* U+1F5C0 &#x1F5C0; */
+	--char-folder-closed: '🗁';  /* U+1F5C1 &#x1F5C1; */
+	--char-drag: '⋮';  /* U+22EE &#x22EE; */
+	--char-inherit: '🜍';  /* U+1F70D &#x1F70D; */
+	--char-chat: '🗪';  /* U+1F5EA &#x1F5EA; */
+	--char-chat-from-left: '🗩';  /* U+1F5E9 &#x1F5E9; */
+	--char-chat-from-right: '🗨';  /* U+1F5E8 &#x1F5E8; */
+	--char-stop: '⏹';  /* U+23F9 &#x23F9; */
+	--char-digits: '🔢';  /* U+1F522 &#x1F522; */
+	--char-palette: '🎨';  /* U+1F3A8 &#x1F3A8; */
+	--char-chart: '📊';  /* U+1F4CA &#x1F4CA; */
+	--char-sun: '☀';  /* U+2600 &#x2600; */
+	--char-sun-outline: '☼';  /* U+263C &#x263C; */
+	--char-moon: '🌙';  /* U+1F319 &#x1F319; */
+	--char-up: '⬆';  /* U+2B06 &#x2B06; */
+	--char-down: '⬇';  /* U+2B07 &#x2B07; */
 }
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
 .ok, .checked, .done, .correct, .success, .completed {
@@ -381,21 +381,43 @@ i.icon {
 	--icon-char: var(--char-cross);
 	--status-icon-text-color: var(--danger);
 }
-.loading, .wait { --icon-char: var(--char-loading); --icon-font-size: 2em; }
+.loading, .wait {
+	--icon-char: var(--char-loading);
+	--icon-font-size: 2em;
+}
 .help, .question { --icon-char: var(--char-question); }
 .warning, .alert, .caution { --icon-char: var(--char-warning); }
-.info { --icon-char: var(--char-info); --icon-font-size: 1.15em; }
+.info {
+	--icon-char: var(--char-info);
+	--icon-font-size: 1.15em;
+}
 .close { --icon-char: var(--char-close); }
-.edit, .modify { --icon-char: var(--char-edit); --icon-font-size: 1.15em; }
-.star, .favorite { --icon-char: var(--char-star); --icon-font-size: 1.2em; }
+.edit, .modify {
+	--icon-char: var(--char-edit);
+	--icon-font-size: 1.15em;
+}
+.star, .favorite {
+	--icon-char: var(--char-star);
+	--icon-font-size: 1.2em;
+}
 .menu { --icon-char: var(--char-menu); }
 .refresh, .reload { --icon-char: var(--char-refresh); }
-.settings { --icon-char: var(--char-settings); --icon-font-size: 1.15em; }
-.copy, .duplicate { --icon-char: var(--char-duplicate); --icon-offset-y: 0.1em; --icon-font-size: 1.15em; }
+.settings {
+	--icon-char: var(--char-settings);
+	--icon-font-size: 1.15em;
+}
+.copy, .duplicate {
+	--icon-char: var(--char-duplicate);
+	--icon-offset-y: 0.1em;
+	--icon-font-size: 1.15em;
+}
 .add, .plus { --icon-char: var(--char-plus); }
 .minus { --icon-char: var(--char-minus); }
 .delete, .remove { --icon-char: var(--char-delete); }
-.icon.trash { --icon-char: var(--char-trash); --icon-font-size: 1.4em; }
+.icon.trash {
+	--icon-char: var(--char-trash);
+	--icon-font-size: 1.4em;
+}
 .up { --icon-char: var(--char-up); }
 .down { --icon-char: var(--char-down); }
 .go-top { --icon-char: var(--char-go-top); }
@@ -409,11 +431,13 @@ i.icon {
 .inherit { --icon-char: var(--char-inherit); }
 .chat {
 	--icon-char: var(--char-chat);
-	&.from-left:not(.from-right) { --icon-char: var(--char-chat-left); }
-	&.from-right:not(.from-left) { --icon-char: var(--char-chat-right); }
+	&.from-left:not(.from-right) { --icon-char: var(--char-chat-from-left); }
+	&.from-right:not(.from-left) { --icon-char: var(--char-chat-from-right); }
 }
 .stop { --icon-char: var(--char-stop); }
-.sun { --icon-char: var(--char-sun); --icon-font-size: 1.15em;
+.sun {
+	--icon-char: var(--char-sun);
+	--icon-font-size: 1.15em;
 	&.outline-style { --icon-char: var(--char-sun-outline); }
 }
 .moon { --icon-char: var(--char-moon); }
@@ -421,6 +445,7 @@ i.icon {
 .digits { --icon-char: var(--char-digits); }
 .palette { --icon-char: var(--char-palette); }
 .chart { --icon-char: var(--char-chart); }
+
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
 	font-variant-emoji: emoji;
@@ -430,38 +455,38 @@ i.icon {
 			font-variant-emoji: emoji;
 		}
 	}
-	--char-check: '✅';
-	--char-cross: '❌';
-	--char-loading: '⏳';
-	--char-question: '❓';
-	--char-warning: '⚠️';
-	--char-info: '💡';
-	--char-close: '❎';
-	--char-edit: '✏️';
-	--char-star: '⭐';
-	--char-menu: '☰';
-	--char-refresh: '🔄';
-	--char-settings: '⚙️';
-	--char-duplicate: '📋';
-	--char-plus: '➕';
-	--char-minus: '➖';
-	--char-delete: '✖';
-	--char-trash: '🗑️';
-	--char-attach: '🖇️';
-	--char-go-top: '⏫';
-	--char-go-bottom: '⏬';
-	--char-folder-open: '📂';
-	--char-folder-closed: '📁';
-	--char-inherit: '⬆';
-	--char-sun: '☀️';
-	--char-sun-outline: '☀️';
-	--char-moon: '🌙';
-	--char-file: '📄';
-	--char-up: '⬆️';
-	--char-down: '⬇️';
-	--char-chat: '🫧';
-	--char-chat-left: '💬';
-	--char-chat-right: '🗨️';
+	--char-check: '✅';  /* U+2705 &#x2705; */
+	--char-cross: '❌';  /* U+274C &#x274C; */
+	--char-loading: '⏳';  /* U+23F3 &#x23F3; */
+	--char-question: '❓';  /* U+2753 &#x2753; */
+	--char-warning: '⚠️';  /* U+26A0+FE0F &#x26A0;&#xFE0F; */
+	--char-info: '💡';  /* U+1F4A1 &#x1F4A1; */
+	--char-close: '❎';  /* U+274E &#x274E; */
+	--char-edit: '✏️';  /* U+270F+FE0F &#x270F;&#xFE0F; */
+	--char-star: '⭐';  /* U+2B50 &#x2B50; */
+	--char-menu: '☰';  /* U+2630 &#x2630; */
+	--char-refresh: '🔄';  /* U+1F504 &#x1F504; */
+	--char-settings: '⚙️';  /* U+2699+FE0F &#x2699;&#xFE0F; */
+	--char-duplicate: '📋';  /* U+1F4CB &#x1F4CB; */
+	--char-plus: '➕';  /* U+2795 &#x2795; */
+	--char-minus: '➖';  /* U+2796 &#x2796; */
+	--char-delete: '✖';  /* U+2716 &#x2716; */
+	--char-trash: '🗑️';  /* U+1F5D1+FE0F &#x1F5D1;&#xFE0F; */
+	--char-attach: '🖇️';  /* U+1F587+FE0F &#x1F587;&#xFE0F; */
+	--char-go-top: '⏫';  /* U+23EB &#x23EB; */
+	--char-go-bottom: '⏬';  /* U+23EC &#x23EC; */
+	--char-folder-open: '📂';  /* U+1F4C2 &#x1F4C2; */
+	--char-folder-closed: '📁';  /* U+1F4C1 &#x1F4C1; */
+	--char-inherit: '⬆';  /* U+2B06 &#x2B06; */
+	--char-sun: '☀️';  /* U+2600+FE0F &#x2600;&#xFE0F; */
+	--char-sun-outline: '☀️';  /* U+2600+FE0F &#x2600;&#xFE0F; */
+	--char-moon: '🌙';  /* U+1F319 &#x1F319; */
+	--char-file: '📄';  /* U+1F4C4 &#x1F4C4; */
+	--char-up: '⬆️';  /* U+2B06+FE0F &#x2B06;&#xFE0F; */
+	--char-down: '⬇️';  /* U+2B07+FE0F &#x2B07;&#xFE0F; */
+	--char-chat: '🫧';  /* U+1FAE7 &#x1FAE7; */
+	--char-chat-from-left: '💬';  /* U+1F4AC &#x1F4AC; */
+	--char-chat-from-right: '🗨️';  /* U+1F5E8+FE0F &#x1F5E8;&#xFE0F; */
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
