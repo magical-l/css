@@ -1,4 +1,4 @@
-@charset "utf-8";/* v3.5.0 */
+@charset "utf-8";/* v3.6.0 */
 /* ============================== 理所当然 ==============================
  * “修正”或补充css未定义的、浏览器默认设置的一些默认值。
  */
@@ -291,17 +291,23 @@ i.icon {
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
 	&.char-style {
-		font-variant-emoji: text;/* 有些字符有字符/emoji两种变体，通常由浏览器按需选择。这里强行指定用字符变体。需要emoji变体的话用.emoji类 */
+		font-variant-emoji: text;/* 有些字符有字符/emoji两种变体，通常由浏览器按需选择。.char-style强行指定用字符变体。需要emoji变体的话用.emoji类 */
+		
 		font-size: var(--icon-font-size, 1em);
-		/* 默认符号（字符）：图标若无内容，则用 ::before 显示默认符号（字符） */
-		&:empty::before {
-			content: var(--icon-char);
-			font-size: var(--icon-font-size, 1em);
-			/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
-			translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
+
+		/* 图标元素若无内容（:empty），或者是label.btn.icon-only（内部可能有input做子元素，不符合:empty） */
+		&:empty, &:is(label) {
+			/* 用 ::before 显示默认符号（字符） */
+			&::before {
+				/* 定义--icon-char变量，设置默认符号（字符） */
+				content: var(--icon-char);
+				font-size: var(--icon-font-size, 1em);
+				/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
+				translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
+			}
 		}
 
-		/* 状态图标颜色 */
+		/* 状态图标 */
 		&.status {
 			background: var(--status-icon-bg, transparent);
 			color: var(--status-icon-text-color, currentColor);
@@ -351,7 +357,7 @@ i.icon {
 .star { --icon-char: var(--icon-star, '★');}
 .favorite { --icon-char: var(--icon-favorite, '★');}
 .star, .favorite { --icon-font-size: 1.2em; }
-.menu { --icon-char: var(--icon-menu, '☰');/* 八卦之乾卦符号，用来表达菜单 */ }
+.menu { --icon-char: var(--icon-menu, '☰');/* 八卦·乾卦符号，用来表达菜单 */ }
 .refresh { --icon-char: var(--icon-refresh, '↻'); }
 .reload { --icon-char: var(--icon-reload, '↻'); }
 .settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
@@ -378,11 +384,29 @@ i.icon {
 .collapsed { --icon-char: var(--icon-collapsed, '▶'); }
 .expanded { --icon-char: var(--icon-expanded, '▼'); }
 .inherit { --icon-char: var(--icon-inherit, '🜍');/* 炼金术硫磺符号，用来表达“继承” */ }
+.chat {/* 对话气泡基类，省略方向修饰时默认通用对话图标 */
+	--icon-char: var(--icon-chat, '🗪');
+	&.from-left:not(.from-right) { --icon-char: var(--icon-chat, '🗩'); }
+	&.from-right:not(.from-left) { --icon-char: var(--icon-chat, '🗨'); }
+}
 .stop { --icon-char: var(--icon-stop, '⏹'); }
+
+/* 数字图标 🔢 */
+.digits { --icon-char: var(--icon-digits, '🔢'); }
+/* 调色板图标 🎨 */
+.palette { --icon-char: var(--icon-palette, '🎨'); }
+/* 图表图标 📊 */
+.chart { --icon-char: var(--icon-chart, '📊'); }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
 	font-variant-emoji: emoji;
+	/* 覆盖本级或后代的.char-style默认的font-variant-emoji:text */
+	&.icon, & .icon, &:where(.btn).icon-only, & :where(.btn).icon-only {
+		&.char-style {
+			font-variant-emoji: emoji;
+		}
+	}
 	--icon-ok: '✅';
 	--icon-checked: '✅';
 	--icon-done: '✅';
@@ -417,6 +441,11 @@ i.icon {
 	--icon-file: '📄';
 	--icon-completed: '✅';
 	--icon-failed: '❌';
+	& .chat {
+		--icon-char: var(--icon-chat, '🫧');
+		&.from-left:not(.from-right) { --icon-char: var(--icon-chat, '💬'); }
+		&.from-right:not(.from-left) { --icon-char: var(--icon-chat, '🗨️'); }
+	}
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
