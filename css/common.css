@@ -1,4 +1,4 @@
-@charset "utf-8";/* v3.6.1 */
+@charset "utf-8";/* v3.6.2 */
 /* ============================== 理所当然 ==============================
  * “修正”或补充css未定义的、浏览器默认设置的一些默认值。
  */
@@ -329,6 +329,11 @@ i.icon {
 	100%      { transform: rotate(360deg); }
 }
 
+/* 按钮里的图标：自动匹配按钮尺寸（:where 降低特异性，回到跟.icon一致的特异性） */
+:where(button, .btn) > .icon {
+	--icon-font-size: calc(var(--btn-h) * 0.65);
+}
+
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上） ------ */
 .ok       { --icon-char: var(--icon-ok, '✓');       --status-icon-text-color: var(--success); }
 .checked  { --icon-char: var(--icon-checked, '✓');   --status-icon-text-color: var(--success); }
@@ -372,12 +377,14 @@ i.icon {
 .minus { --icon-char: var(--icon-minus, '-'); }
 .delete { --icon-char: var(--icon-delete, '✕'); }
 .remove { --icon-char: var(--icon-remove, '✕'); }
+.trash { --icon-char: var(--icon-trash, '🗑'); --icon-font-size: 1.4em; }
 .up { --icon-char: var(--icon-up, '⬆'); }
 .down { --icon-char: var(--icon-down, '⬇'); }
 .go-top { --icon-char: var(--icon-go-top, '⤒'); }
 .go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
 .link { --icon-char: var(--icon-link, '⛓'); }
 .file { --icon-char: var(--icon-file, '🗋'); }
+.attach { --icon-char: var(--icon-attach, '🖇'); }
 .folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
 .folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
 .drag { --icon-char: var(--icon-drag, '⋮'); }
@@ -550,11 +557,6 @@ button, .btn {
 			--btn-text-color: var(--success);
 			--hover-bg: var(--success);
 		}
-	}
-
-	/* 按钮里的图标：自动匹配按钮尺寸 */
-	> .icon {
-		--icon-font-size: calc(var(--btn-h) * 0.65);
 	}
 
 	/* 按钮后的状态图标：自动匹配按钮尺寸 */
