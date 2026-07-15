@@ -80,8 +80,8 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 
 | 状态类 | 默认字符（text） | Emoji 版本 |
 |--------|-------------------|------------|
-| `.ok` `.checked` `.done` `.correct` `.success` | ✓ | ✅ |
-| `.cancel` `.wrong` `.fail` `.error` | ✗ | ❌ |
+| `.ok` `.checked` `.done` `.correct` `.success` `.completed` | ✓ | ✅ |
+| `.cancel` `.wrong` `.fail` `.error` `.failed` | ✗ | ❌ |
 | `.loading` `.wait` | ⏳ | ⏳ |
 | `.help` `.question` | ? | ❓ |
 | `.warning` `.alert` `.caution` | ⚠ | ⚠ |
@@ -96,10 +96,10 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 | `.add` `.plus` | + | ➕ |
 | `.minus` | - | ➖ |
 | `.delete` `.remove` | ✕ | ✖ |
-| `.trash` | 🗑 | 🗑 |
-| `.attach` | 🖇 | 🖇 |
-| `.up` | ⬆ | ⬆ |
-| `.down` | ⬇ | ⬇ |
+| `.trash` | 🗑 | 🗑️ |
+| `.attach` | 🖇 | 🖇️ |
+| `.up` | ⬆ | ⬆️ |
+| `.down` | ⬇ | ⬇️ |
 | `.go-top` | ⤒ | ⏫ |
 | `.go-bottom` | ⤓ | ⏬ |
 | `.link` | ⛓ | ⛓ |
@@ -107,8 +107,14 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 | `.folder-open` | 🗀 | 📂 |
 | `.folder-closed` | 🗁 | 📁 |
 | `.drag` | ⋮ | ⋮ |
-| `.chat` | 🗪 | 🫧 |
+| `.inherit` | 🜍 | ⬆ |
+| `.chat` / `.chat.from-left` / `.chat.from-right` | 🗪 / 🗩 / 🗨 | 🫧 / 💬 / 🗨️ |
 | `.stop` | ⏹ | ⏹ |
+| `.sun` / `.sun.outline` | ☀ / ☼ | ☀️ / ☀️ |
+| `.moon` | 🌙 | 🌙 |
+| `.digits` | 🔢 | 🔢 |
+| `.palette` | 🎨 | 🎨 |
+| `.chart` | 📊 | 📊 |
 
 ## 按钮系统
 
@@ -212,4 +218,5 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 ## 决策日志
 
 - 2026-07-15: 初始文档创建
+- 2026-07-15: 图标系统重构: --char-* 变量统一到 :root，同义类合并（.ok/.done/.completed → --char-check）。.emoji 改为覆盖 --char-* 而非逐个覆盖 --icon-*。新增 .sun（空心/实心）、.moon 类。
 - 2026-07-15: 新增 `.trash`/`.attach` 图标类；修复 `.btn > .icon` 特异性过高导致图标自身 `--icon-font-size` 被覆盖的 bug（改用 `:where()` 降特异性至 0,1,0）

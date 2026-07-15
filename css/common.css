@@ -279,10 +279,7 @@ i.icon {
 	vertical-align: middle;
 	line-height: 1;
 
-	> svg, > img {
-		width: 100%;
-		height: 100%;
-	}
+	> svg, > img { width: 100%; height: 100%; }
 	> svg {
 		stroke: currentColor;
 		stroke-width: var(--icon-stroke-width, 1.5);
@@ -334,123 +331,137 @@ i.icon {
 	--icon-font-size: calc(var(--btn-h) * 0.65);
 }
 
-/* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上） ------ */
-.ok       { --icon-char: var(--icon-ok, '✓');       --status-icon-text-color: var(--success); }
-.checked  { --icon-char: var(--icon-checked, '✓');   --status-icon-text-color: var(--success); }
-.done     { --icon-char: var(--icon-done, '✓');      --status-icon-text-color: var(--success); }
-.correct  { --icon-char: var(--icon-correct, '✓');   --status-icon-text-color: var(--success); }
-.success  { --icon-char: var(--icon-success, '✓');   --status-icon-text-color: var(--success); }
-.cancel   { --icon-char: var(--icon-cancel, '✗');    --status-icon-text-color: var(--danger); }
-.wrong    { --icon-char: var(--icon-wrong, '✗');     --status-icon-text-color: var(--danger); }
-.fail     { --icon-char: var(--icon-fail, '✗');      --status-icon-text-color: var(--danger); }
-.error    { --icon-char: var(--icon-error, '✗');     --status-icon-text-color: var(--danger); }
-.completed { --icon-char: var(--icon-completed, '✓'); --status-icon-text-color: var(--success); }
-.failed    { --icon-char: var(--icon-failed, '✗'); --status-icon-text-color: var(--danger); }
-.loading { --icon-char: var(--icon-loading, '⏳'); }
-.wait    { --icon-char: var(--icon-wait, '⏳'); }
-.loading, .wait { --icon-font-size: 2em; }
-.help { --icon-char: var(--icon-help, '?'); }
-.question { --icon-char: var(--icon-question, '?'); }
-.warning { --icon-char: var(--icon-warning, '⚠'); }
-.alert { --icon-char: var(--icon-alert, '⚠'); }
-.caution { --icon-char: var(--icon-caution, '⚠'); }
-.info { --icon-char: var(--icon-info, 'ⓘ'); --icon-font-size: 1.15em; }
-.close { --icon-char: var(--icon-close, '⌧'); }
-.edit { --icon-char: var(--icon-edit, '✎');/* ✏同时有text/emoji变体，但text变体是一个横着的铅笔，样子太奇怪，还是用斜着的铅笔好。 */}
-.modify { --icon-char: var(--icon-modify, '✎');}
-.edit, .modify { --icon-font-size: 1.15em; }
-.star { --icon-char: var(--icon-star, '★');}
-.favorite { --icon-char: var(--icon-favorite, '★');}
-.star, .favorite { --icon-font-size: 1.2em; }
-.menu { --icon-char: var(--icon-menu, '☰');/* 八卦·乾卦符号，用来表达菜单 */ }
-.refresh { --icon-char: var(--icon-refresh, '↻'); }
-.reload { --icon-char: var(--icon-reload, '↻'); }
-.settings { --icon-char: var(--icon-settings, '⚙'); --icon-font-size: 1.15em; }
-.copy { --icon-char: var(--icon-copy, '⧉'); }
-.duplicate { --icon-char: var(--icon-duplicate, '⧉'); }
-.copy, .duplicate {
-	--icon-offset-y: 0.1em;
-	--icon-font-size: 1.15em;
+/* ------ 字符图标变量（供各图标类引用，.emoji 可整体覆盖） ------ */
+:root {
+	--char-check: '✓';
+	--char-cross: '✗';
+	--char-loading: '⏳';
+	--char-question: '?';
+	--char-warning: '⚠';
+	--char-info: 'ⓘ';
+	--char-close: '⌧';
+	--char-edit: '✎';
+	--char-star: '★';
+	--char-menu: '☰';
+	--char-refresh: '↻';
+	--char-settings: '⚙';
+	--char-duplicate: '⧉';
+	--char-plus: '+';
+	--char-minus: '-';
+	--char-delete: '✕';
+	--char-trash: '🗑';
+	--char-attach: '🖇';
+	--char-go-top: '⤒';
+	--char-go-bottom: '⤓';
+	--char-link: '⛓';
+	--char-file: '🗋';
+	--char-folder-open: '🗀';
+	--char-folder-closed: '🗁';
+	--char-drag: '⋮';
+	--char-inherit: '🜍';
+	--char-chat: '🗪';
+	--char-chat-left: '🗩';
+	--char-chat-right: '🗨';
+	--char-stop: '⏹';
+	--char-digits: '🔢';
+	--char-palette: '🎨';
+	--char-chart: '📊';
+	--char-sun: '☀';
+	--char-sun-outline: '☼';
+	--char-moon: '🌙';
+	--char-up: '⬆';
+	--char-down: '⬇';
 }
-.add { --icon-char: var(--icon-add, '+'); }
-.plus { --icon-char: var(--icon-plus, '+'); }
-.minus { --icon-char: var(--icon-minus, '-'); }
-.delete { --icon-char: var(--icon-delete, '✕'); }
-.remove { --icon-char: var(--icon-remove, '✕'); }
-.trash { --icon-char: var(--icon-trash, '🗑'); --icon-font-size: 1.4em; }
-.up { --icon-char: var(--icon-up, '⬆'); }
-.down { --icon-char: var(--icon-down, '⬇'); }
-.go-top { --icon-char: var(--icon-go-top, '⤒'); }
-.go-bottom { --icon-char: var(--icon-go-bottom, '⤓'); }
-.link { --icon-char: var(--icon-link, '⛓'); }
-.file { --icon-char: var(--icon-file, '🗋'); }
-.attach { --icon-char: var(--icon-attach, '🖇'); }
-.folder-open { --icon-char: var(--icon-folder-open, '🗀'); }
-.folder-closed { --icon-char: var(--icon-folder-closed, '🗁'); }
-.drag { --icon-char: var(--icon-drag, '⋮'); }
-.inherit { --icon-char: var(--icon-inherit, '🜍');/* 炼金术硫磺符号，用来表达“继承” */ }
-.chat {/* 对话气泡基类，省略方向修饰时默认通用对话图标 */
-	--icon-char: var(--icon-chat, '🗪');
-	&.from-left:not(.from-right) { --icon-char: var(--icon-chat, '🗩'); }
-	&.from-right:not(.from-left) { --icon-char: var(--icon-chat, '🗨'); }
+/* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
+.ok, .checked, .done, .correct, .success, .completed {
+	--icon-char: var(--char-check);
+	--status-icon-text-color: var(--success);
 }
-.stop { --icon-char: var(--icon-stop, '⏹'); }
+.cancel, .wrong, .fail, .error, .failed {
+	--icon-char: var(--char-cross);
+	--status-icon-text-color: var(--danger);
+}
+.loading, .wait { --icon-char: var(--char-loading); --icon-font-size: 2em; }
+.help, .question { --icon-char: var(--char-question); }
+.warning, .alert, .caution { --icon-char: var(--char-warning); }
+.info { --icon-char: var(--char-info); --icon-font-size: 1.15em; }
+.close { --icon-char: var(--char-close); }
+.edit, .modify { --icon-char: var(--char-edit); --icon-font-size: 1.15em; }
+.star, .favorite { --icon-char: var(--char-star); --icon-font-size: 1.2em; }
+.menu { --icon-char: var(--char-menu); }
+.refresh, .reload { --icon-char: var(--char-refresh); }
+.settings { --icon-char: var(--char-settings); --icon-font-size: 1.15em; }
+.copy, .duplicate { --icon-char: var(--char-duplicate); --icon-offset-y: 0.1em; --icon-font-size: 1.15em; }
+.add, .plus { --icon-char: var(--char-plus); }
+.minus { --icon-char: var(--char-minus); }
+.delete, .remove { --icon-char: var(--char-delete); }
+.icon.trash { --icon-char: var(--char-trash); --icon-font-size: 1.4em; }
+.up { --icon-char: var(--char-up); }
+.down { --icon-char: var(--char-down); }
+.go-top { --icon-char: var(--char-go-top); }
+.go-bottom { --icon-char: var(--char-go-bottom); }
+.link { --icon-char: var(--char-link); }
+.file { --icon-char: var(--char-file); }
+.attach { --icon-char: var(--char-attach); }
+.folder-open { --icon-char: var(--char-folder-open); }
+.folder-closed { --icon-char: var(--char-folder-closed); }
+.drag { --icon-char: var(--char-drag); }
+.inherit { --icon-char: var(--char-inherit); }
+.chat {
+	--icon-char: var(--char-chat);
+	&.from-left:not(.from-right) { --icon-char: var(--char-chat-left); }
+	&.from-right:not(.from-left) { --icon-char: var(--char-chat-right); }
+}
+.stop { --icon-char: var(--char-stop); }
+.sun { --icon-char: var(--char-sun); --icon-font-size: 1.15em;
+	&.outline-style { --icon-char: var(--char-sun-outline); }
+}
+.moon { --icon-char: var(--char-moon); }
 
-/* 数字图标 🔢 */
-.digits { --icon-char: var(--icon-digits, '🔢'); }
-/* 调色板图标 🎨 */
-.palette { --icon-char: var(--icon-palette, '🎨'); }
-/* 图表图标 📊 */
-.chart { --icon-char: var(--icon-chart, '📊'); }
-
+.digits { --icon-char: var(--char-digits); }
+.palette { --icon-char: var(--char-palette); }
+.chart { --icon-char: var(--char-chart); }
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
 	font-variant-emoji: emoji;
-	/* 覆盖本级或后代的.char-style默认的font-variant-emoji:text */
+	/* 覆盖本级或后代的.char-style默认font-variant-emoji:text */
 	&.icon, & .icon, &:where(.btn).icon-only, & :where(.btn).icon-only {
 		&.char-style {
 			font-variant-emoji: emoji;
 		}
 	}
-	--icon-ok: '✅';
-	--icon-checked: '✅';
-	--icon-done: '✅';
-	--icon-correct: '✅';
-	--icon-success: '✅';
-	--icon-cancel: '❌';
-	--icon-wrong: '❌';
-	--icon-fail: '❌';
-	--icon-error: '❌';
-	--icon-copy: '📋';
-	--icon-duplicate: '📋';
-	--icon-help: '❓';
-	--icon-question: '❓';
-	--icon-info: '💡';
-	--icon-edit: '✏️';
-	--icon-modify: '✏️';
-	--icon-close: '❎';/* “关闭”是正常操作，用一个绿底叉子图标，不用大红叉吓人 */
-	--icon-star: '⭐';
-	--icon-favorite: '⭐';
-	--icon-refresh: '🔄';
-	--icon-reload: '🔄';
-	--icon-add: '➕';
-	--icon-plus: '➕';
-	--icon-minus: '➖';
-	--icon-delete: '✖';
-	--icon-remove: '✖';
-	--icon-go-top: '⏫';
-	--icon-go-bottom: '⏬';
-	--icon-folder-open: '📂';
-	--icon-folder-closed: '📁';
-	--icon-inherit: '⬆';
-	--icon-file: '📄';
-	--icon-completed: '✅';
-	--icon-failed: '❌';
-	& .chat {
-		--icon-char: var(--icon-chat, '🫧');
-		&.from-left:not(.from-right) { --icon-char: var(--icon-chat, '💬'); }
-		&.from-right:not(.from-left) { --icon-char: var(--icon-chat, '🗨️'); }
-	}
+	--char-check: '✅';
+	--char-cross: '❌';
+	--char-loading: '⏳';
+	--char-question: '❓';
+	--char-warning: '⚠️';
+	--char-info: '💡';
+	--char-close: '❎';
+	--char-edit: '✏️';
+	--char-star: '⭐';
+	--char-menu: '☰';
+	--char-refresh: '🔄';
+	--char-settings: '⚙️';
+	--char-duplicate: '📋';
+	--char-plus: '➕';
+	--char-minus: '➖';
+	--char-delete: '✖';
+	--char-trash: '🗑️';
+	--char-attach: '🖇️';
+	--char-go-top: '⏫';
+	--char-go-bottom: '⏬';
+	--char-folder-open: '📂';
+	--char-folder-closed: '📁';
+	--char-inherit: '⬆';
+	--char-sun: '☀️';
+	--char-sun-outline: '☀️';
+	--char-moon: '🌙';
+	--char-file: '📄';
+	--char-up: '⬆️';
+	--char-down: '⬇️';
+	--char-chat: '🫧';
+	--char-chat-left: '💬';
+	--char-chat-right: '🗨️';
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
