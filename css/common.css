@@ -298,6 +298,8 @@ i.icon {
 			&::before {
 				/* 定义--icon-char变量，设置默认符号（字符） */
 				content: var(--icon-char);
+				color: var(--icon-text-color, currentColor);
+				text-shadow: var(--icon-text-shadow, none);
 				font-size: var(--icon-font-size, 1em);
 				/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
 				translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
@@ -369,6 +371,8 @@ i.icon {
 	--char-sun: '☀';  /* U+2600 &#x2600; */
 	--char-sun-outline: '☼';  /* U+263C &#x263C; */
 	--char-moon: '🌙';  /* U+1F319 &#x1F319; */
+	--char-half-light-at-left: '◑';  /* U+25D1 circle with right half black */
+	--char-half-light-at-right: '◐';  /* U+25D0 circle with left half black */
 	--char-up: '⬆';  /* U+2B06 &#x2B06; */
 	--char-down: '⬇';  /* U+2B07 &#x2B07; */
 }
@@ -441,6 +445,12 @@ i.icon {
 	&.outline-style { --icon-char: var(--char-sun-outline); }
 }
 .moon { --icon-char: var(--char-moon); }
+.half-light.at-left, .half-dark.at-right {
+	--icon-char: var(--char-half-light-at-left);
+}
+.half-light.at-right, .half-dark.at-left {
+	--icon-char: var(--char-half-light-at-right);
+}
 
 .digits { --icon-char: var(--char-digits); }
 .palette { --icon-char: var(--char-palette); }
@@ -481,6 +491,8 @@ i.icon {
 	--char-sun: '☀️';  /* U+2600+FE0F &#x2600;&#xFE0F; */
 	--char-sun-outline: '☀️';  /* U+2600+FE0F &#x2600;&#xFE0F; */
 	--char-moon: '🌙';  /* U+1F319 &#x1F319; */
+	--char-half-light-at-left: '🌗';  /* U+1F317 last quarter moon */
+	--char-half-light-at-right: '🌓';  /* U+1F312 first quarter moon */
 	--char-file: '📄';  /* U+1F4C4 &#x1F4C4; */
 	--char-up: '⬆️';  /* U+2B06+FE0F &#x2B06;&#xFE0F; */
 	--char-down: '⬇️';  /* U+2B07+FE0F &#x2B07;&#xFE0F; */
