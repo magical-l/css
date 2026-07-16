@@ -1,4 +1,4 @@
-@charset "utf-8";/* v3.6.2 */
+@charset "utf-8";/* v3.7.0 */
 /* ============================== 理所当然 ==============================
  * “修正”或补充css未定义的、浏览器默认设置的一些默认值。
  */
@@ -288,6 +288,7 @@ i.icon {
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
 	&.char-style {
+		position: relative;
 		font-variant-emoji: text;/* 有些字符有字符/emoji两种变体，通常由浏览器按需选择。.char-style强行指定用字符变体。需要emoji变体的话用.emoji类 */
 		
 		font-size: var(--icon-font-size, 1em);
@@ -303,6 +304,20 @@ i.icon {
 				font-size: var(--icon-font-size, 1em);
 				/* 有些图标字符本身不是完全居中，需要用translate调整回来 */
 				translate: var(--icon-offset-x, 0) var(--icon-offset-y, 0);
+			}
+			&::after {
+				content: var(--icon-overlay-char, '');
+				position: absolute;
+				inset: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--icon-overlay-color, var(--icon-text-color, currentColor));
+				text-shadow: var(--icon-overlay-text-shadow, var(--icon-text-shadow, none));
+				font-size: var(--icon-overlay-font-size, var(--icon-font-size, 1em));
+				translate: var(--icon-overlay-x, var(--icon-offset-x, 0)) var(--icon-overlay-y, var(--icon-offset-y, 0));
+				line-height: 1;
+				pointer-events: none;
 			}
 		}
 
@@ -357,8 +372,8 @@ i.icon {
 	--char-go-bottom: '⤓';  /* U+2913 &#x2913; */
 	--char-link: '⛓';  /* U+26D3 &#x26D3; */
 	--char-file: '🗋';  /* U+1F5CB &#x1F5CB; */
-	--char-folder-open: '🗀';  /* U+1F5C0 &#x1F5C0; */
-	--char-folder-closed: '🗁';  /* U+1F5C1 &#x1F5C1; */
+	--char-folder-open: '🗁';  /* U+1F5C1 &#x1F5C1; */
+	--char-folder-closed: '🗀';  /* U+1F5C0 &#x1F5C0; */
 	--char-drag: '⋮';  /* U+22EE &#x22EE; */
 	--char-chat: '🗪';  /* U+1F5EA &#x1F5EA; */
 	--char-chat-from-left: '🗩';  /* U+1F5E9 &#x1F5E9; */
@@ -374,6 +389,7 @@ i.icon {
 	--char-half-light-at-right: '◐';  /* U+25D0 circle with left half black */
 	--char-up: '⬆';  /* U+2B06 &#x2B06; */
 	--char-down: '⬇';  /* U+2B07 &#x2B07; */
+	--char-eye: '👁';  /* U+1F441 &#x1F441; */
 }
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
 .ok, .checked, .done, .correct, .success, .completed {
@@ -428,8 +444,10 @@ i.icon {
 .link { --icon-char: var(--char-link); }
 .file { --icon-char: var(--char-file); }
 .attach { --icon-char: var(--char-paperclip); }
-.folder-open { --icon-char: var(--char-folder-open); }
-.folder-closed { --icon-char: var(--char-folder-closed); }
+.folder {
+	&.when-open { --icon-char: var(--char-folder-open); }
+	&.when-closed { --icon-char: var(--char-folder-closed); }
+}
 .drag { --icon-char: var(--char-drag); }
 .chat {
 	--icon-char: var(--char-chat);
@@ -453,6 +471,17 @@ i.icon {
 .digits { --icon-char: var(--char-digits); }
 .palette { --icon-char: var(--char-palette); }
 .chart { --icon-char: var(--char-chart); }
+
+.eye {
+	--icon-char: var(--char-eye);
+	&.when-closed {
+		--icon-char: var(--char-eye);
+		--icon-overlay-char: var(--char-cross);
+		--icon-overlay-x: 35%;
+		--icon-overlay-y: 30%;
+		--icon-overlay-color: var(--danger, #e00);
+	}
+}
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
@@ -496,6 +525,7 @@ i.icon {
 	--char-chat: '🫧';  /* U+1FAE7 &#x1FAE7; */
 	--char-chat-from-left: '💬';  /* U+1F4AC &#x1F4AC; */
 	--char-chat-from-right: '🗨️';  /* U+1F5E8+FE0F &#x1F5E8;&#xFE0F; */
+	--char-eye: '👁';  /* U+1F441 &#x1F441; */
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
