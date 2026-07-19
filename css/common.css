@@ -382,6 +382,7 @@ i.icon {
 	--char-digits: '🔢';  /* U+1F522 &#x1F522; */
 	--char-palette: '🎨';  /* U+1F3A8 &#x1F3A8; */
 	--char-chart: '📊';  /* U+1F4CA &#x1F4CA; */
+	--char-speaker: '🔊';  /* U+1F50A &#x1F50A; */
 	--char-sun: '☀';  /* U+2600 &#x2600; */
 	--char-sun-outline: '☼';  /* U+263C &#x263C; */
 	--char-moon: '🌙';  /* U+1F319 &#x1F319; */
@@ -471,6 +472,7 @@ i.icon {
 .digits { --icon-char: var(--char-digits); }
 .palette { --icon-char: var(--char-palette); }
 .chart { --icon-char: var(--char-chart); }
+.speaker { --icon-char: var(--char-speaker); }
 
 .eye {
 	--icon-char: var(--char-eye);
