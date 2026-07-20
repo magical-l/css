@@ -772,6 +772,13 @@ form:has(input:invalid:not(:placeholder-shown)) {
 	border: 2px solid var(--error-border);
 }
 /* ============ 编辑控件 ============ */
+.flex {
+	& > input {
+		min-width: 0;
+		width: 0;
+		flex: 1;
+	}
+}
 textarea {
 	width: 100%;
 	padding: var(--textarea-padding);
@@ -807,11 +814,11 @@ textarea {
 
 	&:hover { background: var(--accent-primary); }
 
-	&.row {
+	&.go-x {
 		height: var(--divider-size);
 		cursor: row-resize;
 	}
-	&.col {
+	&.go-y {
 		width: var(--divider-size);
 		cursor: col-resize;
 	}
@@ -819,8 +826,12 @@ textarea {
 
 /* ======================== 复合组件 ======================== */
 dialog[open] {
+	&:has(header, footer) {
+		display: flex;
+		flex-direction: column;
+	}
 	/* 如果有header且header有方形关闭按钮 */
-	& > header .close.btn.square {
+	& > header .square.close.btn {
 		--square-size: var(--dialog-close-size);
 	}
 }
