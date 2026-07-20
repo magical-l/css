@@ -1,4 +1,4 @@
-@charset "utf-8";/* v3.7.0 */
+@charset "utf-8";/* v3.7.1 */
 /* ============================== 理所当然 ==============================
  * “修正”或补充css未定义的、浏览器默认设置的一些默认值。
  */
@@ -279,12 +279,12 @@ i.icon {
 	vertical-align: middle;
 	line-height: 1;
 
-	> svg, > img { width: 100%; height: 100%; }
-	> svg {
+	& > svg, & > img { width: 100%; height: 100%; }
+	& > svg {
 		stroke: currentColor;
 		stroke-width: var(--icon-stroke-width, 1.5);
 	}
-	> img { object-fit: contain; }
+	& > img { object-fit: contain; }
 
 	/* 字符图标：需要显式设定字号以匹配图标容器尺寸 */
 	&.char-style {
@@ -637,7 +637,7 @@ button, .btn {
 	}
 
 	/* 按钮后的状态图标：自动匹配按钮尺寸 */
-	+ .status.icon {
+	& + .status.icon {
 		--icon-font-size: calc(var(--btn-h) * 0.65);
 		--icon-width: var(--btn-h);
 		--icon-height: var(--btn-h);
@@ -658,7 +658,7 @@ button, .btn {
 /* 把label包装成按钮样式 */
 label.btn {
 	/* 隐藏原生的input */
-	> input { display: none; }
+	& > input { display: none; }
 
 	&:has(> input:checked) {
 		/* 选中态适配：映射到按钮变量 */
@@ -682,7 +682,7 @@ label.btn {
 .btn-group {
 	position: relative;
 	/* 所有按钮先清零圆角 */
-	> button, > .btn {
+	& > button, & > .btn {
 		border-radius: 0;
 		&.main { order: 0; }
 	}
@@ -820,7 +820,7 @@ textarea {
 /* ======================== 复合组件 ======================== */
 dialog[open] {
 	/* 如果有header且header有方形关闭按钮 */
-	> header .close.btn.square {
+	& > header .close.btn.square {
 		--square-size: var(--dialog-close-size);
 	}
 }
