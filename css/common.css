@@ -680,14 +680,20 @@ label.btn {
 }
 
 .btn-group {
+	gap: 0; 
 	position: relative;
-	/* 所有按钮先清零圆角 */
 	& > button, & > .btn {
+		margin: 0; 
+		/* 所有按钮先清零圆角 */
 		border-radius: 0;
+		/* hover 一个按钮时，它的视觉反馈不能被邻居挡住。 */
+		&:hover { z-index: 1; }
+		/* 假设具有一个“主要按钮” */
 		&.main { order: 0; }
 	}
-	/* 横排正向：首项左圆角，末项右圆角 */
-	&.flex:is(.items-go-x, .items-from-left) {
+	/* ------ 变体 ------ */
+	/* 横排从左到右：首项左圆角，末项右圆角 */
+	&:is(.items-go-x, .items-from-left) {
 		/* 可见按钮中，首项左圆角，末项右圆角 */
 		> :is(button, .btn):not(.hidden) {
 			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
@@ -698,8 +704,8 @@ label.btn {
 			}
 		}
 	}
-	/* 横排反向（items-from-right -> row-reverse）：首项右圆角，末项左圆角 */
-	&.flex.items-from-right {
+	/* 横排从右到左：首项右圆角，末项左圆角 */
+	&.items-from-right {
 		> :is(button, .btn):not(.hidden) {
 			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
 				border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
@@ -709,58 +715,25 @@ label.btn {
 			}
 		}
 	}
-	/* 竖排正向：首项上圆角，末项下圆角 */
-	&.flex:is(.items-go-y, .items-from-top) {
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
-			}
-		}
-	}
-	/* 竖排反向（items-from-bottom -> column-reverse）：首项下圆角，末项上圆角 */
-	&.flex.items-from-bottom {
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
-			}
-		}
-	}
-
-	&:is(.items-go-x, .items-from-left) {
-		&.items-from-left {
-			& .secondary.btn {
-				&.near-left { order: -1; }
-				&.near-right { order: 1; }
-			}
-		}
-	}
-	&:is(.items-go-x, .items-from-right) {
-		&.items-from-right {
-			& .secondary.btn {
-				&.near-left { order: 1; }
-				&.near-right { order: -1; }
-			}
-		}
-	}
+	/* 竖排从上到下：首项上圆角，末项下圆角 */
 	&:is(.items-go-y, .items-from-top) {
-		&.items-from-top {
-			& .secondary.btn {
-				&.near-top { order: -1; }
-				&.near-bottom { order: 1; }
+		> :is(button, .btn):not(.hidden) {
+			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
+				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
+			}
+			&:not(:has(~ :is(.btn, button):not(.hidden))) {
+				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
 			}
 		}
 	}
-	&:is(.items-go-y, .items-from-bottom) {
-		&.items-from-bottom {
-			& .secondary.btn {
-				&.near-top { order: 1; }
-				&.near-bottom { order: -1; }
+	/* 竖排从下到上：首项下圆角，末项上圆角 */
+	&.items-from-bottom {
+		> :is(button, .btn):not(.hidden) {
+			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
+				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
+			}
+			&:not(:has(~ :is(.btn, button):not(.hidden))) {
+				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
 			}
 		}
 	}
