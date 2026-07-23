@@ -397,6 +397,7 @@ i.icon {
 	--char-down: '⬇';  /* U+2B07 &#x2B07; */
 	--char-eye: '👁';  /* U+1F441 &#x1F441; */
 	--char-fork: '⤙';
+	--char-mic: '🎤';
 }
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
 .ok, .checked, .done, .correct, .success, .completed {
@@ -490,9 +491,8 @@ i.icon {
 		--icon-overlay-color: var(--danger, #e00);
 	}
 }
-.fork {
-	--icon-char: var(--char-fork);
-}
+.fork { --icon-char: var(--char-fork); }
+.mic { --icon-char: var(--char-mic); }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
