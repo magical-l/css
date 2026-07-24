@@ -398,6 +398,7 @@ i.icon {
 	--char-eye: '👁';  /* U+1F441 &#x1F441; */
 	--char-fork: '⤙';
 	--char-mic: '🎤';
+	--char-music: '♫';
 }
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
 .ok, .checked, .done, .correct, .success, .completed {
@@ -447,6 +448,7 @@ i.icon {
 }
 .up { --icon-char: var(--char-up); }
 .down { --icon-char: var(--char-down); }
+.download { --icon-char: var(--char-down); }
 .go-top { --icon-char: var(--char-go-top); }
 .go-bottom { --icon-char: var(--char-go-bottom); }
 .link { --icon-char: var(--char-link); }
@@ -493,6 +495,7 @@ i.icon {
 }
 .fork { --icon-char: var(--char-fork); }
 .mic { --icon-char: var(--char-mic); }
+.audio { --icon-char: var(--char-music); }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
 .emoji {
@@ -537,6 +540,7 @@ i.icon {
 	--char-chat-from-left: '💬';  /* U+1F4AC &#x1F4AC; */
 	--char-chat-from-right: '🗨️';  /* U+1F5E8+FE0F &#x1F5E8;&#xFE0F; */
 	--char-eye: '👁';  /* U+1F441 &#x1F441; */
+	--char-music: '🎵';  /* U+1F3B5 &#x1F3B5; */
 }
 /* ================== 交互：按钮、表单、编辑控件…… ================== */
 /* 不可交互（视觉可见，但不响应鼠标事件，让点击穿透到下层） */
