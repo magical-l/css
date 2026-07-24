@@ -675,9 +675,9 @@ label.btn {
 
 	&:has(> input:checked) {
 		/* 选中态适配：映射到按钮变量 */
-		--btn-bg: var(--selector-bg, var(--bg-active));
-		--btn-text-color: var(--selector-color, var(--text-primary));
-		--btn-font-weight: var(--selector-font-weight, 500);
+		--btn-bg: var(--checked-bg, var(--bg-active));
+		--btn-text-color: var(--checked-color, var(--text-primary));
+		--btn-font-weight: var(--checked-font-weight, 500);
 		/* 选中态按钮适配：锁住 hover，不让 .btn 的 hover 干扰 */
 		--hover-bg: var(--btn-bg);
 		--hover-text-color: var(--btn-text-color);
