@@ -693,62 +693,51 @@ label.btn {
 }
 
 .btn-group {
+	--btn-radius: var(--radius-md);
+	--btn-first-radius: var(--btn-radius) 0 0 var(--btn-radius);
+	--btn-last-radius: 0 var(--btn-radius) var(--btn-radius) 0;
 	gap: 0; 
 	position: relative;
-	& > button, & > .btn {
+	/* 可见按钮才参与方向圆角（清零 + 首/末项圆角） */
+	& > :is(button, .btn):not(.hidden) {
 		margin: 0; 
 		/* 所有按钮先清零圆角 */
 		border-radius: 0;
+		/* direction-aware: 首项/末项圆角
+		用 :nth-child(1 of :not(.hidden)) 检测可见的首项/末项，比 :not(:~) 简洁，
+		   :nth-child + :nth-last-child 组合即"唯一可见"。 */
+		/* 首个可见按钮：首项圆角 */
+		&:nth-child(1 of :not(.hidden)) {
+			border-radius: var(--btn-first-radius);
+		}
+		/* 末个可见按钮：末项圆角 */
+		&:nth-last-child(1 of :not(.hidden)) {
+			border-radius: var(--btn-last-radius);
+		}
+		/* 唯一可见按钮（同时是首和末）：四角全圆角 */
+		&:nth-child(1 of :not(.hidden)):nth-last-child(1 of :not(.hidden)) {
+			border-radius: var(--btn-radius);
+		}
 		/* hover 一个按钮时，它的视觉反馈不能被邻居挡住。 */
 		&:hover { z-index: 1; }
-		/* 假设具有一个“主要按钮” */
+		/* 假设具有一个"主要按钮" */
 		&.main { order: 0; }
 	}
-	/* ------ 变体 ------ */
-	/* 横排从左到右：首项左圆角，末项右圆角 */
-	&:is(.items-go-x, .items-from-left) {
-		/* 可见按钮中，首项左圆角，末项右圆角 */
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: var(--btn-radius) 0 0 var(--btn-radius);
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
-			}
-		}
+	&.flex.items-from-left {
+		--btn-first-radius: var(--btn-radius) 0 0 var(--btn-radius);
+		--btn-last-radius: 0 var(--btn-radius) var(--btn-radius) 0;
 	}
-	/* 横排从右到左：首项右圆角，末项左圆角 */
-	&.items-from-right {
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: 0 var(--btn-radius) var(--btn-radius) 0;
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: var(--btn-radius) 0 0 var(--btn-radius);
-			}
-		}
+	&.flex.items-from-right {
+		--btn-first-radius: 0 var(--btn-radius) var(--btn-radius) 0;
+		--btn-last-radius: var(--btn-radius) 0 0 var(--btn-radius);
 	}
-	/* 竖排从上到下：首项上圆角，末项下圆角 */
-	&:is(.items-go-y, .items-from-top) {
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
-			}
-		}
+	&.flex:is(.items-go-y, .items-from-top) {
+		--btn-first-radius: var(--btn-radius) var(--btn-radius) 0 0;
+		--btn-last-radius: 0 0 var(--btn-radius) var(--btn-radius);
 	}
-	/* 竖排从下到上：首项下圆角，末项上圆角 */
-	&.items-from-bottom {
-		> :is(button, .btn):not(.hidden) {
-			&:not(:is(.btn, button):not(.hidden) ~ :is(button, .btn)) {
-				border-radius: 0 0 var(--btn-radius) var(--btn-radius);
-			}
-			&:not(:has(~ :is(.btn, button):not(.hidden))) {
-				border-radius: var(--btn-radius) var(--btn-radius) 0 0;
-			}
-		}
+	&.flex.items-from-bottom {
+		--btn-first-radius: 0 0 var(--btn-radius) var(--btn-radius);
+		--btn-last-radius: var(--btn-radius) var(--btn-radius) 0 0;
 	}
 }
 
