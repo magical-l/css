@@ -3,7 +3,7 @@ title: common.css 模块
 covers_file: [css/common.css]
 depends_on: [css-architecture]
 api_signature: CSS 类（.btn、.icon、.hidden、.invisible、.scrollable 等）和 CSS 变量（--bg-*、--text-*、--btn-* 等）
-last_updated: 2026-07-15
+last_updated: 2026-07-24
 why_exists: common.css 是 CSS 库的核心文件，提供全局 reset、Design Tokens、通用组件样式
 ---
 
@@ -150,6 +150,8 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 ### 按钮组 (`.btn-group`)
 
 根据 flex 方向自动处理首尾项的圆角，支持多方向（`items-go-x/y`、`items-from-*`）。
+内部通过 `--btn-first-radius` / `--btn-last-radius` 两个 CSS 自定义属性驱动，方向 class 只需改写这两个变量。
+可见性感知：用 `:nth-child(1 of :not(.hidden))` 检测首个/末个可见按钮，唯一可见按钮自动四角全圆角。
 
 ### 标签式按钮 (`label.btn`)
 
@@ -220,3 +222,4 @@ common.css 的目标是**一个文件覆盖通用需求**：从最基础的浏�
 - 2026-07-15: 初始文档创建
 - 2026-07-15: 图标系统重构: --char-* 变量统一到 :root，同义类合并（.ok/.done/.completed → --char-check）。.emoji 改为覆盖 --char-* 而非逐个覆盖 --icon-*。新增 .sun（空心/实心）、.moon 类。
 - 2026-07-15: 新增 `.trash`/`.attach` 图标类；修复 `.btn > .icon` 特异性过高导致图标自身 `--icon-font-size` 被覆盖的 bug（改用 `:where()` 降特异性至 0,1,0）
+- 2026-07-24: `.btn-group` 圆角系统重构：用 `--btn-first-radius`/`--btn-last-radius` 自定义属性替代 4 块重复选择器；新增 `display: inline-flex` 消除按钮间空隙；可见性感知改用 `:nth-child(1 of :not(.hidden))`；唯一可见按钮自动全圆角。`.btn-group > .btn` 加 `border: none` 防止边框叠加。

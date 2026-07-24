@@ -1,4 +1,4 @@
-@charset "utf-8";/* v3.8.1 */
+@charset "utf-8";/* v3.8.2 */
 /* ============================== 理所当然 ==============================
  * “修正”或补充css未定义的、浏览器默认设置的一些默认值。
  */
@@ -693,14 +693,15 @@ label.btn {
 }
 
 .btn-group {
+	display: inline-flex;
 	--btn-radius: var(--radius-md);
 	--btn-first-radius: var(--btn-radius) 0 0 var(--btn-radius);
 	--btn-last-radius: 0 var(--btn-radius) var(--btn-radius) 0;
-	gap: 0; 
+	gap: 0;
 	position: relative;
 	/* 可见按钮才参与方向圆角（清零 + 首/末项圆角） */
 	& > :is(button, .btn):not(.hidden) {
-		margin: 0; 
+		margin: 0;
 		/* 所有按钮先清零圆角 */
 		border-radius: 0;
 		/* direction-aware: 首项/末项圆角
