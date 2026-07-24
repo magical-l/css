@@ -399,6 +399,7 @@ i.icon {
 	--char-fork: '⤙';
 	--char-mic: '🎤';
 	--char-music: '♫';
+	--char-video: '🎬';
 }
 /* ------ 状态图标（可放在 .icon 上或 .icon 的祖先上）------ */
 .ok, .checked, .done, .correct, .success, .completed {
@@ -495,6 +496,7 @@ i.icon {
 }
 .fork { --icon-char: var(--char-fork); }
 .mic { --icon-char: var(--char-mic); }
+.video { --icon-char: var(--char-video); }
 .audio { --icon-char: var(--char-music); }
 
 /* .emoji 可以放在节点链上任意一环（包括自己），使得所有字符图标自动切到 emoji */
